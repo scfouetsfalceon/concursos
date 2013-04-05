@@ -1,24 +1,60 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>KumbiaPHP web &amp; app Framework</title>
-    <link rel="stylesheet" href="<?php echo PUBLIC_PATH ?>css/style.css" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Error - Base Admin</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Bootstrap -->
+    <?php
+    Tag::css('bootstrap/bootstrap');
+    Tag::css('bootstrap/bootstrap-responsive');
+    Tag::css('font-awesome/font-awesome.css');
+    Tag::css('error');
+    echo Html::IncludeCss();
+    ?>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <?php echo Tag::js('html5shiv.js'); ?>
+    <![endif]-->
+
 </head>
+
 <body>
-    <div style="text-align: center; margin: 50px; font-size: 12pt; background-color: transparent; font-family: Lucida Grande, Verdana, Sans-serif;">
-        <table align="center" id="content" style="background-color: #fff; border: #999 1px solid; padding: 10px 10px 6px 10px; width: 50%;">
-            <tbody>
-                <tr>
-                    <td style="width: 5%">
-                        <a href="http://www.kumbiaphp.com"><img src="<?php echo PUBLIC_PATH ?>img/site_logo.gif" alt="Kumbia PHP Framework"/></a>
-                    </td>
-                    <td>
-                        <h1 style="font-size: 14pt; color: #990000; margin: 0 0 4px 0;">ERROR 404</h1>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="container">
+
+    <div class="row">
+
+        <div class="span12">
+
+            <div class="error-container">
+                <h1>Oops!</h1>
+
+                <h2>404 Página No Encontrada</h2>
+
+                <div class="error-details">
+                    Lo sentimos, Página solicitado no encontrada!
+
+                </div> <!-- /error-details -->
+
+                <div class="error-actions">
+                    <?php echo Html::link('', '<i class="icon-chevron-left icon-white"></i>&nbsp;Volver al Inicio', ' class="btn btn-large btn-primary"'); ?>
+                </div> <!-- /error-actions -->
+
+            </div> <!-- /error-container -->
+
+        </div> <!-- /span12 -->
+
+    </div> <!-- /row -->
+
+</div> <!-- /container -->
+
+<?php echo Tag::js('bootstrap/jquery'); ?>
+<?php echo Tag::js('bootstrap/bootstrap.min'); ?>
+
 </body>
 </html>

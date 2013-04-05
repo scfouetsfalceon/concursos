@@ -2,28 +2,34 @@
 <html lang="es">
  <head>
   <meta http-equiv='Content-type' content='text/html; charset=<?php echo APP_CHARSET ?>' />
+  <meta charset='<?php echo APP_CHARSET ?>' />
   <title>KumbiaPHP web &amp; App Framework</title>
-  <?php Tag::css('bienvenida') ?>
-  <?php Tag::css('style') ?>
-  <?php echo Html::includeCss() ?>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Bootstrap -->
+    <?php
+    Tag::css('bootstrap/bootstrap');
+    Tag::css('bootstrap/bootstrap-responsive');
+    Tag::css('font-awesome/font-awesome.min');
+    Tag::css('font-awesome/css');
+    echo Html::IncludeCss();
+    ?>
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <?php echo Tag::js('html5shiv'); ?>
+    <![endif]-->
+    <!--[if IE 7]>
+        <?php
+        echo '<link href="' . PUBLIC_PATH . "css/font-awesome/font-awesome-ie7.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
+        ?>
+    <![endif]-->
+    <?php echo Tag::js('bootstrap/jquery'); ?>
+    <?php echo Tag::js('bootstrap/bootstrap.min'); ?>
+
 </head>
 <body>
-    <div id='content'>
-        <div id='head'>
-            <div class='alignright'>
-                <p id='config'>
-                    <span class='app'><?php echo basename(dirname(APP_PATH)) ?></span>
-                    <?php echo Html::link('pages/show/kumbia/status/', 'Config', 'title="Ver configuración de la aplicación"') ?>
-                </p>
-             </div>
-             
-            <h1 id='logo'>KumbiaPHP</h1>
-            <h2 id='info-app'>web &amp; app Framework versión <?php echo kumbia_version() ?></h2>
-        </div>
-
-        <?php View::content(); ?>
-
-        <?php View::partial('kumbia/footer') ?>
-    </div>
+    <?php View::content(); ?>
 </body>
 </html>
