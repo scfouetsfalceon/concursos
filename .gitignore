@@ -1,0 +1,16 @@
+default/public/files/dcm/*.*
+default/public/img/dcm/galeria/*
+
+# Logs & "Backup" #
+###################
+*~
+*.log
+log*.txt
+*.*.bak
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
