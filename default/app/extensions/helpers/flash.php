@@ -12,8 +12,9 @@
  * obtain it through the world-wide-web, please send an email
  * to license@kumbiaphp.com so we can send you a copy immediately.
  *
- * Flash Es la clase standard para enviar advertencias,
- * informacion y errores a la pantalla
+ * Flash es la clase standard para enviar advertencias,
+ * informacion y errores a la pantalla. Solo que esta
+ * posee los estilos del bootstrap de Twitter
  *
  * @category   Kumbia
  * @package    Flash
@@ -28,10 +29,14 @@ class Flash {
 	 * @param string $name	Para tipo de mensaje y para CSS class='alert-$name'.
 	 * @param string $msg 	Mensaje a mostrar
 	 */
-	public static function show($name,$msg)
+	public static function show($name,$msg,$autoclose=False)
 	{
 		if(isset($_SERVER['SERVER_SOFTWARE'])){
-    			echo '<div class="alert alert-' , $name , ' fade in" data-dismiss="alert"><a class="close" href="#" >×</a>' , $msg , '</div>', PHP_EOL;
+				if($autoclose){
+					echo '<div class="alert alert-' , $name , ' fade in" data-dismiss="alert">' , $msg , '</div><script type="text/javascript">setTimeout(function(){ $(".alert").alert(\'close\'); }, 6000);</script>', PHP_EOL;
+				} else {
+					echo '<div class="alert alert-' , $name , ' fade in" data-dismiss="alert"><a class="close" href="#" >×</a>' , $msg , '</div>', PHP_EOL;
+				}
 		} else {
 			echo $name , ': ' , strip_tags($msg) , PHP_EOL;
 		}
@@ -42,9 +47,9 @@ class Flash {
 	 *
 	 * @param string $err
 	 */
-	public static function error($err)
+	public static function error($msg,$autoclose=False)
 	{
-		return self::show('error',$err);
+		return self::show('error',$msg,$autoclose);
 	}
 
 	/**
@@ -52,9 +57,9 @@ class Flash {
 	 *
 	 * @param string $msg
 	 */
-	public static function warning($msg)
+	public static function warning($msg,$autoclose=False)
 	{
-		return self::show('warning',$msg);
+		return self::show('warning',$msg,$autoclose);
 	}
 
 	/**
@@ -62,18 +67,18 @@ class Flash {
 	 *
 	 * @param string $msg
 	 */
-	public static function info($msg)
+	public static function info($msg,$autoclose=False)
 	{
-		return self::show('info',$msg);
+		return self::show('info',$msg,$autoclose);
 	}
 	/**
 	 * Visualiza informacion de suceso correcto en pantalla
 	 *
 	 * @param string $msg
 	 */
-	public static function valid($msg)
+	public static function valid($msg,$autoclose=False)
 	{
-		return self::show('success',$msg);
+		return self::show('valid',$msg,$autoclose);
 	}
 
 	/**
@@ -83,9 +88,9 @@ class Flash {
 	 *
 	 * @deprecated  ahora Flah::info()
 	 */
-	public static function notice($msg)
+	public static function notice($msg,$autoclose=False)
 	{
-		return self::show('info',$msg);
+		return self::show('info',$msg,$autoclose);
 	}
 
 	/**
@@ -95,8 +100,8 @@ class Flash {
 	 *
 	 * @deprecated  ahora Flash::valid()
 	 */
-	public static function success($msg)
+	public static function success($msg,$autoclose=False)
 	{
-		return self::show('success',$msg);
+		return self::show('valid',$msg,$autoclose);
 	}
 }
