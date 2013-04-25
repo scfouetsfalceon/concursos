@@ -3,11 +3,10 @@
             if (isset($destiny)) {
                 $parametros = implode('/', Router::get('parameters')).'/';
                 $url = explode('pag', $destiny.$parametros);
-                $url = trim($url[0];,'/');
             } else {
                 $url = explode('pag', Router::get('route'));
-                $url = trim($url[0];,'/');
             }
+            $url = trim($url[0],'/');
     ?>
     <div class="pagination pagination-centered">
         <ul>
@@ -17,12 +16,42 @@
             <!-- Anterior -->
 
             <?php
-            if($objeto->total > 1) {
+            if($objeto->total > 1 && $objeto->total < 10) {
                 for ($i=1; $i <= $objeto->total; $i++) {
                     $str=($objeto->current == $i)?"<li class=\"active\">\n":"<li>\n";
                     $str.=Html::link($url."/pag/$i/", $i);
                     $str .= "</li>\n";
                     echo $str;
+                }
+            } elseif($objeto->total > 1 && $objeto->total > 10) {
+
+                if( $objeto->current > 5){
+                    echo "<li>\n".Html::link($url."/pag/1/", '1')."</li>\n";
+                    echo "<li class=\"disabled\">\n".Html::link($url."#", '...')."</li>\n";
+                }
+
+                if( $objeto->current <= 5){
+                    $inicio=1;
+                    $fin=5;
+                } elseif( $objeto->current > 5 && $objeto->current < ($objeto->total-5)){
+                    $inicio=$objeto->current-2;
+                    $fin=$objeto->current+2;
+                } elseif( $objeto->current >= ($objeto->total-5)){
+                    $inicio=($objeto->total-5);
+                    $fin=$objeto->total;
+                }
+
+                for ($i=$inicio; $i<=$fin; $i++) {
+                    $str=($objeto->current == $i)?"<li class=\"active\">\n":"<li>\n";
+                    $str.=Html::link($url."/pag/$i/", $i);
+                    $str .= "</li>\n";
+                    echo $str;
+                }
+
+
+                if( $objeto->current < ($objeto->total-5)){
+                    echo "<li class=\"disabled\">\n".Html::link($url."#", '...')."</li>\n";
+                    echo "<li>\n".Html::link($url."/pag/".$objeto->total.'/', $objeto->total)."</li>\n";
                 }
             }
             ?>
