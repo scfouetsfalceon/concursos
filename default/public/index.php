@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * KumbiaPHP web & app Framework
  *
  * LICENSE
@@ -26,9 +26,9 @@
  * Establece polí­tica de informe de errores
  */
 //error_reporting(0); // Usar este en producción, no envia errores
-error_reporting(E_ALL ^ E_STRICT); // Comentar en producción
+error_reporting(E_ALL); // Comentar en producción
 //comentar la siguiente linea en producción
-ini_set('display_errors', 'On'); 
+ini_set('display_errors', 'On');
 
 /**
  * Define marca de tiempo en que inicio el Request
@@ -77,5 +77,5 @@ $url = isset($_GET['_url']) ? $_GET['_url'] : '/';
  *
  * @see Bootstrap
  */
-//require APP_PATH . 'libs/bootstrap.php'; //bootstrap de app
-require CORE_PATH . 'kumbia/bootstrap.php'; //bootstrap del core 
+require APP_PATH . 'libs/bootstrap.php'; //bootstrap de app
+require CORE_PATH . 'kumbia/bootstrap.php'; //bootstrap del core

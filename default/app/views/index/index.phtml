@@ -1,8 +1,9 @@
 
-      <form method="post" class="form-signin" action="bienvenida/">
+      <?php echo Form::open(null, 'post', 'class="form-signin"'); ?>
         <h2 class="form-signin-heading">Bienvenido</h2>
-        <input type="text" class="input-block-level" placeholder="Correo Electronico">
-        <input type="password" class="input-block-level" placeholder="Contraseña">
+        <?php View::content(); ?>
+        <input type="text" name="usuario" class="input-block-level" placeholder="Correo Electronico">
+        <input type="password" name="clave" class="input-block-level" placeholder="Contraseña">
         <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
         <small>Sistema en línea de Concursos Nacionales<br>Desarrollado por Icter.us</small>
       </form>

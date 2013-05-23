@@ -50,6 +50,7 @@ require_once CORE_PATH . 'kumbia/config.php';
 
 // Lee la configuracion
 $config = Config::read('config');
+define('APP_NAME', $config['application']['name']);
 
 // Constante que indica si la aplicacion se encuentra en produccion
 if (! defined('PRODUCTION')) {
