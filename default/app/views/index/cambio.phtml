@@ -1,0 +1,10 @@
+
+      <?php echo Form::open(null, 'post', 'class="form-signin"'); ?>
+        <h3 class="form-signin-heading">Cambio de Clave</h3>
+        <?php View::content(); ?>
+        <input type="password" name="actual" class="input-block-level" placeholder="Clave Actual" value="">
+        <input type="password" name="clave" class="input-block-level" placeholder="Clave Nueva" value="">
+        <input type="password" name="reclave" class="input-block-level" placeholder="Reingrese Clave" value="">
+        <button class="btn btn-large btn-primary" type="submit">Cambiar Clave</button>
+        <small>Sistema en línea de Concursos Nacionales<br>Desarrollado por Icter.us</small>
+      </form>

@@ -1,0 +1,180 @@
+      <div class="row">
+        <div class="span12">
+            <div class="row">
+                <div class="span5 offset1 cajas">
+                    <h5>Créditos Mensuales Generales</h5>
+                    <div class="cajitas">
+                        <div id="general" class="graficas_dashboard"></div>
+                    </div>
+                </div>
+
+                <div class="span5 cajas">
+                    <h5>Créditos Mensuales por Rama</h5>
+                    <div class="cajitas">
+                        <div id="ramas" class="graficas_dashboard"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span5 offset1 cajas">
+                    <h5>Indices de Independencia por mes</h5>
+                    <div class="cajitas">
+                        <div id="independencia" class="graficas_dashboard"></div>
+                    </div>
+                </div>
+
+                <div class="span5 cajas">
+                    <h5>Últimas Actividades Reportadas</h5>
+                    <div class="cajitas">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Actividad</th>
+                                    <th>Lugar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>80/11/1984</td>
+                                    <td>El Tinglao</td>
+                                    <td>Vía Sierra Falconiana</td>
+                                </tr>
+                                <tr>
+                                    <td>80/11/1984</td>
+                                    <td>El Tinglao</td>
+                                    <td>Vía Sierra Falconiana</td>
+                                </tr>
+                                <tr>
+                                    <td>80/11/1984</td>
+                                    <td>El Tinglao</td>
+                                    <td>Vía Sierra Falconiana</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    <?php
+        echo Tag::js('flot/jquery.flot');
+        echo Tag::js('flot/jquery.flot.stack');
+    ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cval = '#5BB75B';
+        var cac = '#006DCC';
+        // // $.getJSON('json.php', function (json) {
+        //     // Ahora si datos y eje x
+        //     var datos = new Array();
+        //     var xejes = new Array();
+
+        //     var i;
+        //     $.each(json.data, function(i, meses) {
+        //         i = parseInt(i);
+        //         //alert(i);
+        //         //alert(meses[0]);
+        //         datos.push([(i+1), meses[1]]);
+        //         xejes.push([(i+1), meses[0]]);
+        //         i += 1;
+            // });
+
+             var datos = new Array([1, 12], [2, 5], [3, 14], [4, 12], [5, 5], [6, 14], [7, 12], [8, 5], [9, 14], [10, 12], [11, 5], [12, 14]);
+             var datos2 = new Array([1, 2], [2, 6], [3, 8], [4, 10], [5, 5], [6, 14], [7, 12], [8, 5], [9, 14], [10, 12], [11, 5], [12, 14]);
+             var xejes = new Array([1, 'Ene'], [2, 'Feb'], [3, 'Mar'], [4, 'Abr'], [5, 'May'], [6, 'Jun'], [7, 'Jul'], [8, 'Ago'], [9, 'Sep'], [10, 'Oct'], [11, 'Nov'], [12, 'Dic']);
+             // xejes.push();
+
+            $.plot(
+                $("#general"),
+                [{
+                    data: datos,
+                    color: cval, // Rojo -> '#4F9F33'
+                    bars: {
+                        show: true,
+                        align: "left",
+                        barWidth: 0.4,
+                    }
+                },{
+                    data: datos2,
+                    color: cac, // Verde ->
+                    bars: {
+                        show: true,
+                        align: "right",
+                        barWidth: 0.4,
+                    }
+
+                }],
+                {
+                    grid: {
+                        backgroundColor: { colors: ["#fff", "#eee"] }
+                    },
+                    xaxis: {
+                        ticks: xejes
+                    }
+                }
+            );
+
+            $.plot(
+                $("#ramas"),
+                [{
+                    data: datos,
+                    color: '#4F9F33', // Rojo
+                    bars: {
+                        show: true,
+                        align: "left",
+                        barWidth: 0.4,
+                    }
+                },{
+                    data: datos2,
+                    color: '#F14E32', // Verde
+                    bars: {
+                        show: true,
+                        align: "right",
+                        barWidth: 0.4,
+                    }
+
+                }],
+                {
+                    grid: {
+                        backgroundColor: { colors: ["#fff", "#eee"] }
+                    },
+                    xaxis: {
+                        ticks: xejes
+                    }
+                }
+            );
+
+            $.plot(
+                $("#independencia"),
+                [{
+                    data: datos,
+                    color: '#4F9F33', // Rojo
+                    bars: {
+                        show: true,
+                        align: "left",
+                        barWidth: 0.4,
+                    }
+                },{
+                    data: datos2,
+                    color: '#F14E32', // Verde
+                    bars: {
+                        show: true,
+                        align: "right",
+                        barWidth: 0.4,
+                    }
+
+                }],
+                {
+                    grid: {
+                        backgroundColor: { colors: ["#fff", "#eee"] }
+                    },
+                    xaxis: {
+                        ticks: xejes
+                    }
+                }
+            );
+});
+
+
+</script>

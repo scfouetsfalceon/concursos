@@ -21,11 +21,12 @@ class AppController extends Controller {
 
 	final protected function initialize()
 	{
-            if ( !Auth::is_valid() ) {
-                if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {
-                    Router::redirect('/');
-                }
+		$this->log=Load::model('log');
+        if ( !Auth::is_valid() ) {
+            if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {
+                Router::redirect('/');
             }
+        }
 	}
 
 	final protected function finalize()
