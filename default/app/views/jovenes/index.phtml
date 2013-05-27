@@ -1,6 +1,6 @@
 <div class="span10 offset1">
 	<?php View::content(); ?>
-	<a href="#myModal" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
+	<a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -27,16 +27,39 @@
 	</table>
 </div>
 <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h3 id="myModalLabel">Modal header</h3>
+<div id="ModalInsertar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Registrar Jóven</h3>
+	</div>
+	<div class="modal-body">
+			<label class="span2">Cédula:</label> <?php echo Registro::cmbNac('nac', 'class="span1"'); ?> <?php echo Registro::number('cedula', 'class="span2"'); ?>
+			<label class="span2">Credencial:</label> <?php echo Registro::number('cedula', 'class="span2"'); ?>
+			<label class="span2">Primer Nombre:</label> <?php echo Form::text('primer_nombre', 'class="span2"'); ?>
+			<label class="span2">Segundo Nombre:</label> <?php echo Form::text('segundo_nombre', 'class="span2"'); ?>
+			<label class="span2">Primer Apellido:</label> <?php echo Form::text('primer_apellido', 'class="span2"'); ?>
+			<label class="span2">Segundo Apellido:</label> <?php echo Form::text('segundo_apellido', 'class="span2"'); ?>
+			<label class="span2">Rama:</label> <?php $ramas = array('Manada', 'Tropa', 'Clan'); echo Form::select('rama', $ramas, 'class="span2"'); //Registro::number('cedula', 'class="span2"'); ?>
+	</div>
+	<div class="modal-footer">
+		<i class="icon-spinner icon-spin icon-2x" id="espere"></i>
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+		<button class="btn btn-primary" id="btnRegistrar">Registrar</button>
+	</div>
 </div>
-<div class="modal-body">
-<p>One fine body…</p>
-</div>
-<div class="modal-footer">
-<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-<button class="btn btn-primary">Save changes</button>
-</div>
-</div>
+<?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+	function spinnerRegistro() {
+		var estado = $('#espere').css('display');
+		if (estado == "none") {
+			$('#espere').css('display', 'inline-block');
+		} else {
+			$('#espere').css('display', 'none');
+		}
+	}
+
+	$('#btnRegistrar').on('click', function(evento) {
+		evento.preventDefault();
+		spinnerRegistro();
+	});
+</script>

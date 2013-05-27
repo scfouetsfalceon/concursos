@@ -37,6 +37,11 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     margin:auto;
 }
 
+.modal-footer .icon-spinner {
+    vertical-align: middle;
+    display: none;
+}
+
 
 /* Area para pruebas de espacio */
 .rojo {
