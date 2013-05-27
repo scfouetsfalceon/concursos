@@ -24,6 +24,11 @@ class Usuarios extends ActiveRecord {
 		$usuario->estatus = $estatus;
 		return ($usuario->update())?True:False;
 	}
+
+	public function getDatos() {
+		$usuario = $this->find_first(Session::get('id'));
+		return ($usuario)?$usuario:False;
+	}
 }
 
 ?>

@@ -5,8 +5,8 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
 	border-left: 1px solid #D7D7D7;
 	border-right: 1px solid #D7D7D7;
     border-radius: 0 0 4px 4px;
-    margin: 0 0 20px 0;
-    padding: 20px 12px 12px 15px;
+    margin: 0 -1px 20px -1px;
+    padding: 15px 0;
 }
 
 .cajas h5:before, .cajas h5:after {
@@ -35,4 +35,18 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     width:400px;
     height:200px;
     margin:auto;
+}
+
+
+/* Area para pruebas de espacio */
+.rojo {
+    background-color: red;
+}
+
+.verde {
+    background-color: green;
+}
+
+.azul {
+    background-color: blue;
 }

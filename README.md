@@ -11,5 +11,15 @@ Sistema para reporte en línea de los Concursos Nacionales de Vida al Aire Libre
 * Historicos de Actividades
 
 
+## Cosas listas
+* Logeo
+* Cambio de Clave
+
 ## Cosas por hacer
+* Registrar chamos
+* Importar GPO
+* Crear Unidades
+* Reportar Acitvidades
+* Actividades
+* Dashboard (Gráficas e Información)
 * Integrar con Adaba

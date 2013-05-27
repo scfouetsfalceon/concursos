@@ -46,6 +46,8 @@ class IndexController extends AppController
     }
 
     public function dashboard() {
+        $usuario = Load::model('usuarios');
+        $this->usuario = $usuario->getDatos();
         // if( $this->auth->get('estatus') == 3 ) {
         //     Router::redirect('bienvenida/');
         // }
