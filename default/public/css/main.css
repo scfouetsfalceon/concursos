@@ -42,6 +42,30 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     display: none;
 }
 
+/* Colorcitos */
+.primary {
+    color: ;
+}
+.warning {
+    color: #FAA732;
+}
+.success {
+
+}
+.danger {
+
+}
+
+/* Text align para tablas */
+.table th.text-center, .table td.text-center {
+    text-align: center !important;
+}
+.table th.text-left, .table td.text--left {
+    text-align: center !important;
+}
+.table th.text-right, .table td.text-right {
+    text-align: center !important;
+}
 
 /* Area para pruebas de espacio */
 .rojo {

@@ -1,10 +1,10 @@
 <?php
 
-class jovenes extends ActiveRecord {
+class Jovenes extends ActiveRecord {
 	protected $logger = True;
 
 	public function insertar() {
-		$this->nacionalidad = ($this->nacionalidad == 'VENEZOLANA' || $this->nacionalidad == 'V')'V'?:'E';
+		$this->nacionalidad = ($this->nacionalidad == 'VENEZOLANA' || $this->nacionalidad == 'V')?'V':'E';
 		$this->estado = 1;
 		return ($this->create())?True:False;
 	}

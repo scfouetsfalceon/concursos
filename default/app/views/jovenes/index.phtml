@@ -1,5 +1,5 @@
 <div class="span10 offset1">
-	<?php View::content(); ?>
+	<div class="alert" id="Msj"></div>
 	<a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
 	<table class="table table-striped">
 		<thead>
@@ -8,7 +8,7 @@
 				<th>Credencial</th>
 				<th>Nombre</th>
 				<th>Equipo</th>
-				<th colspan="3">Opciones</th>
+				<th colspan="3" class="text-center">Opciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,9 +18,14 @@
 				<td>123456789</td>
 				<td>Jaro Andrei Marval Pereira</td>
 				<td></td>
-				<td>Inactivar</td>
-				<td>Editar</td>
-				<td>Borrar</td>
+				<td class="text-center">
+					<?php if (True): ?>
+						<a href="#" class="btn btn-warning"><i class="icon-frown"></i> Inactivar</a>
+					<?php else: ?>
+						<a href="#" class="btn btn-success"><i class="icon-smile"></i> Activar</td></a>
+					<?php endif; ?>
+				<td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
+				<td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>
 			</tr>
 			<?php endfor; ?>
 		</tbody>
@@ -34,12 +39,12 @@
 	</div>
 	<div class="modal-body">
 			<label class="span2">Cédula:</label> <?php echo Registro::cmbNac('nac', 'class="span1"'); ?> <?php echo Registro::number('cedula', 'class="span2"'); ?>
-			<label class="span2">Credencial:</label> <?php echo Registro::number('cedula', 'class="span2"'); ?>
+			<label class="span2">Credencial:</label> <?php echo Registro::number('credencial', 'class="span2"'); ?>
 			<label class="span2">Primer Nombre:</label> <?php echo Form::text('primer_nombre', 'class="span2"'); ?>
 			<label class="span2">Segundo Nombre:</label> <?php echo Form::text('segundo_nombre', 'class="span2"'); ?>
 			<label class="span2">Primer Apellido:</label> <?php echo Form::text('primer_apellido', 'class="span2"'); ?>
 			<label class="span2">Segundo Apellido:</label> <?php echo Form::text('segundo_apellido', 'class="span2"'); ?>
-			<label class="span2">Rama:</label> <?php $ramas = array('Manada', 'Tropa', 'Clan'); echo Form::select('rama', $ramas, 'class="span2"'); //Registro::number('cedula', 'class="span2"'); ?>
+			<label class="span2">Rama:</label> <?php echo Form::dbSelect('ramas_id', 'nombre', array('ramas', 'getRamas', '1'), '-- Seleccione --', 'class="span2"'); ?>
 	</div>
 	<div class="modal-footer">
 		<i class="icon-spinner icon-spin icon-2x" id="espere"></i>
@@ -49,17 +54,42 @@
 </div>
 <?php echo Tag::js('form'); ?>
 <script type="text/javascript">
+	$('.alert').fadeOut();
+
 	function spinnerRegistro() {
-		var estado = $('#espere').css('display');
-		if (estado == "none") {
-			$('#espere').css('display', 'inline-block');
-		} else {
-			$('#espere').css('display', 'none');
-		}
+		($('#espere').css('display')=='none')? $('#espere').css('display', 'inline-block') : $('#espere').css('display', 'none') ;
 	}
 
 	$('#btnRegistrar').on('click', function(evento) {
 		evento.preventDefault();
 		spinnerRegistro();
+
+		$.post(
+			'<?php echo PUBLIC_PATH; ?>jovenes/registrar/',
+			{
+				type: 'json',
+				"registro[nac]": $('#nac').val(),
+				"registro[cedula]": $('#cedula').val(),
+				"registro[credencial]": $('#credencial').val(),
+				"registro[primer_nombre]": $('#primer_nombre').val(),
+				"registro[segundo_nombre]": $('#segundo_nombre').val(),
+				"registro[primer_apellido]": $('#primer_apellido').val(),
+				"registro[segundo_apellido]": $('#segundo_apellido').val(),
+				"registro[ramas_id]": $('#ramas_id').val(),
+				registrar: 'registrando'
+			},
+			function(data) {
+				if (data.status == "OK") {
+					sucessMsj('Jovén registrado con éxito');
+					$('#ModalInsertar').modal('hide');
+					spinnerRegistro();
+				} else {
+					errorMsj(data.message);
+					$('#ModalInsertar').modal('hide');
+					spinnerRegistro();
+				}
+			},
+			'json'
+		);
 	});
 </script>

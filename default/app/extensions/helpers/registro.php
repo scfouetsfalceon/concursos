@@ -580,7 +580,7 @@ class Registro extends Form {
      * @return String
      */
     public static function cmbNac($field, $attrs = NULL, $value = NULL) {
-        $data = Array('V', 'E');
+        $data = Array('V'=>'V', 'E'=>'E');
         if (is_array($attrs)) {
             $attrs = Tag::getAttrs($attrs);
         }

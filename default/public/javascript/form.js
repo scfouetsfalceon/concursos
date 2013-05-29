@@ -1,6 +1,6 @@
 // Validar campo númerico y de tipo local
 function numericoPrefijo(objecto, prefijo, mensaje) {
-    objecto.live('keyup', function(){
+    objecto.on('keyup', function(){
         if( this.value.length >= 2 ){
             if ( this.value.substr(0,2) != prefijo )  {
                 this.value = '';
@@ -28,8 +28,20 @@ function numericoPrefijo(objecto, prefijo, mensaje) {
     });
 }
 
-function alertPopup(mensaje) {
-    $('#alert').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+function alertMsj(mensaje) {
+    $('#Msj').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+}
+
+function sucessMsj(mensaje){
+    $('#Msj').addClass('alert-success').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+}
+
+function infoMsj(mensaje){
+    $('#Msj').addClass('alert-info').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+}
+
+function errorMsj(mensaje){
+    $('#Msj').addClass('alert-error').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
 }
 
 $.fn.numerico = function() {
@@ -85,13 +97,13 @@ $.fn.loadSelect = function() {
 }
 
 $(document).ready(function(){
-	var f = new Date(), ano = f.getFullYear();
-    $('input[type="date"]').datepicker({
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-		yearRange: String(ano - 100) + ':' + String(ano)
-	});
+// 	var f = new Date(), ano = f.getFullYear();
+//     $('input[type="date"]').datepicker({
+// 		dateFormat: 'dd/mm/yy',
+// 		changeMonth: true,
+// 		changeYear: true,
+// 		yearRange: String(ano - 100) + ':' + String(ano)
+// 	});
     $('input[class~="req"]').requerido();
     $('input[type="email"]').correo();
 	$('input[type="number"]').numerico();

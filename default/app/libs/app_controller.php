@@ -26,6 +26,12 @@ class AppController extends Controller {
             if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {
                 Router::redirect('/');
             }
+        } else {
+	        if(Input::post('type')=='json'){
+				View::template(null);
+				View::response('json');
+				View::select('../generico/generico');
+			}
         }
 	}
 
