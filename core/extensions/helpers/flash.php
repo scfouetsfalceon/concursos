@@ -14,9 +14,9 @@
  *
  * Flash Es la clase standard para enviar advertencias,
  * informacion y errores a la pantalla
- * 
+ *
  * @category   Kumbia
- * @package    Flash 
+ * @package    Flash
  * @copyright  Copyright (c) 2005-2012 Kumbia Team (http://www.kumbiaphp.com)
  * @license    http://wiki.kumbiaphp.com/Licencia     New BSD License
  */
@@ -36,14 +36,14 @@ class Flash {
 			echo $name , ': ' , strip_tags($text) , PHP_EOL;
 		}
 	}
-	
+
 	/**
 	 * Visualiza un mensaje de error
 	 *
 	 * @param string $text
 	 */
 	public static function error($text)
-	{     
+	{
 		return self::show('error',$text);
 	}
 
@@ -56,7 +56,7 @@ class Flash {
 	{
 		return self::show('warning',$text);
 	}
-	
+
 	/**
 	 * Visualiza informacion en pantalla
 	 *
@@ -75,7 +75,7 @@ class Flash {
 	{
 		return self::show('valid',$text);
 	}
-	
+
 	/**
 	 * Visualiza informacion en pantalla
 	 *

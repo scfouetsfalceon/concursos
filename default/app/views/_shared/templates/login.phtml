@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv='Content-type' content='text/html; charset=<?php echo APP_CHARSET ?>' />
+  <meta charset='<?php echo APP_CHARSET ?>' />
+  <title><?php echo $title; ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- CDN de Bootstrap y Font-awesome -->
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <?php echo Tag::js('html5shiv'); ?>
+  <![endif]-->
+  <!--[if IE 7]>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome-ie7.min.css" rel="stylesheet">
+  <![endif]-->
+  <?php
+    Tag::css('login');
+    echo Html::IncludeCss();
+  ?>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container">
+        <div class="row">
+            <?php View::content(); ?>
+        </div>
+    </div>
+</body>
+</html>

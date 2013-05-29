@@ -1,5 +1,6 @@
 <div class="span10 offset1">
 	<div class="alert" id="Msj"></div>
+	<?php View::content(); ?>
 	<a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
 	<table class="table table-striped">
 		<thead>
@@ -38,6 +39,7 @@
 		<h3 id="myModalLabel">Registrar Jóven</h3>
 	</div>
 	<div class="modal-body">
+			<div class="alert" id="alertPopup"></div>
 			<label class="span2">Cédula:</label> <?php echo Registro::cmbNac('nac', 'class="span1"'); ?> <?php echo Registro::number('cedula', 'class="span2"'); ?>
 			<label class="span2">Credencial:</label> <?php echo Registro::number('credencial', 'class="span2"'); ?>
 			<label class="span2">Primer Nombre:</label> <?php echo Form::text('primer_nombre', 'class="span2"'); ?>
@@ -79,17 +81,20 @@
 				registrar: 'registrando'
 			},
 			function(data) {
-				if (data.status == "OK") {
-					sucessMsj('Jovén registrado con éxito');
+				spinnerRegistro();
+				if (data.status == "valid") {
+					$('#Msj').sucessMsj(data.message);
 					$('#ModalInsertar').modal('hide');
-					spinnerRegistro();
 				} else {
-					errorMsj(data.message);
-					$('#ModalInsertar').modal('hide');
-					spinnerRegistro();
+					$('#alertPopup').errorMsj(data.message);
+					// $('#ModalInsertar').modal('hide');
 				}
 			},
 			'json'
-		);
+		).error(function() {
+			spinnerRegistro();
+			$('#Msj').errorMsj('Ha occurrido un error inesperado, actualice la página y vuelva a intentar');
+			$('#ModalInsertar').modal('hide');
+		});
 	});
 </script>

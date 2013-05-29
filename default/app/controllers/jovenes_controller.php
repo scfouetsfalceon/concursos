@@ -16,19 +16,10 @@ class JovenesController extends AppController {
 		if(Input::hasPost('registrar')) {
 			if(Input::post('type')=='json'){
 				Load::model('jovenes');
-				$salida = array('status' => 'ERROR');
-				try{
-					$jovenes = new Jovenes(Input::post('registro'));
-					if ( $jovenes->insertar() ) {
-						$salida['salida'] = 'OK';
-					} else {
-						$salida['message'] = 'Error durante el registro del Jóven - Intente más tarde';
-					}
-				} catch (Exception $e) {
-					print_r($e);
-					$salida['message'] = 'Error durante el registro del Jóven - Intente más tarde';
+				$jovenes = new Jovenes(Input::post('registro'));
+				if ( $jovenes->insertar() ) {
+					Flash::valid('Jóven registrado con éxito');
 				}
-				echo json_encode($salida);
 			}
 		}
 

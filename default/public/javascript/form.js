@@ -28,21 +28,28 @@ function numericoPrefijo(objecto, prefijo, mensaje) {
     });
 }
 
-function alertMsj(mensaje) {
-    $('#Msj').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+$.fn.alertMsj = function (mensaje, opciones) {
+
+    var settings = $.extend({
+        // Valores por default
+        // FIXME: Luego debo ponerle cariño luego a estas opciones
+        tiempo: 5000,
+    }, opciones );
+
+    $(this).fadeOut().empty().html(mensaje).fadeIn('slow').delay(settings.tiempo).fadeOut('slow');
 }
 
-function sucessMsj(mensaje){
-    $('#Msj').addClass('alert-success').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+$.fn.sucessMsj = function (mensaje){
+    $(this).addClass('alert-success').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
 }
 
-function infoMsj(mensaje){
-    $('#Msj').addClass('alert-info').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+$.fn.infoMsj = function (mensaje){
+    $(this).addClass('alert-info').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
 }
 
-function errorMsj(mensaje){
-    $('#Msj').addClass('alert-error').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
-}
+$.fn.errorMsj = function(mensaje) {
+    $(this).addClass('alert-error').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+};
 
 $.fn.numerico = function() {
 	$(this).on('keyup', function () {
