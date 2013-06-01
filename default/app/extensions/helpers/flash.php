@@ -32,9 +32,7 @@ class Flash {
 	public static function show($name,$msg,$autoclose=False)
 	{
 		if(isset($_SERVER['SERVER_SOFTWARE'])){
-				if($autoclose){
-					echo '<div class="alert alert-' , $name , ' fade in" data-dismiss="alert">' , $msg , '</div><script type="text/javascript">setTimeout(function(){ $(".alert").alert(\'close\'); }, 6000);</script>', PHP_EOL;
-				} elseif ( View::get('response') == 'json') {
+				if ( View::get('response') == 'json') {
 					$clean = array('Error: ' => '', '_' => ' ');
 					$alert= array('status' => $name, 'message' => strtr($msg, $clean));
 					echo json_encode($alert);

@@ -27,9 +27,8 @@ class AppController extends Controller {
                 Router::redirect('/');
             }
         } else {
-	        if(Input::post('type')=='json'){
-				View::template(null);
-				View::response('json');
+	        if(Input::request('type')=='json') {
+				View::response('json', null);
 				View::select('../generico/generico');
 			}
         }

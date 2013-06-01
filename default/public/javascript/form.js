@@ -28,29 +28,84 @@ function numericoPrefijo(objecto, prefijo, mensaje) {
     });
 }
 
+/**
+* Plugin de JQuery para mostrar mensajes de alert
+* Estilos del Bootstrap de Twitter
+*
+* @param String mensaje
+* @param Object opciones
+*/
 $.fn.alertMsj = function (mensaje, opciones) {
-
     var settings = $.extend({
-        // Valores por default
-        // FIXME: Luego debo ponerle cariño luego a estas opciones
+        tipo: 'alert',
+        autocerrar: true,
         tiempo: 5000,
     }, opciones );
 
-    $(this).fadeOut().empty().html(mensaje).fadeIn('slow').delay(settings.tiempo).fadeOut('slow');
+    if ( settings.tipo != 'alert' ) {
+        $(this).removeClass('alert-error alert-info alert-success').addClass('alert-'+settings.tipo);
+    }
+    $(this).fadeOut().empty().html(mensaje).fadeIn('slow');
+    if (settings.autocerrar) {
+        $(this).delay(settings.tiempo).fadeOut('slow');
+    }
 }
 
-$.fn.sucessMsj = function (mensaje){
-    $(this).addClass('alert-success').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+/**
+* Plugin de JQuery para mostrar mensajes de success
+* Estilos del Bootstrap de Twitter
+*
+* @param String mensaje
+* @param Object opciones
+*/
+$.fn.sucessMsj = function (mensaje, opciones){
+    var settings = $.extend({
+        tipo: 'success',
+        autocerrar: true,
+        tiempo: 5000,
+    }, opciones );
+
+    $(this).alertMsj(mensaje, settings);
 }
 
-$.fn.infoMsj = function (mensaje){
-    $(this).addClass('alert-info').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+/**
+* Plugin de JQuery para mostrar mensajes de info
+* Estilos del Bootstrap de Twitter
+*
+* @param String mensaje
+* @param Object opciones
+*/
+$.fn.infoMsj = function (mensaje, opciones){
+    var settings = $.extend({
+        tipo: 'info',
+        autocerrar: true,
+        tiempo: 5000,
+    }, opciones );
+
+    $(this).alertMsj(mensaje, settings);
 }
 
-$.fn.errorMsj = function(mensaje) {
-    $(this).addClass('alert-error').fadeOut().empty().html(mensaje).fadeIn('slow').delay(5000).fadeOut('slow');
+/**
+* Plugin de JQuery para mostrar mensajes de error
+* Estilos del Bootstrap de Twitter
+*
+* @param String mensaje
+* @param Object opciones
+*/
+$.fn.errorMsj = function(mensaje, opciones) {
+    var settings = $.extend({
+        tipo: 'error',
+        autocerrar: true,
+        tiempo: 5000,
+    }, opciones );
+
+    $(this).alertMsj(mensaje, settings);
 };
 
+/**
+* Plugin de JQuery para campos solo númericos
+*
+*/
 $.fn.numerico = function() {
 	$(this).on('keyup', function () {
         if ( this.value.substr(0,1) == 0 )  {
@@ -61,10 +116,20 @@ $.fn.numerico = function() {
 	});
 }
 
+/**
+* Plugin de JQuery para campos telefónicos
+* números locales (Venezuela)
+*
+*/
 $.fn.telefono = function() {
     numericoPrefijo(this, '02', "Esto no es un teléfono de habitación válido<br/>Si desea puede dejar el campo vacío");
 }
 
+/**
+* Plugin de JQuery para campos telefónicos
+* números celular(Venezuela)
+*
+*/
 $.fn.celular = function () {
     numericoPrefijo(this, '04', "Esto no es un teléfono de celular válido<br/>Si desea puede dejar el campo vacío");
 }
@@ -73,14 +138,23 @@ $.fn.requerido = function () {
     $(this).on('blur', function(){
         var text = $(this).val();
         if ( text.length == 0 ) {
-            $(this).addClass('box_error').focus();
-            alertPopup("Este campo es obligatorio");
+            $(this).next('.help-block').remove();
+            $(this).parent().parent().removeClass('error');
+            $(this).after('<span class="help-block">Este campo es obligatorio</span>');
+            $(this).parent().parent().addClass('error');
+            $(this).focus();
         } else {
-            $(this).removeClass('box_error');
+            $(this).next('.help-block').remove();
+            $(this).parent().parent().removeClass('error');
         }
     });
 }
 
+/**
+* Plugin de JQuery para campos correos
+* electrónicos
+*
+*/
 $.fn.correo = function() {
     $(this).on('blur', function(){
         var text = $(this).val();

@@ -42,6 +42,10 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     display: none;
 }
 
+.form-horizontal .control-label {
+    text-align: left;
+}
+
 /* Text align para tablas */
 .table th.text-center, .table td.text-center {
     text-align: center !important;
