@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `scouts_concursos`
 --
-
+CREATE DATABASE IF NOT EXISTS `scouts_concursos`;
+use `scouts_concursos`;
 -- --------------------------------------------------------
 
 --
@@ -27,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `actividades` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `lugar` varchar(45) NOT NULL,
@@ -36,10 +37,10 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `pcp` int(1) NOT NULL COMMENT 'Conceptos Programaticos',
   `ba` int(1) NOT NULL COMMENT 'Bono de  Asistencia',
   `bgi` int(1) NOT NULL COMMENT 'Bono por independencia',
-  `ramas_id` int(11) NOT NULL,
+  `ramas_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_actividades_ramas1_idx` (`ramas_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -48,12 +49,12 @@ CREATE TABLE IF NOT EXISTS `actividades` (
 --
 
 CREATE TABLE IF NOT EXISTS `distrito` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `region_id` int(11) NOT NULL,
+  `region_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_distrito_region_idx` (`region_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -62,12 +63,12 @@ CREATE TABLE IF NOT EXISTS `distrito` (
 --
 
 CREATE TABLE IF NOT EXISTS `equipos` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `ramas_id` int(11) NOT NULL,
+  `ramas_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_equipos_ramas1_idx` (`ramas_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -76,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `equipos` (
 --
 
 CREATE TABLE IF NOT EXISTS `grupos` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `distrito_id` int(11) NOT NULL,
+  `distrito_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_grupos_distrito1_idx` (`distrito_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `grupos` (
 --
 
 CREATE TABLE IF NOT EXISTS `jovenes` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `credencial` int(10) NOT NULL,
   `primer_nombre` varchar(20) NOT NULL,
   `segundo_nombre` varchar(20) DEFAULT NULL,
@@ -100,10 +101,10 @@ CREATE TABLE IF NOT EXISTS `jovenes` (
   `cedula` varchar(45) DEFAULT NULL,
   `creado_at` varchar(45) NOT NULL,
   `actualizado_in` varchar(45) NOT NULL,
-  `ramas_id` int(11) NOT NULL,
+  `ramas_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_jovenes_ramas1_idx` (`ramas_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -112,17 +113,17 @@ CREATE TABLE IF NOT EXISTS `jovenes` (
 --
 
 CREATE TABLE IF NOT EXISTS `jovenes_actividades` (
-  `id` int(11) NOT NULL,
-  `jovenes_id` int(10) unsigned NOT NULL,
-  `actividades_id` int(11) NOT NULL,
-  `usuarios_id` int(10) unsigned NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `jovenes_id` int(11) UNSIGNED unsigned NOT NULL,
+  `actividades_id` int(11) UNSIGNED NOT NULL,
+  `usuarios_id` int(11) UNSIGNED unsigned NOT NULL,
   `creado_at` date NOT NULL,
   `actualizado_in` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_jovenes_actividades_jovenes1_idx` (`jovenes_id`),
   KEY `fk_jovenes_actividades_actividades1_idx` (`actividades_id`),
   KEY `fk_jovenes_actividades_usuarios1_idx` (`usuarios_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -131,12 +132,13 @@ CREATE TABLE IF NOT EXISTS `jovenes_actividades` (
 --
 
 CREATE TABLE IF NOT EXISTS `ramas` (
-  `id` int(11) NOT NULL,
-  `tipo` int(1) NOT NULL,
-  `grupos_id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tipo_id` int(11) UNSIGNED  NOT NULL,
+  `grupos_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_ramas_grupos1_idx` (`grupos_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `fk_ramas_grupos1_idx` (`grupos_id`),
+  KEY `fk_ramas_tipo1_idx` ( `tipo_id` )
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -145,10 +147,10 @@ CREATE TABLE IF NOT EXISTS `ramas` (
 --
 
 CREATE TABLE IF NOT EXISTS `region` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -157,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `region` (
 --
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `primer_nombre` varchar(20) NOT NULL,
   `segundo_nombre` varchar(20) DEFAULT NULL,
   `primer_apellido` varchar(20) NOT NULL,
@@ -168,9 +170,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `actualizado_in` date DEFAULT NULL,
   `tipo` varchar(45) NOT NULL,
   `nivel` int(1) DEFAULT '5',
-  `estructura_id` int(11) NOT NULL,
+  `estructura_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -178,6 +181,30 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `email`, `clave`, `creado_at`, `actualizado_in`, `tipo`, `nivel`, `estructura_id`) VALUES
 (1, 'Jaro', 'Andrei', 'Marval', 'Pereira', 'jampgold@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2013-05-22', NULL, '0', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo`
+--
+
+CREATE TABLE IF NOT EXISTS `tipo` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR( 20 ) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Volcar la base de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`id`, `nombre`) VALUES
+(1, 'Manada Femenina'),
+(2, 'Manada Masculina'),
+(3, 'Tropa Femenina'),
+(4, 'Tropa Masculina'),
+(5, 'Clan Femenino'),
+(6, 'Clan Masculino');
 
 --
 -- Restricciones para tablas volcadas
@@ -225,7 +252,8 @@ ALTER TABLE `jovenes_actividades`
 -- Filtros para la tabla `ramas`
 --
 ALTER TABLE `ramas`
-  ADD CONSTRAINT `fk_ramas_grupos1` FOREIGN KEY (`grupos_id`) REFERENCES `grupos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ramas_grupos1` FOREIGN KEY (`grupos_id`) REFERENCES `grupos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ramas_tipo1` FOREIGN KEY ( `tipo_id` ) REFERENCES `tipo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
