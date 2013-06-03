@@ -1,0 +1,47 @@
+<div class="span10 offset1">
+    <?php View::content(); ?>
+    <div class="alert" id="Msj"></div>
+    <a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th colspan="3" class="text-center">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<?php if(!count($lista)): ?>
+        	<tr>
+                <td colspan="5" class="text-center">No posee datos</td>
+            </tr>
+            <?php 
+            	else:
+            		$i=1;
+            		foreach ($lista as $item): 
+            			$link = 'estructura/'.($nivel+1).'/'.$item->id;
+            			$ahref = Html::link($link, $item->nombre);
+            ?>
+            <tr>
+                <td><?php echo $i; ?></td>
+                <td><?php echo  $ahref; ?></td>
+                <td class="text-center">
+                    <?php if (True): ?>
+                        <a href="#" class="btn btn-warning"><i class="icon-frown"></i> Inactivar</a>
+                    <?php else: ?>
+                        <a href="#" class="btn btn-success"><i class="icon-smile"></i> Activar</td></a>
+                    <?php endif; ?>
+                <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
+                <td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>
+            </tr>
+            <?php 	$i++;
+            		endforeach; 
+            	endif;
+            ?>
+        </tbody>
+    </table>
+</div>
+<?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+    $('.alert').fadeOut();
+</script>

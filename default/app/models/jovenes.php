@@ -21,8 +21,10 @@ class Jovenes extends ActiveRecord {
 		return ($this->update())?True:False;
 	}
 
-	public function listar(){
-
+	public function listar($rama){
+		$columns = 'columns: id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido';
+		$condition = "conditions: ramas_id = $rama AND estado != 0";
+		return $this->find($condition, $columns);
 	}
 
 	private function cambiar_estado($id, $estado) {

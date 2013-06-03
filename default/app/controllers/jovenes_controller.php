@@ -5,8 +5,13 @@ class JovenesController extends AppController {
 	/**
 	 * Listar Jóvenes registrados dentro del sistema
 	 */
-	public function index() {
-
+	public function index($rama=null) {
+		$this->lista = null;
+		if ( !isset($rama) ) { // Session::get('nivel') != 5 ) {
+			Router::redirect('estructura/');
+		} else {
+			$this->lista = Load::model('jovenes')->listar($rama);
+		}
 	}
 
 	/**

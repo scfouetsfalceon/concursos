@@ -13,11 +13,23 @@
             </tr>
         </thead>
         <tbody>
-            <?php for($i=1;$i<=20;$i++):    ?>
+            <?php 
+            $cantidad = count($lista);
+            if(!$cantidad): ?>
+            <tr>
+                <td colspan="7" class="text-center">No posee Jóvenes</td>
+            </tr>
+            <?php 
+                else:
+                    $i=1;
+                    foreach ($lista as $item): 
+                        //$link = 'estructura/'.($nivel+1).'/'.$item->id;
+                        //$ahref = Html::link($link, $item->nombre);
+            ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td>123456789</td>
-                <td>Jaro Andrei Marval Pereira</td>
+                <td><?php echo $item->credencial; ?></td>
+                <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
                 <td></td>
                 <td class="text-center">
                     <?php if (True): ?>
@@ -28,7 +40,10 @@
                 <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
                 <td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>
             </tr>
-            <?php endfor; ?>
+            <?php   $i++;
+                    endforeach; 
+                endif;
+            ?>
         </tbody>
     </table>
 </div>
@@ -110,6 +125,7 @@
 </div>
 <?php echo Tag::js('form'); ?>
 <script type="text/javascript">
+    var cantidad_jovenes = <?php echo $cantidad; ?>;
     $('.alert').fadeOut();
 
     function spinnerRegistro() {
@@ -119,18 +135,18 @@
     $('#btnRegistrar').on('click', function(evento) {
         evento.preventDefault();
         spinnerRegistro();
-
+        var credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
         $.post(
             '<?php echo PUBLIC_PATH; ?>jovenes/registrar/',
             {
                 type: 'json',
                 "registro[nacionalidad]": $('#nac').val(),
                 "registro[cedula]": $('#cedula').val(),
-                "registro[credencial]": $('#credencial').val(),
-                "registro[primer_nombre]": $('#primer_nombre').val(),
-                "registro[segundo_nombre]": $('#segundo_nombre').val(),
-                "registro[primer_apellido]": $('#primer_apellido').val(),
-                "registro[segundo_apellido]": $('#segundo_apellido').val(),
+                "registro[credencial]": credencial,
+                "registro[primer_nombre]": primer_nombre,
+                "registro[segundo_nombre]": segundo_nombre,
+                "registro[primer_apellido]": primer_apellido,
+                "registro[segundo_apellido]": segundo_apellido,
                 "registro[ramas_id]": $('#ramas_id').val(),
                 registrar: 'registrando'
             },
@@ -138,6 +154,17 @@
                 spinnerRegistro();
                 if (data.status == "valid") {
                     $('#Msj').sucessMsj(data.message);
+                    var joven = '<tr>';
+                    joven += '<td>'+(cantidad_jovenes+=1)+'</td>';
+                    joven += '<td>'+credencial+'</td>';
+                    joven += '<td>'+primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido+'</td>';
+                    joven += '<td></td>';
+                    joven += '<td class="text-center">';
+                    joven += '<a href="#" class="btn btn-warning"><i class="icon-frown"></i> Inactivar</a>';
+                    joven += '<td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>';
+                    joven += '<td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>';
+                    joven += '</tr>';
+                    $('table>tbody').append(joven);
                     $('#ModalInsertar').modal('hide');
                 } else {
                     $('#alertPopup').errorMsj(data.message);

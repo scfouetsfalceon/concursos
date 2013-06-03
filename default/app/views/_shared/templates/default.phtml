@@ -26,15 +26,19 @@
 
     </head>
     <body>
-      <div class="container">
-        <div class="row">
-            <?php View::partial('header'); ?>
+      <div id="wrap">
+        <div class="container">
+            <div class="row">
+                <?php View::partial('header'); ?>
 
-            <?php View::content(); ?>
-            <div class="clearfix"></div>
-            <hr>
-            <?php View::partial('footer'); ?>
+                <?php View::content(); ?>
+                <div class="clearfix"></div>
+            </div>
         </div>
+    </div>
+    <div class="container">
+        <hr>
+        <?php View::partial('footer'); ?>
     </div>
 </body>
 </html>

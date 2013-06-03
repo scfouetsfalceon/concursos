@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `jovenes` (
   `actualizado_in` varchar(45) NOT NULL,
   `ramas_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `credencial` (`credencial`),
   KEY `fk_jovenes_ramas1_idx` (`ramas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -205,6 +206,19 @@ INSERT INTO `tipo` (`id`, `nombre`) VALUES
 (4, 'Tropa Masculina'),
 (5, 'Clan Femenino'),
 (6, 'Clan Masculino');
+
+--
+-- Estructura de tabla para la tabla `log`
+--
+
+CREATE TABLE IF NOT EXISTS `log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(39) NOT NULL,
+  `accion` int(1) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Restricciones para tablas volcadas
