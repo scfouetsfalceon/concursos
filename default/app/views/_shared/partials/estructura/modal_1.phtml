@@ -1,0 +1,59 @@
+<!-- Modal -->
+<div id="ModalInsertar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Nuevo</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="alert" id="alertPopup"></div>
+            <div class="control-group">
+                <label class="control-label">Nombre:</label>
+                <div class="controls">
+
+                    <?php echo Form::text('nombre', 'class="span2 req"'); ?>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <i class="icon-spinner icon-spin icon-2x" id="espere"></i>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button class="btn btn-primary" id="btnRegistrar">Registrar</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btnRegistrar').on('click', function(e) {
+        e.preventDefault();
+        var n = $('#nombre').val();
+        var linkver = '<?php echo PUBLIC_PATH."estructura/2/"; ?>';
+        var linkregion = '<?php echo PUBLIC_PATH."region/"; ?>';
+        $.post(
+            '<?php echo PUBLIC_PATH; ?>region/nueva',
+            {
+                type: 'json',
+                registrar: 'e',
+                nombre: n
+            },
+            function (d) {
+                if (d.status=='valid') {
+                    $('#Msj').sucessMsj("Región creada exitosamente");
+                    var fila = '<tr>';
+                    fila += '<td>&nbsp;</td>';
+                    fila += '<td><a href="'+linkver+d.message+'">'+n+'</a></td>';
+                    fila += '<td class="text-center"> <a href="'+linkregion+'desactivar/'+d.message+'" class="btn btn-warning"><i class="icon-frown"></i> Desactivar</a> </td>';
+                    fila += '<td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>';
+                    fila += '</tr>';
+                    $('table>tbody').append(fila);
+                    $('#ModalInsertar').modal('hide');
+                } else {
+                    $('#alertPopup').errorMsj(d.message);
+                }
+            },
+            'json'
+        );
+    });
+</script>
