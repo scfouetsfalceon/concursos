@@ -4,19 +4,19 @@ class grupos extends ActiveRecord {
 	protected $logger = True;
 
 	public function listar($distrito) {
-		return $this->find('distrito_id = '.$distrito.' AND estatus != 2');
+		return $this->find('distrito_id = '.$distrito.' AND estado != 2');
     }
 
     public function nuevo($nombre, $distrito) {
         $this->nombre = $nombre;
         $this->distrito_id = $distrito;
-        $this->estatus = '1';
+        $this->estado = '1';
         return ($this->create())?$this->id:False;
     }
 
     public function estado($id, $estado=NULL) {
         $rs = $this->find_first($id);
-        $rs->estatus = (isset($estado))?$estado:!$rs->estatus;
+        $rs->estado = (isset($estado))?$estado:!$rs->estado;
         return $rs->update();
     }
 

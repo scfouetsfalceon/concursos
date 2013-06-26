@@ -25,7 +25,7 @@
                 <td>&nbsp;</td>
                 <td><?php echo  $ahref; ?></td>
                 <td class="text-center">
-                    <?php if ($item->estatus==1):
+                    <?php if ($item->estado==1):
                         echo Html::link($ubicacion.'/desactivar/'.$item->id, '<i class="icon-frown"></i> Desactivar', 'class="btn btn-warning"');
                         else:
                             echo Html::link($ubicacion.'/activar/'.$item->id, '<i class="icon-smile"></i> Activar', 'class="btn btn-primary"');?>

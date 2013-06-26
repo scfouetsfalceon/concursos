@@ -52,6 +52,9 @@ CREATE TABLE IF NOT EXISTS `distrito` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `region_id` int(11) UNSIGNED NOT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_distrito_region_idx` (`region_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
@@ -66,6 +69,9 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `ramas_id` int(11) UNSIGNED NOT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_equipos_ramas1_idx` (`ramas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
@@ -80,6 +86,9 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `distrito_id` int(11) UNSIGNED NOT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_grupos_distrito1_idx` (`distrito_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
@@ -99,8 +108,9 @@ CREATE TABLE IF NOT EXISTS `jovenes` (
   `segundo_apellido` varchar(20) DEFAULT NULL,
   `nacionalidad` varchar(1) NOT NULL,
   `cedula` varchar(45) DEFAULT NULL,
-  `creado_at` varchar(45) NOT NULL,
-  `actualizado_in` varchar(45) NOT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   `ramas_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `credencial` (`credencial`),
@@ -118,8 +128,9 @@ CREATE TABLE IF NOT EXISTS `jovenes_actividades` (
   `jovenes_id` int(11) UNSIGNED unsigned NOT NULL,
   `actividades_id` int(11) UNSIGNED NOT NULL,
   `usuarios_id` int(11) UNSIGNED unsigned NOT NULL,
+  `estado` int(1) NOT NULL,
   `creado_at` date NOT NULL,
-  `actualizado_in` date DEFAULT NULL,
+  `modificado_in` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_jovenes_actividades_jovenes1_idx` (`jovenes_id`),
   KEY `fk_jovenes_actividades_actividades1_idx` (`actividades_id`),
@@ -136,6 +147,8 @@ CREATE TABLE IF NOT EXISTS `ramas` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tipo_id` int(11) UNSIGNED  NOT NULL,
   `grupos_id` int(11) UNSIGNED NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ramas_grupos1_idx` (`grupos_id`),
   KEY `fk_ramas_tipo1_idx` ( `tipo_id` )
@@ -150,6 +163,9 @@ CREATE TABLE IF NOT EXISTS `ramas` (
 CREATE TABLE IF NOT EXISTS `region` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -167,8 +183,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `segundo_apellido` varchar(20) DEFAULT NULL,
   `email` varchar(20) NOT NULL,
   `clave` varchar(52) NOT NULL,
-  `creado_at` date NOT NULL,
-  `actualizado_in` date DEFAULT NULL,
+  `estado` int(1) NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime DEFAULT NULL,
   `tipo` varchar(45) NOT NULL,
   `nivel` int(1) DEFAULT '5',
   `estructura_id` int(11) UNSIGNED NOT NULL,
@@ -180,8 +197,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `email`, `clave`, `creado_at`, `actualizado_in`, `tipo`, `nivel`, `estructura_id`) VALUES
-(1, 'Jaro', 'Andrei', 'Marval', 'Pereira', 'jampgold@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2013-05-22', NULL, '0', 1, 1);
+INSERT INTO `usuarios` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `email`, `clave`, `estado`, `creado_at`, `modificado_in`, `tipo`, `nivel`, `estructura_id`) VALUES
+(1, 'Jaro', 'Andrei', 'Marval', 'Pereira', 'jampgold@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, '0000-00-00 00:00:00', NULL, '0', 1, 1);
 
 -- --------------------------------------------------------
 

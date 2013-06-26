@@ -8,10 +8,10 @@ class Usuarios extends ActiveRecord {
 		return ($usuario->clave == $clave_actual)?True:False;
 	}
 
-	public function cambio_clave($clave_nueva, $estatus=1){
+	public function cambio_clave($clave_nueva, $estado=1){
 		$usuario = $this->find_first(Auth::get('id'));
 		$usuario->clave = $clave_nueva;
-		$usuario->estatus = $estatus;
+		$usuario->estado = $estado;
 		return ($usuario->update())?True:False;
 	}
 
@@ -19,9 +19,9 @@ class Usuarios extends ActiveRecord {
 		return $this->cambio_clave($clave_nueva, 2);
 	}
 
-	public function cambiar_estatus() {
+	public function cambiar_estado() {
 		$usuario = $this->find_first(Auth::get('id'));
-		$usuario->estatus = $estatus;
+		$usuario->estado = $estado;
 		return ($usuario->update())?True:False;
 	}
 

@@ -19,14 +19,14 @@ class IndexController extends AppController
                 if ( !$this->auth->authenticate() ) {
                     Flash::error("Usuario o Contraseña es Invalida");
                     $this->log->insert('0');
-                } elseif( $this->auth->get('estatus') == 0 ) {
+                } elseif( $this->auth->get('estado') == 0 ) {
                     Auth::destroy_identity();
                     Session::delete('id');
                     Session::delete('nivel');
                     Session::delete('estructura');
                     Flash::info('Su cuenta esta inactiva');
                     Router::redirect('/');
-                } elseif( $this->auth->get('estatus') == 2 ) {
+                } elseif( $this->auth->get('estado') == 2 ) {
                     Flash::info('Debe cambiar su contraseña');
                     Input::delete();
                     Router::redirect('cambio/');
@@ -48,7 +48,7 @@ class IndexController extends AppController
     public function dashboard() {
         $usuario = Load::model('usuarios');
         $this->usuario = $usuario->getDatos();
-        // if( $this->auth->get('estatus') == 3 ) {
+        // if( $this->auth->get('estado') == 3 ) {
         //     Router::redirect('bienvenida/');
         // }
     }

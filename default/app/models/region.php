@@ -9,18 +9,18 @@ class region extends ActiveRecord {
     }
 
 	public function listar() {
-		return $this->find('estatus != 2');
+		return $this->find('estado != 2');
 	}
 
     public function nuevo($nombre) {
         $this->nombre = $nombre;
-        $this->estatus = '1';
+        $this->estado = '1';
         return ($this->create())?$this->id:False;
     }
 
     public function estado($id, $estado=NULL) {
         $rs = $this->find_first($id);
-        $rs->estatus = (isset($estado))?$estado:!$rs->estatus;
+        $rs->estado = (isset($estado))?$estado:!$rs->estado;
         return $rs->update();
     }
 
