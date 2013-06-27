@@ -5,7 +5,6 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Credencial</th>
                 <th>Nombre</th>
                 <th>Equipo</th>
@@ -21,13 +20,9 @@
             </tr>
             <?php
                 else:
-                    $i=1;
                     foreach ($lista as $item):
-                        //$link = 'estructura/'.($nivel+1).'/'.$item->id;
-                        //$ahref = Html::link($link, $item->nombre);
             ?>
             <tr>
-                <td><?php echo $i; ?></td>
                 <td><?php echo $item->credencial; ?></td>
                 <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
                 <td></td>
@@ -40,7 +35,7 @@
                 <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
                 <td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>
             </tr>
-            <?php   $i++;
+            <?php
                     endforeach;
                 endif;
             ?>
@@ -125,7 +120,6 @@
 </div>
 <?php echo Tag::js('form'); ?>
 <script type="text/javascript">
-    var cantidad_jovenes = <?php echo $cantidad; ?>;
     $('.alert').fadeOut();
 
     function spinnerRegistro() {
@@ -155,7 +149,6 @@
                 if (data.status == "valid") {
                     $('#Msj').sucessMsj(data.message);
                     var joven = '<tr>';
-                    joven += '<td>'+(cantidad_jovenes+=1)+'</td>';
                     joven += '<td>'+credencial+'</td>';
                     joven += '<td>'+primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido+'</td>';
                     joven += '<td></td>';
