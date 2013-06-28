@@ -1,14 +1,16 @@
 <?php
 
 /**
-* 
+*
 */
 class ActividadesController extends AppController
 {
-	
+
 	public function index($param=null) {
 
+        $this->id = 1;
         $hoy = $_SERVER['REQUEST_TIME'];
+
         $ano_actual = date('Y', $hoy);
         $this->mes_actual = date('n', $hoy);
         $sabados = 6;
@@ -40,7 +42,8 @@ class ActividadesController extends AppController
 
 	}
 
-	public function nueva() {
+	public function nueva($unidad, $mes=null, $ano=null) {
+        $this->unidad = $unidad;
 
 	}
 }

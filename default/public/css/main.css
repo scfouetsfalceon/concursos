@@ -60,6 +60,15 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     text-align: center !important;
 }
 
+.table-actividades {
+    margin: 0 auto 0;
+    font-size: 13px;
+    width: 90%;
+}
+.th-fecha {
+    width: 75px;
+}
+
 /* Area para pruebas de espacio */
 .rojo {
     background-color: red;
