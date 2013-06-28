@@ -12,7 +12,7 @@
         </thead>
         <tbody>
         	<?php if(!count($lista)): ?>
-        	<tr>
+        	<tr id="vacio">
                 <td colspan="5" class="text-center">No posee datos</td>
             </tr>
             <?php
@@ -44,6 +44,31 @@
 </div>
 <?php if($nivel != 4): ?>
 <?php echo Tag::js('form'); ?>
+<!-- Modal -->
+<form class="form-horizontal" id="nevo">
+<div id="ModalInsertar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Nuevo</h3>
+    </div>
+    <div class="modal-body">
+            <div class="alert" id="alertPopup"></div>
+            <div class="control-group">
+                <label class="control-label">Nombre:</label>
+                <div class="controls">
+                    <?php echo Form::text('nombre', 'class="span2 req"'); ?>
+                </div>
+            </div>
+
+    </div>
+    <div class="modal-footer">
+        <i class="icon-spinner icon-spin icon-2x" id="espere"></i>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <input type="submit" class="btn btn-primary" value="Registrar">
+    </div>
+</div>
+</form>
 <?php View::partial('estructura/modal_'.$nivel); ?>
 <script type="text/javascript">
     $('a.btn-danger').on('click', function(e) {

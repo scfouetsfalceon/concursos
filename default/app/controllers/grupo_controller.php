@@ -8,7 +8,7 @@ class GrupoController extends AppController
 
     public function nueva() {
         if (Input::post('registrar')) {
-            $nombre = mysql_real_escape_string(Input::post('nombre'));
+            $nombre = Input::post('nombre');
             $region = Filter::get(Input::post('distrito_id'), 'int');
             $id = Load::model('grupos')->nuevo($nombre, $region);
             if ( $id ) Flash::valid($id);
@@ -21,7 +21,7 @@ class GrupoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('grupos')->borrar($id);
         if ( $id ) Flash::valid("Grupo borrada exitosamente");
     }
@@ -32,7 +32,7 @@ class GrupoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('grupos')->activar($id);
         if ( $id ) Flash::valid("Grupo activada exitosamente");
     }
@@ -43,7 +43,7 @@ class GrupoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('grupos')->desactivar($id);
         if ( $id ) Flash::valid("Grupo desactivada exitosamente");
     }

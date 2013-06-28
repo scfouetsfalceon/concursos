@@ -8,7 +8,7 @@ class DistritoController extends AppController
 
     public function nueva() {
         if (Input::post('registrar')) {
-            $nombre = mysql_real_escape_string(Input::post('nombre'));
+            $nombre = Input::post('nombre');
             $region = Filter::get(Input::post('region_id'), 'int');
             $id = Load::model('distrito')->nuevo($nombre, $region);
             if ( $id ) Flash::valid($id);
@@ -21,7 +21,7 @@ class DistritoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('distrito')->borrar($id);
         if ( $id ) Flash::valid("Distrito borrada exitosamente");
     }
@@ -32,7 +32,7 @@ class DistritoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('distrito')->activar($id);
         if ( $id ) Flash::valid("Distrito activada exitosamente");
     }
@@ -43,7 +43,7 @@ class DistritoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('distrito')->desactivar($id);
         if ( $id ) Flash::valid("Distrito desactivada exitosamente");
     }

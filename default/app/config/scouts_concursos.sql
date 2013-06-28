@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(39) NOT NULL,
   `accion` int(1) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
+  `usuario_id` int(11) NULL,
   `creado_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

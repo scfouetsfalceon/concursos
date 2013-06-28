@@ -8,7 +8,7 @@ class RegionController extends AppController
 
     public function nueva() {
         if (Input::post('registrar')) {
-            $nombre = mysql_real_escape_string(Input::post('nombre'));
+            $nombre = Input::post('nombre');
             $id = Load::model('region')->nuevo($nombre);
             if ( $id ) Flash::valid($id);
         }
@@ -20,7 +20,7 @@ class RegionController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('region')->borrar($id);
         if ( $id ) Flash::valid("Región borrada exitosamente");
     }
@@ -31,7 +31,7 @@ class RegionController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('region')->activar($id);
         if ( $id ) Flash::valid("Región activada exitosamente");
     }
@@ -42,7 +42,7 @@ class RegionController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = mysql_real_escape_string(Input::post('nombre'));
+        $nombre = Input::post('nombre');
         $id = Load::model('region')->desactivar($id);
         if ( $id ) Flash::valid("Región desactivada exitosamente");
     }

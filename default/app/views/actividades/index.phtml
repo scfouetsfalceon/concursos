@@ -1,0 +1,30 @@
+    <?php View::content(); ?>
+    <div class="span12">
+        <div class="row">
+        <?php $i=1; foreach ($objeto as $mes => $dias): ?>
+            <div class="span4 cajas">
+                <h5><?php echo ($mes_actual >= $i)?$mes . ' <small><a href="#">(Actividades)</a></small>':$mes . ' <small>(Aún no Disponible)</small>'; ?></h5>
+                <div class="cajitas">
+                    <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Actividad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($dias as $dia): ?>
+                                <tr>
+                                    <td><?php echo $dia; ?></td>
+                                    <td>Visita al Cerro Santa Ana de Coro</td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        <?php if ( ($i%3)==0 ){ ?>
+        </div>
+        <div class="row">
+        <?php } $i++;  ?>
+    <?php endforeach; ?>
