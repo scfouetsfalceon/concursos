@@ -30,14 +30,17 @@ use `scouts_concursos`;
 CREATE TABLE IF NOT EXISTS `actividades` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `lugar` varchar(45) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `lugar` varchar(50) NOT NULL,
   `duracion` int(2) NOT NULL,
-  `tipo` varchar(45) NOT NULL,
-  `pcp` int(1) NOT NULL COMMENT 'Conceptos Programaticos',
-  `ba` int(1) NOT NULL COMMENT 'Bono de  Asistencia',
-  `bgi` int(1) NOT NULL COMMENT 'Bono por independencia',
+  `tipo` int(1) UNSIGNED NOT NULL COMMENT 'Tipo de Actividades CVAL(1), CAC(2)',
+  `bcp` int(1) UNSIGNED NOT NULL COMMENT 'Conceptos Programaticos',
+  `ba` int(1) UNSIGNED NOT NULL COMMENT 'Bono de  Asistencia',
+  `bgi` int(1) UNSIGNED NOT NULL COMMENT 'Bono por independencia',
+  `creditos` int(2) UNSIGNED NOT NULL COMMENT 'Bono por independencia',
   `ramas_id` int(11) UNSIGNED NOT NULL,
+  `creado_at` datetime UNSIGNED NOT NULL,
+  `modificado_in` datetime UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_actividades_ramas1_idx` (`ramas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

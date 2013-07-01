@@ -80,7 +80,7 @@ class ActividadesController extends AppController
             }
             if($resultado) Flash::success('Actividades registradas exitosamente!!!');
         }
-        Router::redirect(Utils::getBack());
+        Router::redirect('actividades/unidad/');
     }
 }
 
