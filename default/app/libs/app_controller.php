@@ -21,6 +21,7 @@ class AppController extends Controller {
 
 	final protected function initialize()
 	{
+        $this->hoy = $_SERVER['REQUEST_TIME'];
 		$this->log=Load::model('log');
         if ( !Auth::is_valid() ) {
             if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {

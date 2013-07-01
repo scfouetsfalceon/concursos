@@ -80,7 +80,7 @@ class Flash {
 	 */
 	public static function valid($msg)
 	{
-		return self::show('valid',$msg);
+		return self::show('success',$msg);
 	}
 
 	/**
@@ -104,6 +104,6 @@ class Flash {
 	 */
 	public static function success($msg)
 	{
-		return self::show('valid',$msg);
+		return self::show('success',$msg);
 	}
 }

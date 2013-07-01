@@ -291,6 +291,7 @@ class Registro extends Form {
 
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
 
+        $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"number\" value=\"$value\" $attrs/>";
     }
 
@@ -309,6 +310,7 @@ class Registro extends Form {
 
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
 
+        $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"tel\" value=\"$value\" data-type=\"local\" $attrs/>";
     }
 
@@ -327,6 +329,7 @@ class Registro extends Form {
 
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
 
+        $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"tel\" value=\"$value\" data-type=\"celular\" $attrs/>";
     }
 
@@ -345,6 +348,7 @@ class Registro extends Form {
 
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
 
+        $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"email\" value=\"$value\" $attrs/>";
     }
 
@@ -371,6 +375,7 @@ class Registro extends Form {
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
         $value = ($value) ? strftime("%d/%m/%Y", strtotime($value)) : "";
 
+        $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"date\" value=\"$value\" $attrs/>";
     }
 
@@ -587,6 +592,107 @@ class Registro extends Form {
 
         extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
+    }
+
+
+    //////////// CONCURSOS //////////////////////
+
+    /**
+     * Helpers para crear un campo select para la tipo de concursos
+     * @param String $field
+     * @param String/Nulll Optional $attrs
+     * @param String/Nulll Optional $value
+     * @return String
+     */
+    public static function selectTipo($field, $attrs = NULL, $value = NULL) {
+        $data = Array('1'=>'CVAL', '2'=>'CAC');
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
+
+        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        return parent::select($field, $data, $attrs, $value);
+    }
+
+    /**
+     * Helpers para crear un campo select para la tipo de concursos
+     * @param String $field
+     * @param String/Nulll Optional $attrs
+     * @param String/Nulll Optional $value
+     * @return String
+     */
+    public static function selectNones($field, $attrs = NULL, $value = NULL) {
+        $data = Array('1'=>'1', '2'=>'2', '3'=>'3', '5'=>'5');
+
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
+
+        // Obtiene name, id y value (solo para autoload) para el campo y los carga en el scope
+        extract(self::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
+
+        $options = '';
+        foreach ($data as $k => $v) {
+            $k = htmlspecialchars($k, ENT_COMPAT, APP_CHARSET);
+            $options .= "<option value=\"$k\"";
+            // Si es array $value para select multiple se seleccionan todos
+            if (is_array($value)) {
+                if (in_array($k, $value)) {
+                    $options .= ' selected="selected"';
+                }
+            } else {
+                if ($k == $value) {
+                    $options .= ' selected="selected"';
+                }
+            }
+            $options .= '>' . htmlspecialchars($v, ENT_COMPAT, APP_CHARSET) . '</option>';
+        }
+
+        $id = self::_getIdClean($id);
+        return "<select id=\"$id\" name=\"$name\" $attrs>$options</select>";
+    }
+
+
+    /**
+     * Helpers para crear un campo select para la tipo de concursos
+     * @param String $field
+     * @param String/Nulll Optional $attrs
+     * @param String/Nulll Optional $value
+     * @return String
+     */
+    public static function selectPares($field, $attrs = NULL, $value = NULL) {
+        $data = Array('2'=>'2', '4'=>'4', '6'=>'6', '8'=>'8');
+
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
+
+        // Obtiene name, id y value (solo para autoload) para el campo y los carga en el scope
+        extract(self::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
+
+        $options = '';
+        foreach ($data as $k => $v) {
+            $k = htmlspecialchars($k, ENT_COMPAT, APP_CHARSET);
+            $options .= "<option value=\"$k\"";
+            // Si es array $value para select multiple se seleccionan todos
+            if (is_array($value)) {
+                if (in_array($k, $value)) {
+                    $options .= ' selected="selected"';
+                }
+            } else {
+                if ($k == $value) {
+                    $options .= ' selected="selected"';
+                }
+            }
+            $options .= '>' . htmlspecialchars($v, ENT_COMPAT, APP_CHARSET) . '</option>';
+        }
+
+        $id = self::_getIdClean($id);
+        return "<select id=\"$id\" name=\"$name\" $attrs>$options</select>";
+    }
+
+    protected static function _getIdClean($id){
+        return strtr($id, array(']'=>'', '['=>'_'));
     }
 
 }
