@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `bgi` int(1) UNSIGNED NOT NULL COMMENT 'Bono por independencia',
   `creditos` int(2) UNSIGNED NOT NULL COMMENT 'Bono por independencia',
   `ramas_id` int(11) UNSIGNED NOT NULL,
-  `creado_at` datetime UNSIGNED NOT NULL,
-  `modificado_in` datetime UNSIGNED NOT NULL,
+  `creado_at` datetime NOT NULL,
+  `modificado_in` datetime  NULL,
   PRIMARY KEY (`id`),
   KEY `fk_actividades_ramas1_idx` (`ramas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

@@ -13,7 +13,7 @@
                 region_id: '<?php $p = Router::get("parameters"); echo $p[1]; ?>'
             },
             function (d) {
-                if (d.status=='valid') {
+                if (d.status=='success') {
                     $('#Msj').sucessMsj("Distrito creado exitosamente");
                     $('#vacio').remove();
                     var fila = '<tr>';

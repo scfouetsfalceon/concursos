@@ -7,6 +7,24 @@ class grupos extends ActiveRecord {
 		return $this->find('distrito_id = '.$distrito.' AND estado != 2');
     }
 
+    public function listarConActividades($distrito) {
+        $sql = "SELECT 
+        `grupos`.`id`,
+        `grupos`.`nombre`, 
+        sum(`actividades`.`cval`) AS cval,
+        sum(`actividades`.`cac`) AS cac
+
+        FROM `grupos`
+
+        LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
+        LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
+
+        WHERE `grupos`.`distrito_id` = '$distrito' AND `grupos`.`estado` != 2
+
+        GROUP BY `grupos`.`id`";
+        return $this->find_all_by_sql($sql);
+    }
+
     public function nuevo($nombre, $distrito) {
         $this->nombre = $nombre;
         $this->distrito_id = $distrito;

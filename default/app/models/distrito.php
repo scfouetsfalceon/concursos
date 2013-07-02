@@ -7,6 +7,25 @@ class distrito extends ActiveRecord {
 		return $this->find('region_id = '.$region.' AND estado != 2');
     }
 
+    public function listarConActividades($region) {
+        $sql = "SELECT 
+        `distrito`.`id`,
+        `distrito`.`nombre`, 
+        sum(`actividades`.`cval`) AS cval,
+        sum(`actividades`.`cac`) AS cac
+
+        FROM `distrito`
+
+        LEFT JOIN `grupos` ON `distrito`.`id` = `grupos`.`distrito_id`
+        LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
+        LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
+
+        WHERE `distrito`.`region_id` = '$region' AND `distrito`.`estado` != 2
+
+        GROUP BY `distrito`.`id`";
+        return $this->find_all_by_sql($sql);
+    }
+
     public function nuevo($nombre, $region) {
         $this->nombre = $nombre;
         $this->region_id = $region;

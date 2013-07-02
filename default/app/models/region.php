@@ -12,6 +12,26 @@ class region extends ActiveRecord {
 		return $this->find('estado != 2');
 	}
 
+    public function listarConActividades() {
+        $sql = "SELECT 
+        `region`.`id`,
+        `region`.`nombre`, 
+        sum(`actividades`.`cval`) AS cval,
+        sum(`actividades`.`cac`) AS cac
+
+        FROM `region`
+
+        LEFT JOIN `distrito` ON `region`.`id` = `distrito`.`region_id`
+        LEFT JOIN `grupos` ON `distrito`.`id` = `grupos`.`distrito_id`
+        LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
+        LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
+
+        WHERE `region`.`estado` != 2
+
+        GROUP BY `region`.`id`";
+        return $this->find_all_by_sql($sql);
+    }
+
     public function nuevo($nombre) {
         $this->nombre = $nombre;
         $this->estado = '1';

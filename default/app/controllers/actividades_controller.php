@@ -11,13 +11,42 @@ class ActividadesController extends AppController
 
 
 
-	public function index($param1=null, $param2=null) {
+	public function index($param1=null, $param2=null, $param3=null) {
+        $ano_actual = date('Y', $this->hoy);
+        $nivel = (isset($param1) && Session::get('nivel') < $param1)?$param1:Session::get('nivel');
+        $estructura = ( (Session::get('nivel') == $nivel) && (Session::get('estructura') != $param2) )?Session::get('estructura'):$param2;
+        $ano = ($ano_actual < $param3)?$ano_actual:$param3;
+        if ($nivel == 5) {
+            Router::redirect('actividades/unidad/'.$estructura);
+        } else {
+            $this->nivel = $nivel;
+            switch ($nivel) {
+                case 1: // Nacional
+                    echo "<h3>Regiones</h3>";
+                    $this->lista = Load::model('region')->listarConActividades();
+                    break;
+                case 2: // Regional
+                    echo "<h3>Distritos</h3>";
+                    $this->lista = Load::model('distrito')->listarConActividades($estructura);
+                    break;
+                case 3: // Distrital
+                    echo "<h3>Grupos</h3>";
+                    $this->lista = Load::model('grupos')->listarConActividades($estructura );
+                    break;
+                case 4: // Grupal
+                    echo "<h3>Unidades</h3>";
+                    $this->lista = Load::model('ramas')->listarConActividades($estructura);
+                    break;
+            }
+
+
+        }
 
     }
 
     public function unidad($param1=null, $param2=null) {
 
-        $this->id = (Session::get('nivel') == 5)?Session::get('nivel'):1;
+        $this->id = (Session::get('nivel') == 5)?Session::get('estructura'):$param1;
 
         $ano_actual = date('Y', $this->hoy);
         $this->mes_actual = date('n', $this->hoy);
@@ -33,13 +62,25 @@ class ActividadesController extends AppController
         $meses = $this->meses;
 
         $this->objeto = new StdClass();
+        $fechas = Load::model('actividades');
 
+        $hay = False;
         for($dia = $fecha_inicio; $dia <= $fecha_fin; $dia += $this->segundos_dias){
             if(date("d", $dia) == "01") {
-                $this->objeto->$meses[date('n',$dia)-1] = array();
+                $act = $fechas->listar($this->id, $ano, date('m',$dia));
+                if( count($act) ) {
+                    $this->objeto->$meses[date('n',$dia)-1] = $act;    
+                    $hay = True;
+                } else {
+                    $this->objeto->$meses[date('n',$dia)-1] = array();
+                    $hay = False;
+                }
             }
-            if (date("w", $dia) == $this->sabados) {
-                array_push($this->objeto->$meses[date('n',$dia)-1], date("d/m/Y",$dia));
+            if ( (date("w", $dia) == $this->sabados) && !$hay ) {
+                $data = new StdClass();
+                $data->fecha = date("d/m/Y",$dia);
+                $data->nombre = 'Disponible';
+                array_push($this->objeto->$meses[date('n',$dia)-1], $data);
             }
         }
 
@@ -80,7 +121,7 @@ class ActividadesController extends AppController
             }
             if($resultado) Flash::success('Actividades registradas exitosamente!!!');
         }
-        Router::redirect('actividades/unidad/');
+        Router::redirect('actividades/unidad/'.$rama);
     }
 }
 
