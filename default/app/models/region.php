@@ -26,7 +26,7 @@ class region extends ActiveRecord {
         LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
         LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
 
-        WHERE `region`.`estado` != 2
+        WHERE `region`.`estado` == 1
 
         GROUP BY `region`.`id`";
         return $this->find_all_by_sql($sql);

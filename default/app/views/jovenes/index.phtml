@@ -97,16 +97,7 @@
                 <label class="control-label">Segundo Apellido:</label>
                 <div class="controls">
 
-                    <?php echo Form::text('segundo_apellido', 'class="span2"'); ?>
-
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">Rama:</label>
-                <div class="controls">
-
-                    <?php echo Form::dbSelect('ramas_id', 'nombre', array('ramas', 'getRamas', '1'), '-- Seleccione --', 'class="span2"'); ?>
+                    <?php echo Form::text('segundo_apellido', 'class="span2"'). Form::dbSelect('ramas_id', null, $rama); ?>
 
                 </div>
             </div>
@@ -146,7 +137,7 @@
             },
             function(data) {
                 spinnerRegistro();
-                if (data.status == "valid") {
+                if (data.status == "success") {
                     $('#Msj').sucessMsj(data.message);
                     var joven = '<tr>';
                     joven += '<td>'+credencial+'</td>';

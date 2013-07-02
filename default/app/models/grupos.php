@@ -19,7 +19,7 @@ class grupos extends ActiveRecord {
         LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
         LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
 
-        WHERE `grupos`.`distrito_id` = '$distrito' AND `grupos`.`estado` != 2
+        WHERE `grupos`.`distrito_id` = '$distrito' AND `grupos`.`estado` == 1
 
         GROUP BY `grupos`.`id`";
         return $this->find_all_by_sql($sql);

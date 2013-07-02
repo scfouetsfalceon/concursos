@@ -3,6 +3,13 @@
 class Usuarios extends ActiveRecord {
 	protected $logger = True;
 
+	public function listar($nivel, $estructura) {
+		$columns = 'columns: `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `email`, `estado`';
+		$conditions = "`nivel` >= '$nivel' AND `estructura` = '$estructura'";
+
+		return $this->find();
+	}
+
 	public function verificar_clave($clave_actual){
 		$usuario = $this->find_first(Auth::get('id'));
 		return ($usuario->clave == $clave_actual)?True:False;
