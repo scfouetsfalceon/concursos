@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `nombre` varchar(50) NOT NULL,
   `lugar` varchar(50) NOT NULL,
   `duracion` int(2) NOT NULL,
-  `tipo` int(1) UNSIGNED NOT NULL COMMENT 'Tipo de Actividades CVAL(1), CAC(2)',
+  `cval` int(1) UNSIGNED NOT NULL,
+  `cac` int(1) UNSIGNED NOT NULL,
   `bcp` int(1) UNSIGNED NOT NULL COMMENT 'Conceptos Programaticos',
   `ba` int(1) UNSIGNED NOT NULL COMMENT 'Bono de  Asistencia',
   `bgi` int(1) UNSIGNED NOT NULL COMMENT 'Bono por independencia',
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `ramas_id` int(11) UNSIGNED NOT NULL,
   `creado_at` datetime NOT NULL,
   `modificado_in` datetime  NULL,
+  `tipo` int(1) UNSIGNED NOT NULL COMMENT 'Tipo de Actividad',
   PRIMARY KEY (`id`),
   KEY `fk_actividades_ramas1_idx` (`ramas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
