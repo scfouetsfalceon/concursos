@@ -7,19 +7,21 @@ Sistema para reporte en línea de los Concursos Nacionales de Vida al Aire Libre
 * [Jaro Marval](jampgold@gmail.com) (Jefe del Proyecto, Desarrollador, Seudo-Diseñador)
 
 ## Caracteristicas
-* Importación desde un archivo de Registro GPO
+* Gráficas de estadísticas
 * Historicos de Actividades
-
+* Administración de Usuario por nivel
+* Reporte de Actividades
 
 ## Cosas listas
 * Logeo
 * Cambio de Clave
+* Actividades
+* Crear Estructuras (Regiones, Distritos, Grupos/Unidades)
 
 ## Cosas por hacer
 * Registrar chamos
 * Importar GPO
-* Crear Unidades
-* Reportar Acitvidades
-* Actividades
+* Reportar Actividades
 * Dashboard (Gráficas e Información)
 * Integrar con Adaba
+* Importación desde un archivo de Registro GPO
