@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `grupos` (
 
 CREATE TABLE IF NOT EXISTS `jovenes` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `credencial` int(10) NOT NULL,
+  `credencial` int(10) DEFAULT NULL,
   `primer_nombre` varchar(20) NOT NULL,
   `segundo_nombre` varchar(20) DEFAULT NULL,
   `primer_apellido` varchar(20) NOT NULL,

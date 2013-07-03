@@ -16,7 +16,7 @@
             $cantidad = count($lista);
             if(!$cantidad): ?>
             <tr>
-                <td colspan="7" class="text-center">No posee Jóvenes</td>
+                <td colspan="7" class="text-center" id="vacio">No posee Jóvenes</td>
             </tr>
             <?php
                 else:
@@ -97,7 +97,7 @@
                 <label class="control-label">Segundo Apellido:</label>
                 <div class="controls">
 
-                    <?php echo Form::text('segundo_apellido', 'class="span2"'). Form::dbSelect('ramas_id', null, $rama); ?>
+                    <?php echo Form::text('segundo_apellido', 'class="span2"'). Form::hidden('ramas_id', null, $rama); ?>
 
                 </div>
             </div>
@@ -139,6 +139,7 @@
                 spinnerRegistro();
                 if (data.status == "success") {
                     $('#Msj').sucessMsj(data.message);
+                    $('#vacio').remove();
                     var joven = '<tr>';
                     joven += '<td>'+credencial+'</td>';
                     joven += '<td>'+primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido+'</td>';

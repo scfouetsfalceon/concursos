@@ -7,10 +7,11 @@ class JovenesController extends AppController {
 	 */
 	public function index($rama=null) {
 		$this->lista = null;
-		if ( !isset($rama) ) { // Session::get('nivel') != 5 ) {
+		$this->rama = $rama;
+		if ( !isset($this->rama) ) { // Session::get('nivel') != 5 ) {
 			Router::redirect('estructura/');
 		} else {
-			$this->lista = Load::model('jovenes')->listar($rama);
+			$this->lista = Load::model('jovenes')->listar($this->rama);
 		}
 	}
 
