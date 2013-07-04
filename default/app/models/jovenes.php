@@ -22,9 +22,10 @@ class Jovenes extends ActiveRecord {
 	}
 
 	public function listar($rama){
-		$columns = 'columns: id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido';
+		$columns = 'columns: jovenes.id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, nombre';
+		$joins = 'join: INNER JOIN  `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id` INNER JOIN `tipo` ON `tipo`.`id` = `tipo_id`';
 		$condition = "conditions: ramas_id = $rama AND estado != 0";
-		return $this->find($condition, $columns);
+		return $this->find($condition, $columns, $joins);
 	}
 
 	private function cambiar_estado($id, $estado) {

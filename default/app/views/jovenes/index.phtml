@@ -1,4 +1,5 @@
 <div class="span10 offset1">
+    <h3>Unidad <?php $cantidad = count($lista); echo ($cantidad)?$lista[0]->nombre:''; ?></h3>
     <div class="alert" id="Msj"></div>
     <?php View::content(); ?>
     <a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
@@ -13,7 +14,7 @@
         </thead>
         <tbody>
             <?php
-            $cantidad = count($lista);
+            
             if(!$cantidad): ?>
             <tr>
                 <td colspan="7" class="text-center" id="vacio">No posee Jóvenes</td>

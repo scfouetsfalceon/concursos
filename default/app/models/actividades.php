@@ -9,14 +9,15 @@ class Actividades extends ActiveRecord
 
     public function nueva($rama, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
         $fecha = explode('/', $fecha);
-        $existe = $this->find_first("ramas_id = $rama AND fecha = '$fecha'");
+        $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+        $existe = $this->find_first("ramas_id = $rama AND fecha = '$ingles'");
         if ($existe) {
             $item = $existe;
         } else {
             $item = $this;
         }
         $item->ramas_id = $rama;
-        $item->fecha = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+        $item->fecha = $ingles;
         $item->nombre = $nombre;
         $item->lugar = $lugar;
         $item->cval = ($tipo==1)?'1':'0';

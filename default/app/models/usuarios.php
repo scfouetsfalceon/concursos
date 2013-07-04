@@ -4,10 +4,9 @@ class Usuarios extends ActiveRecord {
 	protected $logger = True;
 
 	public function listar($nivel, $estructura) {
-		$columns = 'columns: `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `email`, `estado`';
-		$conditions = "`nivel` >= '$nivel' AND `estructura` = '$estructura'";
-
-		return $this->find();
+		$columns = 'columns: primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, estado, nivel';
+		$conditions = "`nivel` >= '$nivel' AND `estructura_id` = '$estructura'";
+		return $this->find($columns, $conditions);
 	}
 
 	public function verificar_clave($clave_actual){

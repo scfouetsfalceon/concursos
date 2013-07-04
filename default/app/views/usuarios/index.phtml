@@ -1,0 +1,65 @@
+<div class="span10 offset1">
+    <h3>Usuarios</h3>
+    <?php View::content(); ?>
+    <a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="30%">Nombre</th>
+                <th>Correo Electrónico</th>
+                <th>Nivel</th>
+                <th colspan="3" class="text-center">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(!count($lista)): ?>
+            <tr id="vacio">
+                <td colspan="8" class="text-center">No posee datos</td>
+            </tr>
+            <?php else:
+                    foreach ($lista as $item): ?>
+            <tr>
+                <td>&nbsp;</td>
+                <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
+                <td><?php echo $item->email; ?></td>
+                <td class="text-center">
+                    <?php 
+                        switch ($item->nivel) {
+                            case 1:
+                                $nivel = 'Nacional';
+                                break;
+                            case 2:
+                                $nivel = 'Regional';
+                                break;
+                            case 3:
+                                $nivel = 'Distrital';
+                                break;
+                            case 4:
+                                $nivel = 'Grupo';
+                                break;
+                            case 5:
+                                $nivel = 'Unidad';
+                                break;
+                        }
+                        echo $nivel;
+                    ?>
+                </td>
+
+                <td class="text-center"><a href="#" class="btn<?php 
+                    echo ($item->estado)?' btn-warning"><i class="icon-frown"></i> Inactivar':' btn-primary"><i class="icon-smile"></i> Activar'; ?></a></td>
+
+                <td class="text-center">
+                    <a href="#" class="btn"><i class="icon-edit"></i> Editar<?php echo $item->id; ?></a>
+                </td>
+                <td class="text-center">
+                    <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar<?php echo $item->id; ?></a>
+                </td>
+            </tr>
+            <?php
+                    endforeach;
+                endif;
+            ?>
+        </tbody>
+    </table>
+</div>
