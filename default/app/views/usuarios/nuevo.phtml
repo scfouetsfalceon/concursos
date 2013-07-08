@@ -1,0 +1,182 @@
+<div class="span8 offset2">
+    <h3> Nuevo Usuarios</h3>
+    <?php View::content(); ?>
+    <form class="form-horizontal" method="post">
+            <div class="control-group">
+            <label class="control-label">Cédula:</label>
+            <div class="controls">
+
+                <?php echo Registro::cmbNac('adulto.nac', 'class="span1"'),' ',Registro::number('adulto.cedula', 'class="span2"'); ?>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Credencial:</label>
+            <div class="controls">
+
+                <?php echo Registro::number('adulto.credencial', 'class="span2"'); ?>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Primer Nombre:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.primer_nombre', 'class="span2 req"'); ?>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Segundo Nombre:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.segundo_nombre', 'class="span2"'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Primer Apellido:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.primer_apellido', 'class="span2 req"'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Segundo Apellido:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.segundo_apellido', 'class="span2"'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Correo Electrónico:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.email', 'class="span2"'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Clave:</label>
+            <div class="controls">
+
+                <?php echo Form::text('adulto.clave', 'class="span2"'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Región:</label>
+            <div class="controls">
+
+                <?php echo Form::dbSelect('adulto.region_id', 'nombre'); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Distrito:</label>
+            <div class="controls">
+
+                <?php echo Form::select('adulto.distrito_id', array('Vacío')); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Grupo:</label>
+            <div class="controls">
+
+                <?php echo Form::select('adulto.grupos_id', array('Vacío')); ?>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Unidad:</label>
+            <div class="controls">
+
+                <?php echo Form::select('adulto.ramas_id', array('Vacío')); ?>
+
+            </div>
+        </div>
+
+        <button class="btn btn-primary" id="btnRegistrar">Registrar</button>
+    </form>
+</div>
+<?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+    $('#adulto_region_id').on('change',function(e) {
+        var id = $(this).val();
+        $("#adulto_distrito_id").html('<option>Vacío</option>');
+        $("#adulto_grupos_id").html('<option>Vacío</option>');
+        $("#adulto_ramas_id").html('<option>Vacío</option>');
+        if ( id ) {
+            $.getJSON(
+                '<?php echo PUBLIC_PATH,"distrito/listar/"; ?>'+id+'/',
+                {
+                    type: 'json'
+                },
+                function(d){
+                    if(d.status == 'success'){
+                        var options = '<option value="0">No aplica</option>';
+                        $(d.lista).each( function(i, e) {
+                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                        });
+                        $("#adulto_distrito_id").html(options);
+                    }
+                }
+            );
+        }
+    });
+
+    $('#adulto_distrito_id').on('change',function(e) {
+        var id = $(this).val();
+        $("#adulto_grupos_id").html('<option>Vacío</option>');
+        $("#adulto_ramas_id").html('<option>Vacío</option>');
+        if ( id ) {
+            $.getJSON(
+                '<?php echo PUBLIC_PATH,"grupo/listar/"; ?>'+id+'/',
+                {
+                    type: 'json'
+                },
+                function(d){
+                    if(d.status == 'success'){
+                        var options = '<option value="0">No aplica</option>';
+                        $(d.lista).each( function(i, e) {
+                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                        });
+                        $("#adulto_grupos_id").html(options);
+                    }
+                }
+            );
+        }        
+    });
+
+    $('#adulto_grupos_id').on('change',function(e) {
+        var id = $(this).val();
+        if ( id ) {
+            $.getJSON(
+                '<?php echo PUBLIC_PATH,"ramas/listar/"; ?>'+id+'/',
+                {
+                    type: 'json'
+                },
+                function(d){
+                    if(d.status == 'success'){
+                        var options = '<option value="0">No aplica</option>';
+                        $(d.lista).each( function(i, e) {
+                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                        });
+                        $("#adulto_ramas_id").html(options);
+                    }
+                }
+            );
+        }
+    });
+</script>

@@ -4,7 +4,9 @@ class distrito extends ActiveRecord {
 	protected $logger =  True;
 
 	public function listar($region) {
-		return $this->find('region_id = '.$region.' AND estado != 2');
+        $columns = 'columns: id, nombre';
+        $conditions = 'region_id = '.$region.' AND estado != 2';
+		return $this->find($columns, $conditions);
     }
 
     public function listarConActividades($region) {

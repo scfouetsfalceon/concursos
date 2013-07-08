@@ -4,7 +4,9 @@ class grupos extends ActiveRecord {
 	protected $logger = True;
 
 	public function listar($distrito) {
-		return $this->find('distrito_id = '.$distrito.' AND estado != 2');
+        $columns = 'columns: id, nombre';
+        $conditions = 'distrito_id = '.$distrito.' AND estado != 2';
+        return $this->find($columns, $conditions);
     }
 
     public function listarConActividades($distrito) {

@@ -1,7 +1,7 @@
 <div class="span10 offset1">
     <h3>Usuarios</h3>
     <?php View::content(); ?>
-    <a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
+    <?php echo Html::link('usuarios/nuevo/', '<i class="icon-plus"></i> Nuevo Usuario', ' class="btn btn-success pull-right"'); ?>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -18,7 +18,7 @@
                 <td colspan="8" class="text-center">No posee datos</td>
             </tr>
             <?php else:
-                    foreach ($lista as $item): ?>
+                    foreach ($lista->items as $item): ?>
             <tr>
                 <td>&nbsp;</td>
                 <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
@@ -62,4 +62,5 @@
             ?>
         </tbody>
     </table>
+    <?php View::partial('paginate', null, array('objeto'=>$lista, 'destiny'=>'/usuarios/lista/')); ?>
 </div>

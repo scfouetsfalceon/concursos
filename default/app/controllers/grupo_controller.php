@@ -48,6 +48,22 @@ class GrupoController extends AppController
         if ( $id ) Flash::valid("Grupo desactivada exitosamente");
     }
 
+    public function listar($param1, $param2=NULL) {
+        if($param1 == 'json') {
+            $id = Filter::get($param2, 'int');
+        } else {
+            $id = Filter::get($param1, 'int');
+        }
+        $lista = Load::model('grupos')->listar($id);
+        if (count($lista) != 0) {
+            $salida = array('status'=>'success', 'lista'=>$lista);
+        } else {
+            $salida = array('status'=>'error');
+        }
+        
+        echo json_encode($salida);
+    }
+
 }
 
 ?>

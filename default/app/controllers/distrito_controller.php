@@ -48,6 +48,22 @@ class DistritoController extends AppController
         if ( $id ) Flash::valid("Distrito desactivada exitosamente");
     }
 
+    public function listar($param1, $param2=NULL) {
+        if($param1 == 'json') {
+            $id = Filter::get($param2, 'int');
+        } else {
+            $id = Filter::get($param1, 'int');
+        }
+        $lista = Load::model('distrito')->listar($id);
+        if (count($lista) != 0) {
+            $salida = array('status'=>'success', 'lista'=>$lista);
+        } else {
+            $salida = array('status'=>'error');
+        }
+        
+        echo json_encode($salida);
+    }
+
 }
 
 ?>

@@ -289,7 +289,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"number\" value=\"$value\" $attrs/>";
@@ -308,7 +308,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"tel\" value=\"$value\" data-type=\"local\" $attrs/>";
@@ -327,7 +327,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"tel\" value=\"$value\" data-type=\"celular\" $attrs/>";
@@ -346,7 +346,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $id = self::_getIdClean($id);
         return "<input id=\"$id\" name=\"$name\" type=\"email\" value=\"$value\" $attrs/>";
@@ -372,7 +372,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         $value = ($value) ? strftime("%d/%m/%Y", strtotime($value)) : "";
 
         $id = self::_getIdClean($id);
@@ -462,7 +462,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -478,7 +478,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -494,7 +494,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -510,7 +510,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -526,7 +526,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -542,7 +542,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -558,7 +558,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -573,7 +573,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -590,7 +590,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -610,7 +610,7 @@ class Registro extends Form {
             $attrs = Tag::getAttrs($attrs);
         }
 
-        extract(self::_getFieldData($field, $value), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
         return parent::select($field, $data, $attrs, $value);
     }
 
@@ -629,7 +629,7 @@ class Registro extends Form {
         }
 
         // Obtiene name, id y value (solo para autoload) para el campo y los carga en el scope
-        extract(self::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $options = '';
         foreach ($data as $k => $v) {
@@ -668,7 +668,7 @@ class Registro extends Form {
         }
 
         // Obtiene name, id y value (solo para autoload) para el campo y los carga en el scope
-        extract(self::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
         $options = '';
         foreach ($data as $k => $v) {
