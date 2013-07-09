@@ -50,10 +50,10 @@
                     echo ($item->estado)?' btn-warning"><i class="icon-frown"></i> Inactivar':' btn-primary"><i class="icon-smile"></i> Activar'; ?></a></td>
 
                 <td class="text-center">
-                    <a href="#" class="btn"><i class="icon-edit"></i> Editar<?php echo $item->id; ?></a>
+                    <?php echo Html::link('usuarios/editar/'.$item->id, '<i class="icon-edit"></i> Editar', 'class="btn"'); ?>
                 </td>
                 <td class="text-center">
-                    <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar<?php echo $item->id; ?></a>
+                    <a href="#" class="btn btn-danger" data-borrar="<?php echo $item->id; ?>"><i class="icon-trash"></i> Borrar</a>
                 </td>
             </tr>
             <?php

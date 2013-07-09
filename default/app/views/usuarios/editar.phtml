@@ -6,7 +6,7 @@
             <label class="control-label">Cédula:</label>
             <div class="controls">
 
-                <?php echo Registro::cmbNac('adulto.nac', 'class="span1"'),' ',Registro::number('adulto.cedula', 'class="span2"'); ?>
+                <?php echo Registro::cmbNac('adulto.nac', 'class="span1"'),' ',Registro::number('adulto.cedula', 'class="span2"'), Form::hidden('adulto.id'); ?>
 
             </div>
         </div>
@@ -66,7 +66,7 @@
             <label class="control-label">Clave:</label>
             <div class="controls">
 
-                <?php echo Form::text('adulto.clave', 'class="span2"'); ?>
+                <?php echo Form::text('adulto.reclave', 'class="span2"', ''); ?>
 
             </div>
         </div>
@@ -115,11 +115,7 @@
             <div class="controls">
 
                 <?php 
-                if( $nivel < 2 ):
-                    echo Form::select('adulto.distrito_id', array('Vacío'));
-                else:
-                    echo Form::dbSelect('adulto.distrito_id', 'nombre', array('distrito', 'listar', $estructura));
-                endif;
+                    echo Form::dbSelect('adulto.distrito_id', 'nombre', array('distrito', 'listar',  Session::get('region_id')));
                 ?>
 
             </div>
@@ -158,11 +154,7 @@
             <div class="controls">
 
                 <?php
-                if( $nivel < 3 ):
-                    echo Form::select('adulto.grupos_id', array('Vacío'));
-                else:
-                    echo Form::dbSelect('adulto.grupos_id', 'nombre', array('grupos', 'listar', $estructura));
-                endif;
+                    echo Form::dbSelect('adulto.grupos_id', 'nombre', array('grupos', 'listar', Session::get('distrito_id')));
                 ?>
 
             </div>
@@ -199,11 +191,7 @@
             <div class="controls">
 
                 <?php 
-                if( $nivel < 3 ):
-                    echo Form::select('adulto.ramas_id', array('Vacío')); 
-                else:
-                    echo Form::dbSelect('adulto.ramas_id', 'nombre', array('ramas', 'getRamas', $estructura));
-                endif;
+                    echo Form::dbSelect('adulto.ramas_id', 'nombre', array('ramas', 'getRamas',  Session::get('grupos_id')));
                 ?>
 
             </div>

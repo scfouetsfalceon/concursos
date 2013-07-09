@@ -24,6 +24,10 @@ class IndexController extends AppController
                     Session::delete('id');
                     Session::delete('nivel');
                     Session::delete('estructura');
+                    Session::delete('region_id');
+                    Session::delete('distrito_id');
+                    Session::delete('grupos_id');
+                    Session::delete('ramas_id');
                     Flash::info('Su cuenta esta inactiva');
                     Router::redirect('/');
                 } elseif( $this->auth->get('estado') == 2 ) {
@@ -34,6 +38,10 @@ class IndexController extends AppController
                     Session::set( 'id', $this->auth->get('id') );
                     Session::set( 'nivel', $this->auth->get('nivel'));
                     Session::set( 'estructura', $this->auth->get('estructura_id'));
+                    Session::set( 'region_id', $this->auth->get('region_id'));
+                    Session::set( 'distrito_id', $this->auth->get('distrito_id'));
+                    Session::set( 'grupos_id', $this->auth->get('grupos_id'));
+                    Session::set( 'ramas_id', $this->auth->get('ramas_id'));
                     Router::redirect('dashboard/');
                     $this->log->insert('1');
                 }
@@ -73,6 +81,10 @@ class IndexController extends AppController
                     Session::delete('id');
                     Session::delete('nivel');
                     Session::delete('estructura');
+                    Session::delete('region_id');
+                    Session::delete('distrito_id');
+                    Session::delete('grupos_id');
+                    Session::delete('ramas_id');
                     Flash::info('Clave cambiada exitosamente!!!');
                     Router::redirect('/');
                 } else {

@@ -21,12 +21,12 @@ class Usuarios extends ActiveRecord {
 			} elseif ( $nivel == 3 ) { // Distrital
 				$conditions .= " OR  (`nivel` > '$nivel' AND `distrito_id` = '$estructura') ";
 			} elseif ( $nivel == 4 ) { // Grupo
-				$conditions .= " OR  (`nivel` > '$nivel' AND `grupo_id` = '$estructura') ";
+				$conditions .= " OR  (`nivel` > '$nivel' AND `grupos_id` = '$estructura') ";
 			} elseif ( $nivel == 5 ) { // Unidad
 				$conditions .= " OR  (`nivel` > '$nivel' AND `unidad_id` = '$estructura') ";
 			}
 		}
-		$columns = 'columns: primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, estado, nivel';
+		$columns = 'columns: id, cedula, nac, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, estado, nivel';
 		return $this->paginate($columns, $conditions, $page, $per_page);
 	}
 
@@ -72,13 +72,37 @@ class Usuarios extends ActiveRecord {
 			$this->estructura_id = $this->distrito_id;
 		} elseif ( $this->ramas_id == '0' ) {
 			$this->nivel = 4;
-			$this->estructura_id = $this->grupo_id;
+			$this->estructura_id = $this->grupos_id;
 		} else {
 			$this->nivel = 5;
 			$this->estructura_id = $this->ramas_id;
 		}
 		return $this->create();
 	}
+
+	public function actualizar($nueva) {
+		print_r($this);
+		$this->tipo = '0';
+		$this->clave = (empty($nueva))?$this->clave:md5($nueva);
+		if ( $this->region_id == '0' ) {
+			$this->nivel = 1;
+			$this->estructura_id = '0';
+		} elseif ( $this->distrito_id == '0' ) {
+			$this->nivel = 2;
+			$this->estructura_id = $this->region_id;
+		} elseif ( $this->grupos_id == '0' ) {
+			$this->nivel = 3;
+			$this->estructura_id = $this->distrito_id;
+		} elseif ( $this->ramas_id == '0' ) {
+			$this->nivel = 4;
+			$this->estructura_id = $this->grupos_id;
+		} else {
+			$this->nivel = 5;
+			$this->estructura_id = $this->ramas_id;
+		}
+		return $this->save();	
+	}
+
 }
 
 ?>
