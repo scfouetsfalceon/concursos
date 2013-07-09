@@ -1,11 +1,11 @@
 <?php
 
 /**
-* 
+*
 */
 class UsuariosController extends AppController
 {
-    
+
     public function index($pag='pag', $page=1) {
         $nivel = Session::get('nivel');
         $estructura = Session::get('estructura');
@@ -14,6 +14,8 @@ class UsuariosController extends AppController
     }
 
     public function nuevo() {
+        $this->nivel = Session::get('nivel');
+
         if (Input::hasPost('adulto')) {
             Load::model('usuarios');
             $usuario = new Usuarios(Input::post('adulto'));

@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <?php if( $nivel == 1 ): ?>
+        <?php if( $nivel <= 1 ): ?>
         <div class="control-group">
             <label class="control-label">Región:</label>
             <div class="controls">
@@ -107,7 +107,7 @@
         </script>
         <?php endif; ?>
 
-        <?php if( $nivel == 2 ): ?>
+        <?php if( $nivel <= 2 ): ?>
         <div class="control-group">
             <label class="control-label">Distrito:</label>
             <div class="controls">
@@ -137,7 +137,7 @@
                         }
                     }
                 );
-            }        
+            }
         });
         </script>
         <script type="text/javascript">
@@ -164,7 +164,7 @@
         </script>
         <?php endif; ?>
 
-        <?php if( $nivel == 2 ): ?>
+        <?php if( $nivel <= 3 ): ?>
         <div class="control-group">
             <label class="control-label">Grupo:</label>
             <div class="controls">
@@ -175,6 +175,7 @@
         </div>
         <?php endif; ?>
 
+        <?php if( $nivel <= 4 ): ?>
         <div class="control-group">
             <label class="control-label">Unidad:</label>
             <div class="controls">
@@ -183,6 +184,7 @@
 
             </div>
         </div>
+        <?php endif; ?>
 
         <button class="btn btn-primary" id="btnRegistrar">Registrar</button>
     </form>
