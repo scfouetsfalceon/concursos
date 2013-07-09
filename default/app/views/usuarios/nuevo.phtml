@@ -71,6 +71,7 @@
             </div>
         </div>
 
+        <?php if( $nivel == 1 ): ?>
         <div class="control-group">
             <label class="control-label">Región:</label>
             <div class="controls">
@@ -79,7 +80,34 @@
 
             </div>
         </div>
+        <script type="text/javascript">
+            $('#adulto_region_id').on('change',function(e) {
+                var id = $(this).val();
+                $("#adulto_distrito_id").html('<option>Vacío</option>');
+                $("#adulto_grupos_id").html('<option>Vacío</option>');
+                $("#adulto_ramas_id").html('<option>Vacío</option>');
+                if ( id ) {
+                    $.getJSON(
+                        '<?php echo PUBLIC_PATH,"distrito/listar/"; ?>'+id+'/',
+                        {
+                            type: 'json'
+                        },
+                        function(d){
+                            if(d.status == 'success'){
+                                var options = '<option value="0">No aplica</option>';
+                                $(d.lista).each( function(i, e) {
+                                    options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                                });
+                                $("#adulto_distrito_id").html(options);
+                            }
+                        }
+                    );
+                }
+            });
+        </script>
+        <?php endif; ?>
 
+        <?php if( $nivel == 2 ): ?>
         <div class="control-group">
             <label class="control-label">Distrito:</label>
             <div class="controls">
@@ -88,7 +116,55 @@
 
             </div>
         </div>
+        <script type="text/javascript">
+        $('#adulto_distrito_id').on('change',function(e) {
+            var id = $(this).val();
+            $("#adulto_grupos_id").html('<option>Vacío</option>');
+            $("#adulto_ramas_id").html('<option>Vacío</option>');
+            if ( id ) {
+                $.getJSON(
+                    '<?php echo PUBLIC_PATH,"grupo/listar/"; ?>'+id+'/',
+                    {
+                        type: 'json'
+                    },
+                    function(d){
+                        if(d.status == 'success'){
+                            var options = '<option value="0">No aplica</option>';
+                            $(d.lista).each( function(i, e) {
+                                options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                            });
+                            $("#adulto_grupos_id").html(options);
+                        }
+                    }
+                );
+            }        
+        });
+        </script>
+        <script type="text/javascript">
+            $('#adulto_grupos_id').on('change',function(e) {
+                var id = $(this).val();
+                if ( id ) {
+                    $.getJSON(
+                        '<?php echo PUBLIC_PATH,"ramas/listar/"; ?>'+id+'/',
+                        {
+                            type: 'json'
+                        },
+                        function(d){
+                            if(d.status == 'success'){
+                                var options = '<option value="0">No aplica</option>';
+                                $(d.lista).each( function(i, e) {
+                                    options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                                });
+                                $("#adulto_ramas_id").html(options);
+                            }
+                        }
+                    );
+                }
+            });
+        </script>
+        <?php endif; ?>
 
+        <?php if( $nivel == 2 ): ?>
         <div class="control-group">
             <label class="control-label">Grupo:</label>
             <div class="controls">
@@ -97,6 +173,7 @@
 
             </div>
         </div>
+        <?php endif; ?>
 
         <div class="control-group">
             <label class="control-label">Unidad:</label>
@@ -111,72 +188,3 @@
     </form>
 </div>
 <?php echo Tag::js('form'); ?>
-<script type="text/javascript">
-    $('#adulto_region_id').on('change',function(e) {
-        var id = $(this).val();
-        $("#adulto_distrito_id").html('<option>Vacío</option>');
-        $("#adulto_grupos_id").html('<option>Vacío</option>');
-        $("#adulto_ramas_id").html('<option>Vacío</option>');
-        if ( id ) {
-            $.getJSON(
-                '<?php echo PUBLIC_PATH,"distrito/listar/"; ?>'+id+'/',
-                {
-                    type: 'json'
-                },
-                function(d){
-                    if(d.status == 'success'){
-                        var options = '<option value="0">No aplica</option>';
-                        $(d.lista).each( function(i, e) {
-                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                        });
-                        $("#adulto_distrito_id").html(options);
-                    }
-                }
-            );
-        }
-    });
-
-    $('#adulto_distrito_id').on('change',function(e) {
-        var id = $(this).val();
-        $("#adulto_grupos_id").html('<option>Vacío</option>');
-        $("#adulto_ramas_id").html('<option>Vacío</option>');
-        if ( id ) {
-            $.getJSON(
-                '<?php echo PUBLIC_PATH,"grupo/listar/"; ?>'+id+'/',
-                {
-                    type: 'json'
-                },
-                function(d){
-                    if(d.status == 'success'){
-                        var options = '<option value="0">No aplica</option>';
-                        $(d.lista).each( function(i, e) {
-                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                        });
-                        $("#adulto_grupos_id").html(options);
-                    }
-                }
-            );
-        }        
-    });
-
-    $('#adulto_grupos_id').on('change',function(e) {
-        var id = $(this).val();
-        if ( id ) {
-            $.getJSON(
-                '<?php echo PUBLIC_PATH,"ramas/listar/"; ?>'+id+'/',
-                {
-                    type: 'json'
-                },
-                function(d){
-                    if(d.status == 'success'){
-                        var options = '<option value="0">No aplica</option>';
-                        $(d.lista).each( function(i, e) {
-                            options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                        });
-                        $("#adulto_ramas_id").html(options);
-                    }
-                }
-            );
-        }
-    });
-</script>
