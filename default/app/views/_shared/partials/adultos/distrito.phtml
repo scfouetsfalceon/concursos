@@ -1,0 +1,42 @@
+        <?php if( $nivel <= 2 ): ?>
+        <div class="control-group">
+            <label class="control-label">Distrito:</label>
+            <div class="controls">
+
+                <?php 
+                if( $nivel < 2 && empty($region) ):
+                    echo Form::select('adulto.distrito_id', array('Vacío'));
+                else:
+                    echo Form::dbSelect('adulto.distrito_id', 'nombre', array('distrito', 'listar', $region));
+                endif;
+                ?>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+        $('#adulto_distrito_id').on('change',function(e) {
+            var id = $(this).val();
+            $("#adulto_grupos_id").html('<option>Vacío</option>');
+            $("#adulto_ramas_id").html('<option>Vacío</option>');
+            if ( id ) {
+                $.getJSON(
+                    '<?php echo PUBLIC_PATH,"grupo/listar/"; ?>'+id+'/',
+                    {
+                        type: 'json'
+                    },
+                    function(d){
+                        if(d.status == 'success'){
+                            var options = '<option value="0">No aplica</option>';
+                            $(d.lista).each( function(i, e) {
+                                options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                            });
+                            $("#adulto_grupos_id").html(options);
+                        }
+                    }
+                );
+            }
+        });
+        </script>
+        <?php else: ?>
+            <?php echo Form::hidden('adulto.distrito_id', null, $distrito); ?>
+        <?php endif; ?>

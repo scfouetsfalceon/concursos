@@ -1,0 +1,37 @@
+        <?php if( $nivel <= 1 ): ?>
+        <div class="control-group">
+            <label class="control-label">Región:</label>
+            <div class="controls">
+
+                <?php echo Form::dbSelect('adulto.region_id', 'nombre'); ?>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#adulto_region_id').on('change',function(e) {
+                var id = $(this).val();
+                $("#adulto_distrito_id").html('<option>Vacío</option>');
+                $("#adulto_grupos_id").html('<option>Vacío</option>');
+                $("#adulto_ramas_id").html('<option>Vacío</option>');
+                if ( id ) {
+                    $.getJSON(
+                        '<?php echo PUBLIC_PATH,"distrito/listar/"; ?>'+id+'/',
+                        {
+                            type: 'json'
+                        },
+                        function(d){
+                            if(d.status == 'success'){
+                                var options = '<option value="0">No aplica</option>';
+                                $(d.lista).each( function(i, e) {
+                                    options += '<option value="' + e.id + '">' + e.nombre + '</option>';
+                                });
+                                $("#adulto_distrito_id").html(options);
+                            }
+                        }
+                    );
+                }
+            });
+        </script>
+        <?php else: ?>
+            <?php echo Form::hidden('adulto.region_id', null, $region); ?>
+        <?php endif; ?>

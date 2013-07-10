@@ -66,137 +66,18 @@
             <label class="control-label">Clave:</label>
             <div class="controls">
 
-                <?php echo Form::text('adulto.reclave', 'class="span2"', ''); ?>
+                <?php echo Form::text('adulto.nueva_clave', 'class="span2"', ''), Form::hidden('adulto.clave'); ; ?>
 
             </div>
         </div>
 
-        <?php if( $nivel <= 1 ): ?>
-        <div class="control-group">
-            <label class="control-label">Región:</label>
-            <div class="controls">
+        <?php View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>$adulto->region_id, 'adulto'=>$adulto)); ?>
 
-                <?php echo Form::dbSelect('adulto.region_id', 'nombre'); ?>
+        <?php View::partial('adultos/distrito', null, array('nivel'=>$nivel, 'region'=>$adulto->region_id, 'distrito'=>$adulto->distrito_id, 'adulto'=>$adulto)); ?>
 
-            </div>
-        </div>
-        <script type="text/javascript">
-            $('#adulto_region_id').on('change',function(e) {
-                var id = $(this).val();
-                $("#adulto_distrito_id").html('<option>Vacío</option>');
-                $("#adulto_grupos_id").html('<option>Vacío</option>');
-                $("#adulto_ramas_id").html('<option>Vacío</option>');
-                if ( id ) {
-                    $.getJSON(
-                        '<?php echo PUBLIC_PATH,"distrito/listar/"; ?>'+id+'/',
-                        {
-                            type: 'json'
-                        },
-                        function(d){
-                            if(d.status == 'success'){
-                                var options = '<option value="0">No aplica</option>';
-                                $(d.lista).each( function(i, e) {
-                                    options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                                });
-                                $("#adulto_distrito_id").html(options);
-                            }
-                        }
-                    );
-                }
-            });
-        </script>
-        <?php else: ?>
-            <?php echo Form::hidden('adulto.region_id', null, Session::get('region_id')); ?>
-        <?php endif; ?>
+        <?php View::partial('adultos/grupos', null, array('nivel'=>$nivel, 'distrito'=>$adulto->distrito_id, 'grupo'=>$adulto->grupos_id, 'adulto'=>$adulto)); ?>
 
-        <?php if( $nivel <= 2 ): ?>
-        <div class="control-group">
-            <label class="control-label">Distrito:</label>
-            <div class="controls">
-
-                <?php 
-                    echo Form::dbSelect('adulto.distrito_id', 'nombre', array('distrito', 'listar',  Session::get('region_id')));
-                ?>
-
-            </div>
-        </div>
-        <script type="text/javascript">
-        $('#adulto_distrito_id').on('change',function(e) {
-            var id = $(this).val();
-            $("#adulto_grupos_id").html('<option>Vacío</option>');
-            $("#adulto_ramas_id").html('<option>Vacío</option>');
-            if ( id ) {
-                $.getJSON(
-                    '<?php echo PUBLIC_PATH,"grupo/listar/"; ?>'+id+'/',
-                    {
-                        type: 'json'
-                    },
-                    function(d){
-                        if(d.status == 'success'){
-                            var options = '<option value="0">No aplica</option>';
-                            $(d.lista).each( function(i, e) {
-                                options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                            });
-                            $("#adulto_grupos_id").html(options);
-                        }
-                    }
-                );
-            }
-        });
-        </script>
-        <?php else: ?>
-            <?php echo Form::hidden('adulto.distrito_id', null, Session::get('distrito_id')); ?>
-        <?php endif; ?>
-
-        <?php if( $nivel <= 3 ): ?>
-        <div class="control-group">
-            <label class="control-label">Grupo:</label>
-            <div class="controls">
-
-                <?php
-                    echo Form::dbSelect('adulto.grupos_id', 'nombre', array('grupos', 'listar', Session::get('distrito_id')));
-                ?>
-
-            </div>
-        </div>
-        <script type="text/javascript">
-            $('#adulto_grupos_id').on('change',function(e) {
-                var id = $(this).val();
-                if ( id ) {
-                    $.getJSON(
-                        '<?php echo PUBLIC_PATH,"ramas/listar/"; ?>'+id+'/',
-                        {
-                            type: 'json'
-                        },
-                        function(d){
-                            if(d.status == 'success'){
-                                var options = '<option value="0">No aplica</option>';
-                                $(d.lista).each( function(i, e) {
-                                    options += '<option value="' + e.id + '">' + e.nombre + '</option>';
-                                });
-                                $("#adulto_ramas_id").html(options);
-                            }
-                        }
-                    );
-                }
-            });
-        </script>
-        <?php else: ?>
-            <?php echo Form::hidden('adulto.grupos_id', null, Session::get('grupos_id')); ?>
-        <?php endif; ?>
-
-        <?php if( $nivel <= 4 ): ?>
-        <div class="control-group">
-            <label class="control-label">Unidad:</label>
-            <div class="controls">
-
-                <?php 
-                    echo Form::dbSelect('adulto.ramas_id', 'nombre', array('ramas', 'getRamas',  Session::get('grupos_id')));
-                ?>
-
-            </div>
-        </div>
-        <?php endif; ?>
+        <?php View::partial('adultos/ramas', null, array('nivel'=>$nivel, 'grupo'=>$adulto->grupos_id, 'adulto'=>$adulto)); ?>
 
         <button class="btn btn-primary" id="btnRegistrar">Registrar</button>
     </form>

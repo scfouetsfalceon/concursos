@@ -26,6 +26,7 @@ class Usuarios extends ActiveRecord {
 				$conditions .= " OR  (`nivel` > '$nivel' AND `unidad_id` = '$estructura') ";
 			}
 		}
+		$conditions .= " AND estado != 3";
 		$columns = 'columns: id, cedula, nac, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, estado, nivel';
 		return $this->paginate($columns, $conditions, $page, $per_page);
 	}
@@ -40,14 +41,14 @@ class Usuarios extends ActiveRecord {
 		$usuario->clave = $clave_nueva;
 		$usuario->estado = $estado;
 		return ($usuario->update())?True:False;
-	}
-
+	
+}
 	public function temporal_clave() {
 		return $this->cambio_clave($clave_nueva, 2);
 	}
 
-	public function cambiar_estado() {
-		$usuario = $this->find_first(Auth::get('id'));
+	public function cambiar_estado($id, $estado) {
+		$usuario = $this->find_first($id);
 		$usuario->estado = $estado;
 		return ($usuario->update())?True:False;
 	}
@@ -61,16 +62,16 @@ class Usuarios extends ActiveRecord {
 		$this->tipo = '0';
 		$this->estado = 1;
 		$this->clave = md5($this->clave);
-		if ( $this->region_id == '0' ) {
+		if ( empty($this->region_id) ) {
 			$this->nivel = 1;
 			$this->estructura_id = '0';
-		} elseif ( $this->distrito_id == '0' ) {
+		} elseif ( $this->distrito_id == '0' || empty($this->distrito_id) ) {
 			$this->nivel = 2;
 			$this->estructura_id = $this->region_id;
-		} elseif ( $this->grupos_id == '0' ) {
+		} elseif ( $this->grupos_id == '0' || empty($this->grupos_id) ) {
 			$this->nivel = 3;
 			$this->estructura_id = $this->distrito_id;
-		} elseif ( $this->ramas_id == '0' ) {
+		} elseif ( $this->ramas_id == '0' || empty($this->ramas_id) ) {
 			$this->nivel = 4;
 			$this->estructura_id = $this->grupos_id;
 		} else {
@@ -80,27 +81,45 @@ class Usuarios extends ActiveRecord {
 		return $this->create();
 	}
 
-	public function actualizar($nueva) {
-		print_r($this);
-		$this->tipo = '0';
-		$this->clave = (empty($nueva))?$this->clave:md5($nueva);
-		if ( $this->region_id == '0' ) {
-			$this->nivel = 1;
-			$this->estructura_id = '0';
-		} elseif ( $this->distrito_id == '0' ) {
-			$this->nivel = 2;
-			$this->estructura_id = $this->region_id;
-		} elseif ( $this->grupos_id == '0' ) {
-			$this->nivel = 3;
-			$this->estructura_id = $this->distrito_id;
-		} elseif ( $this->ramas_id == '0' ) {
-			$this->nivel = 4;
-			$this->estructura_id = $this->grupos_id;
-		} else {
-			$this->nivel = 5;
-			$this->estructura_id = $this->ramas_id;
+	public function actualizar($datos) {
+		// print_r($this);
+
+		$existe = $this->find_first($datos['id']);
+
+		$existe->primer_nombre = $datos['primer_nombre'];
+		$existe->segundo_nombre = $datos['segundo_nombre'];
+		$existe->primer_apellido = $datos['primer_apellido'];
+		$existe->segundo_apellido = $datos['segundo_apellido'];
+		$existe->email = $datos['email'];
+
+		if ( !empty($datos['clave']) ) {
+			$existe->clave = md5($datos['clave']);
 		}
-		return $this->save();	
+		if ( empty($datos['region_id']) ) {
+			$existe->nivel = 1;
+			$existe->estructura_id = '0';
+		} elseif ( empty($datos['distrito_id']) ) {
+			$existe->nivel = 2;
+			$existe->estructura_id = $datos['region_id'];
+		} elseif ( empty($datos['grupos_id']) ) {
+			$existe->nivel = 3;
+			$existe->estructura_id = $datos['distrito_id'];
+		} elseif ( empty($datos['ramas_id']) ) {
+			$existe->nivel = 4;
+			$existe->estructura_id = $datos['grupos_id'];
+		} else {
+			$existe->nivel = 5;
+			$existe->estructura_id = $datos['ramas_id'];
+		}
+
+		$existe->tipo = '0';
+		$existe->estado = 1;
+		$existe->region_id = $datos['region_id'];
+		$existe->distrito_id = $datos['distrito_id'];
+		$existe->grupos_id = $datos['grupos_id'];
+		$existe->ramas_id = $datos['ramas_id'];
+
+		return $existe->update();
 	}
 
 }

@@ -1,5 +1,6 @@
 <div class="span10 offset1">
     <h3>Usuarios</h3>
+    <div class="alert" id="Msj"></div>
     <?php View::content(); ?>
     <?php echo Html::link('usuarios/nuevo/', '<i class="icon-plus"></i> Nuevo Usuario', ' class="btn btn-success pull-right"'); ?>
     <table class="table table-striped">
@@ -18,10 +19,12 @@
                 <td colspan="8" class="text-center">No posee datos</td>
             </tr>
             <?php else:
-                    foreach ($lista->items as $item): ?>
-            <tr>
+                    foreach ($lista->items as $item): 
+                        $nombre = trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido);
+            ?>
+            <tr> 
                 <td>&nbsp;</td>
-                <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
+                <td><?php echo $nombre; ?></td>
                 <td><?php echo $item->email; ?></td>
                 <td class="text-center">
                     <?php 
@@ -46,14 +49,16 @@
                     ?>
                 </td>
 
-                <td class="text-center"><a href="#" class="btn<?php 
+
+
+                <td class="text-center"><a href="#" data-borrar="<?php echo $item->id; ?>" class="btn<?php 
                     echo ($item->estado)?' btn-warning"><i class="icon-frown"></i> Inactivar':' btn-primary"><i class="icon-smile"></i> Activar'; ?></a></td>
 
                 <td class="text-center">
                     <?php echo Html::link('usuarios/editar/'.$item->id, '<i class="icon-edit"></i> Editar', 'class="btn"'); ?>
                 </td>
                 <td class="text-center">
-                    <a href="#" class="btn btn-danger" data-borrar="<?php echo $item->id; ?>"><i class="icon-trash"></i> Borrar</a>
+                    <a href="#" class="btn btn-danger" data-nombre="<?php echo $nombre; ?>" data-borrar="<?php echo $item->id; ?>"><i class="icon-trash"></i> Borrar</a>
                 </td>
             </tr>
             <?php
@@ -64,3 +69,106 @@
     </table>
     <?php View::partial('paginate', null, array('objeto'=>$lista, 'destiny'=>'/usuarios/lista/')); ?>
 </div>
+
+<div id="ModalBorrar" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Advertencia</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</a>
+        <a href="#" class="btn btn-danger" id="BtnBorrar" data-dismiss="modal" aria-hidden="true">Borrar</a>
+    </div>
+</div>
+<?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+$('.alert').fadeOut();
+var opened = false, objeto;
+$('a.btn-danger').on('click', function(e) {
+    e.preventDefault();
+    var id = $(this).attr('data-borrar');
+    if (opened) {
+        $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x" id="espere"></i> Por favor espere');
+        $.post(
+            '<?php echo PUBLIC_PATH; ?>usuarios/borrar/',
+            {
+                type: 'json',
+                id: id,
+            },
+            function(d) {
+                console.log(d.status);
+                if( d.status == 'success' ) {
+                    $('#Msj').sucessMsj(d.message);
+                    objeto.parent().parent().remove();
+                } else {
+                    $('#Msj').errorMsj(d.message);
+                }
+            },
+            'json'
+        ).error(function() {
+            $('#Msj').errorMsj('Ha ocurrido un error inesperado');
+        });
+        opened = false;
+    } else {
+        opened = true;
+        objeto = $(this);
+        var nombre = $(this).attr('data-nombre');
+        $('#BtnBorrar').attr('data-borrar', id);
+        $('#ModalBorrar p').html('Esta seguro de querer borrar a '+nombre+'???');
+        $('#ModalBorrar').modal('show');
+    }
+});
+
+$('a.btn-warning').on('click', function(e){
+    e.preventDefault();
+    var id = $(this).attr('data-borrar'), objeto = $(this);
+    $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x" id="espere"></i> Por favor espere');
+    $.post(
+        '<?php echo PUBLIC_PATH; ?>usuarios/desactivar/',
+        {
+            type: 'json',
+            id: id,
+        },
+        function(d) {
+            console.log(d.status);
+            if( d.status == 'success' ) {
+                $('#Msj').sucessMsj(d.message);
+                objeto.removeClass('btn-warning').addClass('btn-primary').html('<i class="icon-smile"></i>Activar');
+            } else {
+                $('#Msj').errorMsj(d.message);
+            }
+        },
+        'json'
+    ).error(function() {
+        $('#Msj').errorMsj('Ha ocurrido un error inesperado');
+    });
+});
+
+$('a.btn-primary').on('click', function(e){
+    e.preventDefault();
+    var id = $(this).attr('data-borrar'), objeto = $(this);
+    $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x" id="espere"></i> Por favor espere');
+    $.post(
+        '<?php echo PUBLIC_PATH; ?>usuarios/activar/',
+        {
+            type: 'json',
+            id: id,
+        },
+        function(d) {
+            console.log(d.status);
+            if( d.status == 'success' ) {
+                $('#Msj').sucessMsj(d.message);
+                objeto.removeClass('btn-primary').addClass('btn-warning').html('<i class="icon-frown"></i>Desactivar');
+            } else {
+                $('#Msj').errorMsj(d.message);
+            }
+        },
+        'json'
+    ).error(function() {
+        $('#Msj').errorMsj('Ha ocurrido un error inesperado');
+    });
+});
+</script>

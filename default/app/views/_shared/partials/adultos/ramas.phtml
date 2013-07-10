@@ -1,0 +1,16 @@
+        <?php if( $nivel <= 4 ): ?>
+        <div class="control-group">
+            <label class="control-label">Unidad:</label>
+            <div class="controls">
+
+                <?php 
+                if( $nivel < 4 && empty($grupo) ):
+                    echo Form::select('adulto.ramas_id', array('Vacío')); 
+                else:
+                    echo Form::dbSelect('adulto.ramas_id', 'nombre', array('ramas', 'getRamas', $grupo));
+                endif;
+                ?>
+
+            </div>
+        </div>
+        <?php endif; ?>

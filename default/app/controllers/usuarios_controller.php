@@ -10,7 +10,6 @@ class UsuariosController extends AppController
         $nivel = Session::get('nivel');
         $estructura = Session::get('estructura');
         $this->lista = Load::model('usuarios')->listar($nivel, $estructura, $page);
-        // print_r($this->lista);
     }
 
     public function nuevo() {
@@ -21,7 +20,7 @@ class UsuariosController extends AppController
             Load::model('usuarios');
             $usuario = new Usuarios(Input::post('adulto'));
             if ( $usuario->guardar() ) {
-                Flash::valid('Usuario creado existosamente!!!');
+                Flash::valid('Usuario creado exitosamente!!!');
                 Router::redirect('usuarios/');
             }
         }
@@ -30,15 +29,44 @@ class UsuariosController extends AppController
     public function editar($id) {
         $this->nivel = Session::get('nivel');
         $this->adulto = Load::model('usuarios')->find($id);
+        // print_r($this->adulto);
+        // print_r($_SESSION);
 
         if (Input::hasPost('adulto')) {
             Load::model('usuarios');
             $datos = Input::post('adulto');
-            $usuario = new Usuarios($datos);
-            if ( $usuario->actualizar($datos['reclave']) ) {
-                Flash::valid('Usuario actualizado existosamente!!!');
+            $usuario = new Usuarios();
+            if ( $usuario->actualizar($datos) ) {
+                Flash::valid('Usuario actualizado exitosamente!!!');
                 Router::redirect('usuarios/');
             }
+        }
+    }
+
+    public function borrar() {
+        if ( Input::hasPost('type') ) {
+            $id = Input::post('id');
+            if ( Load::model('usuarios')->cambiar_estado($id, 3) ) Flash::success('Usuario borrado exitosamente');
+        } else {
+            Flash::error('Problemas al intentar borrar');
+        }
+    }
+
+    public function desactivar() {
+        if ( Input::hasPost('type') ) {
+            $id = Input::post('id');
+            if ( Load::model('usuarios')->cambiar_estado($id, '0') ) Flash::success('Usuario desactivado exitosamente');
+        } else {
+            Flash::error('Problemas al intentar borrar');
+        }
+    }
+
+    public function activar() {
+        if ( Input::hasPost('type') ) {
+            $id = Input::post('id');
+            if ( Load::model('usuarios')->cambiar_estado($id, 1) ) Flash::success('Usuario activado exitosamente');
+        } else {
+            Flash::error('Problemas al intentar borrar');
         }
     }
 
