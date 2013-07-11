@@ -29,9 +29,9 @@ class UsuariosController extends AppController
     public function editar($id) {
         $this->nivel = Session::get('nivel');
         $this->adulto = Load::model('usuarios')->find($id);
-        // print_r($this->adulto);
-        // print_r($_SESSION);
 
+        // FIXME: Optimizar los parciales con la carga asincrono se puede hacer un sola función ya que comunicación 
+        // las formas de los datos son exactamente las mismas (JS), prioridad -99
         if (Input::hasPost('adulto')) {
             Load::model('usuarios');
             $datos = Input::post('adulto');

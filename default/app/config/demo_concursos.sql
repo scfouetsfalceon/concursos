@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `scouts_concursos`
 --
-CREATE DATABASE IF NOT EXISTS `scouts_concursos`;
-use `scouts_concursos`;
+CREATE DATABASE IF NOT EXISTS `demo_concursos`;
+use `demo_concursos`;
 -- --------------------------------------------------------
 
 --
@@ -194,10 +194,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `tipo` varchar(45) NOT NULL,
   `nivel` int(1) DEFAULT '5',
   `estructura_id` int(11) UNSIGNED NOT NULL,
-  `region_id` int(11) UNSIGNED DEFAULT NULL,
-  `distrito_id` int(11) UNSIGNED DEFAULT NULL,
-  `grupos_id` int(11) UNSIGNED DEFAULT NULL,
-  `ramas_id` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 

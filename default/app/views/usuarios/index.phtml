@@ -121,7 +121,7 @@ $('a.btn-danger').on('click', function(e) {
         $('#ModalBorrar').modal('show');
     }
 });
-
+// FIXME: Problemas con los botones de Activar y desactivar asincronos, no funciona pero la prioridad es -99
 $('a.btn-warning').on('click', function(e){
     e.preventDefault();
     var id = $(this).attr('data-borrar'), objeto = $(this);
