@@ -21,6 +21,11 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF}
     clear: both;
 }
 
+.botonera {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .cajas h5 {
     background-color: #FAFAFA;
     background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);

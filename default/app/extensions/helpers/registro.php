@@ -427,24 +427,15 @@ class Registro extends Form {
      * @param Boolean $year
      * @return String
      */
-    public static function calendario($field, $value = NULL,  $attrs = NULL) {
-        $campo = "<input type=\"text\" value=\"$value\" name=\"$field\" id=\"$field\" $attrs size=\"12\" />
+    public static function calendario($field, $attrs = NULL, $value = NULL) {
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
 
-        <script>
-	$(function() {
-                $( \"#$field\" ).datepicker({
-			showOn: \"button\",
-			buttonImage: \"" . PUBLIC_PATH .  "img/calendario.gif\",
-			buttonImageOnly: true,
-			changeMonth: true,
-		});
-                $.datepicker.setDefaults( $.datepicker.regional[ \"es\" ] );
-                $.datepicker.formatDate(\"dd/mm/yy\");
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
 
-	});
-	</script>";
-
-        return $campo;
+        $id = self::_getIdClean($id);
+        return "<input id=\"$id\" name=\"$name\" type=\"date\" value=\"$value\" $attrs/>";
     }
 
 

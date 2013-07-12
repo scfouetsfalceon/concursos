@@ -7,12 +7,17 @@ class Actividades extends ActiveRecord
 {
     protected $logger = True;
 
-    public function nueva($rama, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
+    public function nueva($rama, $id, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
+        print $fecha;
         $fecha = explode('/', $fecha);
         $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
-        $existe = $this->find_first("ramas_id = $rama AND fecha = '$ingles'");
-        if ($existe) {
-            $item = $existe;
+        if (!empty($id)){
+            $existe = $this->find_first($id);
+            if ($existe) {
+                $item = $existe;
+            } else {
+                $item = $this;
+            }
         } else {
             $item = $this;
         }
@@ -26,14 +31,14 @@ class Actividades extends ActiveRecord
         $item->bcp = $bcp;
         $item->ba = $ba;
         $item->bgi = $bgi;
-        $item->creditos = ($duracion*$bcp)+$ba+$bgi;
+        // $item->creditos = ($duracion*$bcp)+$ba+$bgi;
         return ($item->save())?True:False;
     }
 
     public function listar($unidad, $ano=null, $mes=null){
-        $columns = "columns: fecha, nombre";
-        $ano_actual = date('Y');
-        $mes_actual = date('m');
+        $columns = "columns: id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
+        $ano = (empty($ano))?date('Y'):$ano;
+        $mes = (empty($mes))?date('m'):$mes;
         $unidad = "conditions: ramas_id = $unidad";
         $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
         return $this->find($conditions, $columns);

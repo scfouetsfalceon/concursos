@@ -86,25 +86,53 @@ class ActividadesController extends AppController
 
 	}
 
-	public function nueva($unidad, $mes=null, $ano=null) {
+	public function mes($unidad, $mes=null, $ano=null) {
         $this->unidad = $unidad;
         $mes_actual = date('n', $this->hoy);
         $ano_actual = date('Y', $this->hoy);
         $this->mes = ( !isset($mes) || $mes_actual < $mes )? $mes_actual : $mes;
+        $this->mes = ($this->mes < 9)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
         $this->ano = ( !isset($ano) || $ano_actual < $ano)? $ano_actual : $ano;
 
-        $m = ($this->mes > 9)?'0'.$this->mes:$this->mes;
-        $primer_dia = '01-'.$m.'-'.$this->ano;
-        $fecha_inicio = strtotime($primer_dia);
+        $act = Load::model('actividades')->listar($this->unidad, $this->ano, $this->mes);
+        if( count($act) ) {
+            foreach ($act as $dia) {
+                $fecha = explode('-', $dia->fecha);
+                $dia->fecha = $fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+                $dia->creditos = ($dia->duracion*$dia->bcp)+$dia->ba+$dia->bgi;
+            }
+            $this->dias = $act;
+        } else {
+            // Primer día de cada mes 
+            $primer_dia = '01-'.$this->mes.'-'.$this->ano;
+            $fecha_inicio = strtotime($primer_dia);
 
-        $ultimo_mes = date('t', $fecha_inicio);
-        $ultimo_dia = $ultimo_mes.'-'.$m.'-'.$this->ano;
-        $fecha_fin = strtotime($ultimo_dia);
 
-        $this->dias = array();
-        for($dia = $fecha_inicio; $dia <= $fecha_fin; $dia += $this->segundos_dias){
-            if (date("w", $dia) == $this->sabados) {
-                $this->dias[] = date("d/m/Y",$dia);
+            // Obtenemos el útilmo día del mes
+            $ultimo_dia = date('t', $fecha_inicio).'-'.$this->mes.'-'.$this->ano;
+            $fecha_fin = strtotime($ultimo_dia);
+
+            $this->dias = array();
+            $objeto = new StdClass();
+            $objeto->id = null;
+            $objeto->fecha = null;
+            $objeto->nombre = null;
+            $objeto->lugar = null;
+            $objeto->duracion = null;
+            $objeto->cval = null;
+            $objeto->cac = null;
+            $objeto->bcp = null;
+            $objeto->ba = null;
+            $objeto->bgi = null;
+            $objeto->creditos = null;
+
+            $i=0;
+            for($dia = $fecha_inicio; $dia <= $fecha_fin; $dia += $this->segundos_dias){
+                if (date("w", $dia) == $this->sabados) {
+                    $this->dias[$i]= clone $objeto;
+                    $this->dias[$i]->fecha = date("d/m/Y",$dia);
+                    $i++;
+                }
             }
         }
 	}
@@ -116,7 +144,7 @@ class ActividadesController extends AppController
             $resultado = True;
             foreach ($actividades as $actividad) {
                 if ( !empty($actividad['actividad']) && !empty($actividad['duracion']) ){
-                    $resultado = $resultado && Load::model('actividades')->nueva($rama, $actividad['fecha'], $actividad['actividad'], $actividad['lugar'], $actividad['tipo'], $actividad['duracion'], $actividad['bcp'], $actividad['ba'], $actividad['bgi']);
+                    $resultado = $resultado && Load::model('actividades')->nueva($rama, $actividad['id'], $actividad['fecha'], $actividad['actividad'], $actividad['lugar'], $actividad['tipo'], $actividad['duracion'], $actividad['bcp'], $actividad['ba'], $actividad['bgi']);
                 }
             }
             if($resultado) Flash::success('Actividades registradas exitosamente!!!');

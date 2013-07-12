@@ -5,7 +5,7 @@
             <div class="span4 cajas">
                 <h5>
                     <?php echo ($mes_actual >= $i)?
-                    $mes . ' <small>' . Html::link('actividades/nueva/'.$id.'/'.$i,'(Actividades)') . '</small>':
+                    $mes . ' <small>' . Html::link('actividades/mes/'.$id.'/'.$i,'(Actividades)') . '</small>':
                     $mes . ' <small>(Aún no Disponible)</small>'; ?>
                 </h5>
                 <div class="cajitas">
@@ -19,7 +19,15 @@
                             <tbody>
                                 <?php foreach ($dias as $dia): ?>
                                 <tr>
-                                    <td><?php echo $dia->fecha; ?></td>
+                                    <td>
+                                        <?php 
+                                        if ($dia->fecha{4} == '-') {
+                                            $fecha = explode('-', $dia->fecha); echo $fecha[2],'/',$fecha[1],'/',$fecha[0];
+                                        } else {
+                                            echo $dia->fecha;
+                                        }
+                                        ?>
+                                    </td>
                                     <td><?php echo $dia->nombre; ?></td>
                                 </tr>
                                 <?php endforeach; ?>

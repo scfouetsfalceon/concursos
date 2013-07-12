@@ -178,6 +178,12 @@ $.fn.loadSelect = function() {
     $(this).append( new Option("Cargando...", "") );
 };
 
+jQuery.browser = {};
+jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+
 $(document).ready(function(){
 //  var f = new Date(), ano = f.getFullYear();
 //     $('input[type="date"]').datepicker({
@@ -191,4 +197,5 @@ $(document).ready(function(){
     $('input[type="number"]').numerico();
     $('input[type="tel"][data-type="local"]').telefono();
     $('input[type="tel"][data-type="celular"]').celular();
+    $('input[type="date"]').datepicker({language: 'es'});
 });

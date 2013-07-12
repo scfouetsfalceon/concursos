@@ -32,6 +32,30 @@ class region extends ActiveRecord {
         return $this->find_all_by_sql($sql);
     }
 
+    public function listarReporte($ano) {
+        $ano_actual= date('Y');
+        $ano = ($ano > $ano_actual)?$ano_actual:$ano;
+        $sql = "SELECT
+        `region`.`id`,
+        `region`.`nombre`,
+        sum(`creditos`) AS creditos
+
+        FROM `region`
+
+        LEFT JOIN `distrito` ON `region`.`id` = `distrito`.`region_id`
+        LEFT JOIN `grupos` ON `distrito`.`id` = `grupos`.`distrito_id`
+        LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
+        LEFT JOIN `jovenes` ON `ramas`.`id` = ` jovenes`.`ramas_id`
+        LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
+        LEFT JOIN `jovenes_actividades` ON `ramas`.`id` = `jovenes`.`ramas_id`
+
+
+        WHERE `region`.`estado` = 1
+
+        GROUP BY `region`.`id` ";
+        return $this->find_all_by_sql($sql);
+    }
+
     public function nuevo($nombre) {
         $this->nombre = $nombre;
         $this->estado = '1';

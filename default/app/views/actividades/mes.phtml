@@ -1,3 +1,4 @@
+
         <div class="span12 cajas">
             <h5>
                 <?php echo $meses[($mes-1)]; ?>
@@ -23,40 +24,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i=0; foreach ($dias as $dia): ?>
+                            <?php $i=0; foreach ($dias as $dia): $tipo = ($dia->cac == 1)?2:1;?>
 
                             <tr>
-                                <td><?php echo Form::text("actividad[$i].fecha", 'class="input-small"', $dia); ?></td>
-                                <td><?php echo Form::text("actividad[$i].actividad", 'class="span2"'); ?></td>
-                                <td><?php echo Form::text("actividad[$i].lugar", 'class="span2"'); ?></td>
+                                <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Registro::calendario("actividad[$i].fecha", 'class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
+                                <td><?php echo Form::text("actividad[$i].actividad", 'class="span2"', $dia->nombre); ?></td>
+                                <td><?php echo Form::text("actividad[$i].lugar", 'class="span2"', $dia->lugar); ?></td>
                                 <td>
-                                    <?php echo Registro::selectTipo("actividad[$i].tipo", 'class="span1"'); ?>
+                                    <?php echo Registro::selectTipo("actividad[$i].tipo", 'class="span1"', $tipo); ?>
                                 </td>
-                                <td><?php echo Registro::number("actividad[$i].duracion", 'class="span1" maxlength="2" data-calculo="True" data-grupo="'.$i.'"'); ?></td>
+                                <td><?php echo Registro::number("actividad[$i].duracion", 'class="span1" maxlength="2" data-calculo="True" data-grupo="'.$i.'"', $dia->duracion); ?></td>
 
                                 <td>
-                                    <?php echo Registro::selectNones("actividad[$i].bcp", 'class="span1" data-calculo="True" data-grupo="'.$i.'"'); ?>
+                                    <?php echo Registro::selectNones("actividad[$i].bcp", 'class="span1" data-calculo="True" data-grupo="'.$i.'"', $dia->bcp); ?>
                                 </td>
                                 <td>
-                                    <?php echo Registro::selectPares("actividad[$i].ba", 'class="span1" data-calculo="True"'); ?>
+                                    <?php echo Registro::selectPares("actividad[$i].ba", 'class="span1" data-calculo="True"', $dia->ba); ?>
                                 </td>
                                 <td>
-                                    <?php echo Registro::selectNones("actividad[$i].bgi", 'class="span1" data-calculo="True"'); ?>
+                                    <?php echo Registro::selectNones("actividad[$i].bgi", 'class="span1" data-calculo="True"', $dia->bgi); ?>
                                 </td>
 
-                                <td><?php echo Registro::number("actividad[$i].creditos", 'class="span1" maxlength="2" readonly="readonly"'); ?></td>
+                                <td><?php echo Registro::number("actividad[$i].creditos", 'class="span1" maxlength="2" readonly="readonly"', $dia->creditos); ?></td>
                             </tr>
 
                             <?php $i++; endforeach; ?>
                         </tbody>
                     </table>
-                        <a href="javascript:history.back(-1);" class="btn btn-primary"><i class="icon-chevron-left"></i> Volver</a>
-                        <button type="submit" class="btn btn-success"><i class="icon-cogs"></i> Crear</button>
+                        <div class="botonera">
+                            <a href="javascript:history.back(-1);" class="btn btn-primary"><i class="icon-chevron-left"></i> Volver</a>
+                            <button type="submit" class="btn btn-success"><i class="icon-cogs"></i> Crear</button>
+                        </div>
                     </form>
             </div>
         </div>
-        <?php echo Tag::js('form'); ?>
+
+        <?php 
+        echo Tag::js('bootstrap-datepicker');
+        echo Tag::js('bootstrap-datepicker.es');
+        echo Tag::js('form');
+        Tag::css('datepicker');
+        ?>
         <script type="text/javascript">
+            console.log($.browser);
             function calcularCreditos() {
                 var data = $(this).attr('id').split('_'),
                 campos = '#'+data[0]+'_'+data[1]+'_';
