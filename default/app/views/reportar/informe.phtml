@@ -1,0 +1,48 @@
+<div class="span8 offset2">
+    <h3>Generar Informes Generales</h3>
+    <?php View::content(); ?>
+</div>
+<div class="span4 offset4">
+        <?php print Session::get('region_id'); View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
+
+        <?php $estructura = ($nivel < 2)?null:$estructura; View::partial('adultos/distrito', null, array('nivel'=>$nivel, 'region'=>$estructura, 'distrito'=>Session::get('distrito_id'))); ?>
+
+        <?php $estructura = ($nivel < 3)?null:$estructura; View::partial('adultos/grupos', null, array('nivel'=>$nivel, 'distrito'=>$estructura, 'grupo'=>Session::get('grupos_id'))); ?>
+
+        <button class="btn btn-primary" id="btnRegistrar">Generar</button>
+</div>
+<div class="clearfix"></div>
+<div class="span10 offset1">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th class="text-center">CVAL Oro</th>
+                <th class="text-center">CVAL Plata</th>
+                <th class="text-center">CVAL Bronce</th>
+
+                <th class="text-center">CAC Oro</th>
+                <th class="text-center">CAC Plata</th>
+                <th class="text-center">CAC Bronce</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($lista as $cantidad): ?>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Falcón</th>
+                <td class="text-center">2</td>
+                <td class="text-center">4</td>
+                <td class="text-center">4</td>
+
+                <td class="text-center">2</td>
+                <td class="text-center">4</td>
+                <td class="text-center">4</td>
+            </tr>
+            <?php endforeach; ?>
+        </thead>
+        </tbody>
+    </table>
+</div>
+<?php echo Tag::js('form'); ?>

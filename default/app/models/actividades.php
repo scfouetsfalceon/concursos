@@ -25,6 +25,7 @@ class Actividades extends ActiveRecord
         $item->fecha = $ingles;
         $item->nombre = $nombre;
         $item->lugar = $lugar;
+        $item->tipo = '0';
         $item->cval = ($tipo==1)?'1':'0';
         $item->cac = ($tipo==2)?'1':'0';
         $item->duracion = $duracion;
@@ -36,6 +37,7 @@ class Actividades extends ActiveRecord
     }
 
     public function listar($unidad, $ano=null, $mes=null){
+        $unidad = ActiveRecord::sql_sanizite($unidad);
         $columns = "columns: id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
         $ano = (empty($ano))?date('Y'):$ano;
         $mes = (empty($mes))?date('m'):$mes;

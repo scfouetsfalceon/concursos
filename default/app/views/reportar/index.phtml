@@ -5,15 +5,14 @@
             <tr>
                 <th></th>
                 <th width="50%">Nombre</th>
-                <th class="text-center">Créditos obtenidos de CVAL</th>
-                <th class="text-center">Créditos obtenidos de CAC</th>
-                <th class="text-center">Reporte Detallado</th>
+                <th class="text-center">Act. al Aire Libre</th>
+                <th class="text-center">Act. de Acción Comunitaria</th>
             </tr>
         </thead>
         <tbody>
             <?php if(!count($lista)): ?>
             <tr id="vacio">
-                <td colspan="5" class="text-center">No posee datos</td>
+                <td colspan="4" class="text-center">No posee datos</td>
             </tr>
             <?php
                 else:
@@ -26,7 +25,6 @@
                 <td width="50%"><?php echo  $ahref; ?></td>
                 <td class="text-center"><?php echo ($item->cval)?$item->cval:0; ?></td>
                 <td class="text-center"><?php echo ($item->cac)?$item->cac:0; ?></td>
-                <td class="text-center"><?php echo "<a href='' class='btn btn-success'>Ver</a>"; ?></td>
             </tr>
             <?php
                     endforeach;

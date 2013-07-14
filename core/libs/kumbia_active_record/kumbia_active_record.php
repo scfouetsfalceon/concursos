@@ -1380,7 +1380,7 @@ class KumbiaActiveRecord
 			if(in_array($f, $this->_with_default)) {
 				continue;
 			}
-			
+
             if (!isset($this->$f) || is_null($this->$f) || $this->$f == '') {
                 if (!$ex && $f == $this->primary_key[0]) {
                     continue;
@@ -1538,7 +1538,7 @@ class KumbiaActiveRecord
          */
 		// parche para que no tome encuenta el propio registro
 		// al validar campos unicos, ya que si lo toma en cuenta
-		// lanzará error de validacion porque ya existe un registro 
+		// lanzará error de validacion porque ya existe un registro
 		// con igual valor en el campo unico.
 		$and_condition = $ex ? " AND id != '$this->id'" : '';
         foreach($this->_validates['uniqueness_of'] as $f => $opt) {
@@ -1683,10 +1683,10 @@ class KumbiaActiveRecord
                     if (in_array($field, $this->_in)) {
                         unset($this->$field);
                     }
-                    
+
 					if(isset($this->$field) && $this->$field != '') {
 						$fields[] = ActiveRecord::sql_sanizite($field);
-                        
+
 						if(($this->_data_type[$field] == 'datetime' || $this->_data_type[$field] == 'date') && $config['type'] == 'mysql'){
 							$values[] = $this->db->add_quotes(date("Y-m-d G:i:s",strtotime($this->$field)));
 						} elseif ($this->_data_type[$field] == 'date' && $config['type'] == 'oracle') {
@@ -1695,12 +1695,12 @@ class KumbiaActiveRecord
 						} else {
 							$values[] = $this->db->add_quotes($this->$field);
 						}
-						
+
 					} elseif (!in_array($field, $this->_with_default)) {
 						$fields[] = ActiveRecord::sql_sanizite($field);
 						$values[] = 'NULL';
 					}
-					
+
                 } else {
                     /**
                      * Campos autonumericos en Oracle deben utilizar una sequencia auxiliar
@@ -1719,7 +1719,7 @@ class KumbiaActiveRecord
                     }
                 }
             }
-            
+
             $val = $this->db->insert($table, $values, $fields);
         }
         if (!isset($config['pdo']) && $config['type'] == 'oracle') {

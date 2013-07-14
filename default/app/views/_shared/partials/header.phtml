@@ -6,6 +6,7 @@
 			<li><?php echo Html::link('jovenes/', '<i class="icon-group"></i> Jovenes', 'title="Jóvenes Scouts"') ?></li>
 			<li><?php echo Html::link('actividades/', '<i class="icon-flag"></i> Actividades', 'title="Crear Actividades"') ?></li>
 			<li><?php echo Html::link('reportar/', '<i class="icon-calendar"></i> Reportar', 'title="Reportar Actividades"') ?></li>
+			<li><?php echo Html::link('reportar/informe', '<i class="icon-bar-chart"></i> Informe', 'title="Informe Actividades"') ?></li>
 			<!-- <li><?php echo Html::link('soporte/', '<i class="icon-wrench"></i> Soporte', 'title="Reportar Fallas y Solicitar Soporte"') ?></li> -->
 			<?php if ( Session::get('nivel') <= 4 ): ?>
 			<li><?php echo Html::link('usuarios/', '<i class="icon-male"></i> Usuarios', 'title="Usuario de la Aplicación"') ?></li>

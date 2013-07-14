@@ -682,6 +682,31 @@ class Registro extends Form {
         return "<select id=\"$id\" name=\"$name\" $attrs>$options</select>";
     }
 
+    /**
+     * Crea un campo checkbox
+     *
+     * @param string $field Nombre de campo
+     * @param string $checkValue Valor en el checkbox
+     * @param string|array $attrs Atributos de campo (opcional)
+     * @param string $checked Indica si se marca el campo (opcional)
+     * @return string
+     */
+    public static function check($field, $checkValue, $attrs = NULL, $checked = NULL) {
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
+
+        // Obtiene name y id para el campo y los carga en el scope
+        extract(self::_getFieldData($field, $checked === NULL), EXTR_OVERWRITE);
+
+        if ($checked || ($checked === NULL && $checkValue == $value)) {
+            $checked = 'checked="checked"';
+        }
+
+        $id = self::_getIdClean($id);
+        return "<input id=\"$id\" name=\"$name\" type=\"checkbox\" value=\"$checkValue\" $attrs $checked/>";
+    }
+
     protected static function _getIdClean($id){
         return strtr($id, array(']'=>'', '['=>'_'));
     }

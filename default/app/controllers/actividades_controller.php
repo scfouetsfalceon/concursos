@@ -69,7 +69,7 @@ class ActividadesController extends AppController
             if(date("d", $dia) == "01") {
                 $act = $fechas->listar($this->id, $ano, date('m',$dia));
                 if( count($act) ) {
-                    $this->objeto->$meses[date('n',$dia)-1] = $act;    
+                    $this->objeto->$meses[date('n',$dia)-1] = $act;
                     $hay = True;
                 } else {
                     $this->objeto->$meses[date('n',$dia)-1] = array();
@@ -103,7 +103,7 @@ class ActividadesController extends AppController
             }
             $this->dias = $act;
         } else {
-            // Primer día de cada mes 
+            // Primer día de cada mes
             $primer_dia = '01-'.$this->mes.'-'.$this->ano;
             $fecha_inicio = strtotime($primer_dia);
 
