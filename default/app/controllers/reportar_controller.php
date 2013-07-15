@@ -112,8 +112,9 @@ class ReportarController extends AppController {
     public function informe($param1=null, $param2=null) {
         $this->nivel = Session::get('nivel');
         $this->estructura = Session::get('estructura');
-
-        $this->lista = Load::model('jovenes_actividades')->jovenes($this->estructura, $param1, $param2);
+        if($this->nivel >= 5){
+            Router::toAction('informe_unidad/'.$this->nivel.'/'.$param1.'/'.$param2);
+        }
     }
 
     public function informe_unidad($unidad, $ano=null, $mes=null) {
@@ -139,6 +140,52 @@ class ReportarController extends AppController {
                 $this->jovenes[$item->id]->cval += $item->creditos;
             }
         }
+    }
+
+    public function consulta($region=null, $distrito=null, $grupo=null){
+        $mes=null; $ano=null;
+        $ano_actual = date('Y', $this->hoy);
+        $mes_actual = date('n', $this->hoy);
+        $ano = ( !empty($ano) || $ano_actual < $ano )?$ano_actual:$ano;
+        $mes = ( !empty($mes) || $mes_actual < $mes )?$mes_actual:$mes;
+
+        $model = Load::model('jovenes_actividades');
+
+        if(empty($region)) {
+            $creditos = $model->nacional($ano, $mes);
+        } elseif (empty($distrito)) {
+            $creditos = $model->region($region, $ano, $mes);
+        } elseif (empty($grupo)) {
+            $creditos = $model->distrito($distrito, $ano, $mes);
+        } else {
+            $creditos = $model->grupo($grupo, $ano, $mes);
+        }
+
+        if ( count($creditos) != 0 ) {
+            $this->jovenes = array();
+            foreach ($creditos as $item) {
+                if (!array_key_exists($item->id, $this->jovenes)) {
+                    $this->jovenes[$item->id] = new StdClass();
+                    $this->jovenes[$item->id]->campo = $item->campo;
+                    $this->jovenes[$item->id]->campo_nombre = $item->campo_nombre;
+                    $this->jovenes[$item->id]->credencial = $item->credencial;
+                    $this->jovenes[$item->id]->nombre = trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido);
+                    $this->jovenes[$item->id]->cval = 0;
+                    $this->jovenes[$item->id]->cac = 0;
+                }
+                if ($item->cac == 1) {
+                    $this->jovenes[$item->id]->cac += $item->creditos;
+                }
+                if ($item->cval == 1) {
+                    $this->jovenes[$item->id]->cval += $item->creditos;
+                }
+            }
+            $salida = array('status'=>'valid', 'jovenes'=>$this->jovenes);
+        } else {
+            $salida = array('status'=>'error');
+        }
+
+        echo json_encode($salida);
     }
 
 }

@@ -1,19 +1,21 @@
 <div class="span8 offset2">
     <h3>Generar Informes Generales</h3>
+    <h4 class="visible-print"></h4>
     <?php View::content(); ?>
 </div>
-<div class="span4 offset4">
+<div class="span4 offset4 hidden-print">
         <?php print Session::get('region_id'); View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
 
         <?php $estructura = ($nivel < 2)?null:$estructura; View::partial('adultos/distrito', null, array('nivel'=>$nivel, 'region'=>$estructura, 'distrito'=>Session::get('distrito_id'))); ?>
 
         <?php $estructura = ($nivel < 3)?null:$estructura; View::partial('adultos/grupos', null, array('nivel'=>$nivel, 'distrito'=>$estructura, 'grupo'=>Session::get('grupos_id'))); ?>
 
-        <button class="btn btn-primary" id="btnRegistrar">Generar</button>
+        <button class="btn btn-primary" id="btnGenerar">Generar</button>
+        <a href="#" onClick="print();" class="btn btn-success disabled" id="btnImprimir">Imprimir</a>
 </div>
 <div class="clearfix"></div>
 <div class="span10 offset1">
-    <table class="table table-stripped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th></th>
@@ -28,21 +30,89 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lista as $cantidad): ?>
             <tr>
-                <td>&nbsp;</td>
-                <td>Falcón</th>
-                <td class="text-center">2</td>
-                <td class="text-center">4</td>
-                <td class="text-center">4</td>
-
-                <td class="text-center">2</td>
-                <td class="text-center">4</td>
-                <td class="text-center">4</td>
+                <td colspan="8">&nbsp;</td>
             </tr>
-            <?php endforeach; ?>
         </thead>
         </tbody>
     </table>
 </div>
 <?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+    $('#btnGenerar').on('click', function(e){
+        e.preventDefault();
+        $('table>tbody').html('<tr><td colspan="8"d class="text-center"><i class="icon-spinner icon-spin"></i> Generando, por favor espere...</td></tr>');
+        var region = $('#adulto_region_id').val(),region_nombre = $('#adulto_region_id option:selected').text();
+        var distrito = $('#adulto_distrito_id').val(),distrito_nombre = $('#adulto_distrito_id option:selected').text();
+        var grupo = $('#adulto_grupos_id').val(),grupo_nombre = $('#adulto_grupos_id option:selected').text();
+        var url='',nombre='',str='';
+        var orden=0,cval_bronce=0, cval_plata=0, cval_oro=0;cac_bronce=0, cac_plata=0, cac_oro=0;
+        var titulo = 'Nacional';
+        if (region != undefined && region != 0) {
+            url += region+'/';
+            titulo = region_nombre;
+        }
+        if (distrito != undefined && distrito != 0 && distrito != 'Vacío') {
+            url += distrito+'/';
+            titulo = region_nombre+' > '+distrito_nombre;
+        }
+        if (grupo != undefined && grupo != 0 && grupo != 'Vacío') {
+            url += grupo+'/';
+            titulo = region_nombre+' > '+distrito_nombre+' > '+grupo_nombre;
+        }
+        $('h4').html(titulo);
+        $.post(
+            '<?php echo PUBLIC_PATH; ?>reportar/consulta/'+url,
+            {
+                type: 'json'
+            },
+            function(d){
+                if (d.status == 'valid') {
+                    $.each(d.jovenes, function(index, item) {
+                        if(orden==0){
+                            orden=item.campo;
+                            nombre = item.campo_nombre;
+                            console.log(nombre);
+                        }else if(orden!=0 && item.campo!=orden) {
+                            str='<tr><td>&nbsp;</td><td>'+nombre+'</td>';
+                            str+='<td class="text-center">'+cval_oro+'</td>';
+                            str+='<td class="text-center">'+cval_plata+'</td>';
+                            str+='<td class="text-center">'+cval_bronce+'</td>';
+                            str+='<td class="text-center">'+cac_oro+'</td>';
+                            str+='<td class="text-center">'+cac_plata+'</td>';
+                            str+='<td class="text-center">'+cac_bronce+'</td></tr>';
+                            $('table>tbody').html(str);
+                            nombre=item.campo_nombre, cval_bronce=0, cval_plata=0, cval_oro=0;cac_bronce=0, cac_plata=0, cac_oro=0;
+                        }
+                        if(item.cval>=135){
+                            cval_oro+=1;
+                        } else if(item.cval>=85){
+                            cval_plata+=1;
+                        } else if(item.cval>=40){
+                            cval_bronce+=1;
+                        }
+                        if(item.cac>=135){
+                            cac_oro+=1;
+                        } else if(item.cac>=85){
+                            cac_plata+=1;
+                        } else if(item.cac>=40){
+                            cac_bronce+=1;
+                        }
+                    });
+                    str='<tr><td>&nbsp;</td><td>'+nombre+'</td>';
+                    str+='<td class="text-center">'+cval_oro+'</td>';
+                    str+='<td class="text-center">'+cval_plata+'</td>';
+                    str+='<td class="text-center">'+cval_bronce+'</td>';
+                    str+='<td class="text-center">'+cac_oro+'</td>';
+                    str+='<td class="text-center">'+cac_plata+'</td>';
+                    str+='<td class="text-center">'+cac_bronce+'</td></tr>';
+                    $('table>tbody').html(str);
+                    $('#btnImprimir').removeClass('disabled');
+                } else {
+                    $('table>tbody').html('<tr><td colspan="8"d class="text-center">Informe Vacío</td></tr>');
+                }
+            },
+            'json'
+        );
+    });
+</script>
