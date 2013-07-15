@@ -56,7 +56,7 @@ class IndexController extends AppController
     public function dashboard() {
         $usuario = Load::model('usuarios');
         $this->usuario = $usuario->getDatos();
-        
+        Flash::info('Área aún en construcción y mejoras constantes, por favor disculpe las molestias');
         // if( $this->auth->get('estado') == 3 ) {
         //     Router::redirect('bienvenida/');
         // }
