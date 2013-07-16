@@ -197,5 +197,5 @@ $(document).ready(function(){
     $('input[type="number"]').numerico();
     $('input[type="tel"][data-type="local"]').telefono();
     $('input[type="tel"][data-type="celular"]').celular();
-    $('input[type="date"]').datepicker({language: 'es'});
+    $('.datepicker').datepicker({language: 'es'});
 });

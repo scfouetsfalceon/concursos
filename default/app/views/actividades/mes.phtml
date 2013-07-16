@@ -27,7 +27,7 @@
                             <?php $i=0; foreach ($dias as $dia): $tipo = ($dia->cac == 1)?2:1;?>
 
                             <tr>
-                                <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Registro::calendario("actividad[$i].fecha", 'class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
+                                <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Form::text("actividad[$i].fecha", 'class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
                                 <td><?php echo Form::text("actividad[$i].actividad", 'class="span2"', $dia->nombre); ?></td>
                                 <td><?php echo Form::text("actividad[$i].lugar", 'class="span2"', $dia->lugar); ?></td>
                                 <td>
@@ -45,7 +45,7 @@
                                     <?php echo Registro::selectNones("actividad[$i].bgi", 'class="span1" data-calculo="True"', $dia->bgi); ?>
                                 </td>
 
-                                <td><?php echo Registro::number("actividad[$i].creditos", 'class="span1" maxlength="2" readonly="readonly"', $dia->creditos); ?></td>
+                                <td><?php echo Registro::text("actividad[$i].creditos", 'class="span1" maxlength="2" readonly="readonly"', $dia->creditos); ?></td>
                             </tr>
 
                             <?php $i++; endforeach; ?>
@@ -66,7 +66,6 @@
         Tag::css('datepicker');
         ?>
         <script type="text/javascript">
-            console.log($.browser);
             function calcularCreditos() {
                 var data = $(this).attr('id').split('_'),
                 campos = '#'+data[0]+'_'+data[1]+'_';

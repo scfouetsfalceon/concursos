@@ -284,6 +284,25 @@ class Registro extends Form {
      * @param String $value
      * @return String
      */
+    public static function text($field, $attrs = NULL, $value = NULL ) {
+        if (is_array($attrs)) {
+            $attrs = Tag::getAttrs($attrs);
+        }
+
+        extract(parent::_getFieldData($field, $value === NULL), EXTR_OVERWRITE);
+
+        $id = self::_getIdClean($id);
+        return "<input id=\"$id\" name=\"$name\" type=\"text\" value=\"$value\" $attrs/>";
+    }
+
+    /**
+     * Campo numerico (html5)
+     *
+     * @param String $field
+     * @param String $attrs
+     * @param String $value
+     * @return String
+     */
     public static function number($field, $attrs = NULL, $value = NULL ) {
         if (is_array($attrs)) {
             $attrs = Tag::getAttrs($attrs);
