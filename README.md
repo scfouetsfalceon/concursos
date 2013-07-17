@@ -5,6 +5,7 @@ Sistema para reporte en línea de los Concursos Nacionales de Vida al Aire Libre
 
 ## Desarrollado por el Equipo de Icterus
 * [Jaro Marval](jampgold@gmail.com) (Jefe del Proyecto, Desarrollador, Seudo-Diseñador)
+* [Enrique Valerio](comisionado@scoutsfalcon.org) (Co-Autor de la idea, Tester y documentador)
 
 ## Caracteristicas
 * Gráficas de estadísticas
