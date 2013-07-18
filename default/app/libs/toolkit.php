@@ -367,13 +367,17 @@ class Toolkit {
      * @return string
      */
     public static function getHowLong($first_date, $last_date='') {
+        if ( empty($first_date) ) {
+            return "Esta es su primera visita.";
+        }
         $first = self::getTimestamp($first_date);
-        print $first;
         $last = ($last_date) ? self::getTimestamp($last_date) : self::getTimestamp(date("Y-m-d H:i:s"));
         $diff = ($last - $first)/60;
         //$diff = $diff + 50;
-        if($diff < 60) {
-            return "Hace $diff min.";
+        if($diff < 1) {
+            return "Hace menos de minuto";
+        } elseif($diff < 60) {
+            return "Hace ".round($diff)." min.";
         } else if(($diff/60) < 24) {
             $diff = round(($diff/60),0);
             if($diff > 1) {

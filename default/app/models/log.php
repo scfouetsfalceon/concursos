@@ -19,7 +19,8 @@ class Log extends ActiveRecord{
 	}
 
     public function ultimaVisita(){
-        return $this->find_first('usuario_id = '.Session::get('id'), 'columns: creado_at', 'order: id DESC')->fecha;
+        $sql = "SELECT creado_at FROM log WHERE usuario_id = ".Session::get('id')." ORDER BY id DESC LIMIT 1 OFFSET 1";
+        return $this->find_by_sql($sql)->creado_at;
     }
 
 }
