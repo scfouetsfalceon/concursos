@@ -19,6 +19,8 @@
   <?php
     Tag::css('login');
     echo Html::IncludeCss();
+    Html::headLink(PUBLIC_PATH.'img/favicon.ico' ,'rel="shortcut icon"');
+    echo Html::includeHeadLinks();
   ?>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
