@@ -70,12 +70,14 @@
                 var data = $(this).attr('id').split('_'),
                 campos = '#'+data[0]+'_'+data[1]+'_';
 
-                var duracion = parseInt($(campos+'duracion').val());
-                var bcp = parseInt($(campos+'bcp').val());
-                var ba = parseInt($(campos+'ba').val());
-                var bgi = parseInt($(campos+'bgi').val());
+                var duracion = +$(campos+'duracion').val();
+                var bcp =  +$(campos+'bcp').val();
+                var ba = +$(campos+'ba').val();
+                var bgi = +$(campos+'bgi').val();
 
-                var creditos = ( duracion * bcp ) + ba + bgi ;
+                factor = duracion*bcp;
+                factor = (factor==0)?1:factor;
+                var creditos = factor + ba + bgi ;
                 $(campos+'creditos').val( (isNaN(creditos))?'':creditos);
             }
 

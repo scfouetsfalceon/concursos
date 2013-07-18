@@ -8,6 +8,7 @@ class Actividades extends ActiveRecord
     protected $logger = True;
 
     public function nueva($rama, $id, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
+        print 'ID ->'.$id;
         $fecha = explode('/', $fecha);
         $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
         if (!empty($id)){
@@ -27,7 +28,7 @@ class Actividades extends ActiveRecord
         $item->tipo = '0';
         $item->cval = ($tipo==1)?'1':'0';
         $item->cac = ($tipo==2)?'1':'0';
-        $item->duracion = $duracion;
+        $item->duracion = "'".$duracion."'";
         $item->bcp = $bcp;
         $item->ba = $ba;
         $item->bgi = $bgi;

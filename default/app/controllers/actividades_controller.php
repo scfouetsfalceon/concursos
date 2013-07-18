@@ -99,7 +99,7 @@ class ActividadesController extends AppController
             foreach ($act as $dia) {
                 $fecha = explode('-', $dia->fecha);
                 $dia->fecha = $fecha[2].'/'.$fecha[1].'/'.$fecha[0];
-                $dia->creditos = ($dia->duracion*$dia->bcp)+$dia->ba+$dia->bgi;
+                $dia->creditos = Toolkit::calcularCreditos($dia->duracion, $dia->bcp, $dia->ba, $dia->bgi);
             }
             $this->dias = $act;
         } else {
@@ -143,7 +143,7 @@ class ActividadesController extends AppController
             $actividades = Input::post('actividad');
             $resultado = True;
             foreach ($actividades as $actividad) {
-                if ( !empty($actividad['actividad']) && !empty($actividad['duracion']) ){
+                if ( !empty($actividad['actividad']) && $actividad['duracion'] != '' ){
                     $resultado = $resultado && Load::model('actividades')->nueva($rama, $actividad['id'], $actividad['fecha'], $actividad['actividad'], $actividad['lugar'], $actividad['tipo'], $actividad['duracion'], $actividad['bcp'], $actividad['ba'], $actividad['bgi']);
                 }
             }

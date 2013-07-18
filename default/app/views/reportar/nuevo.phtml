@@ -18,7 +18,7 @@
                                     <?php if ($dia->fecha{4} == '-') : ?>
                                     <td><?php $fecha = explode('-', $dia->fecha); echo $fecha[2],'/',$fecha[1],'/',$fecha[0]; ?></td>
                                     <td><?php echo $dia->nombre; ?></td>
-                                    <td class="text-center"><?php echo (($dia->duracion*$dia->bcp)+$dia->ba+$dia->bgi); ?></td>
+                                    <td class="text-center"><?php echo Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi); ?></td>
                                     <?php endif; ?>
                             </tr>
                             <?php endforeach; ?>
@@ -48,7 +48,7 @@
                             <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
                             <?php
                             foreach ($objeto as $dia):
-                                $creditos = ($dia->duracion*$dia->bcp)+$dia->ba+$dia->bgi;
+                                $creditos = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
                                 $tipo = ($dia->cval==1)?'cval':'cac';
                             ?>
                             <td class="text-center"><?php echo Registro::check("campo[$item->id][]", $dia->id, "data-creditos='$creditos' data-tipo='$tipo' data-id='$item->id'"); ?></td>

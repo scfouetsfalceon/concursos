@@ -406,5 +406,11 @@ class Toolkit {
         return date('d/m/Y', strtotime($fecha));
     }
 
+    public static function calcularCreditos($duracion, $bcp, $ba, $bgi){
+        $factor = $duracion * $bcp;
+        $factor = ($factor == 0)?1:$factor;
+        return $factor+$ba+$bgi;
+    }
+
 }
 ?>
