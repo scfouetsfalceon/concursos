@@ -77,6 +77,14 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF;}
 .th-fecha {
     width: 75px;
 }
+th i { 
+    display: none !important;
+}
+
+th:hover i { 
+    display: inline-block !important;
+    font-size: 12px;
+} 
 
 #cintillo {
     margin-bottom: 35px;

@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th></th>
-                <th>Nombre</th>
+                <th>Nombre <i class="icon-sort-by-attributes icon-small"></i></th>
                 <th colspan="2" class="text-center">Opciones</th>
             </tr>
         </thead>
@@ -45,6 +45,7 @@
 </div>
 <?php if($nivel != 4): ?>
 <?php echo Tag::js('form'); ?>
+<?php echo Tag::js('jquery.tablesorter.min'); ?>
 <!-- Modal -->
 <form class="form-horizontal" id="nevo">
 <div id="ModalInsertar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,6 +73,7 @@
 </form>
 <?php View::partial('estructura/modal_'.$nivel); ?>
 <script type="text/javascript">
+    $("table").tablesorter(); 
     $('a.btn-danger').on('click', function(e) {
         e.preventDefault();
         fila = $(this).parent().parent();
