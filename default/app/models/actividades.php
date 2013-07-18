@@ -45,6 +45,42 @@ class Actividades extends ActiveRecord
         $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
         return $this->find($conditions, $columns);
     }
+
+    public function ultimasActividades(){
+        $nivel = Session::get('nivel');
+        $estructura = Session::get('estructura_id');
+        $joins = '';
+        if($nivel == 5){ // Unidad
+            $where = 'ramas_id = '.$estructura;
+        }
+        if($nivel >= 4){ // Grupo
+            $joins = 'INNER JOIN ramas ON actividades.ramas_id = ramas.id
+            INNER JOIN grupos ON grupos.id = ramas.grupos_id';
+            $where = 'grupos.id = '.$estructura;
+        }
+        if($nivel >= 3){ // Distrito
+            $joins = 'INNER JOIN distrito ON distrito.id = grupo.distrito_id' + $joins;
+            $where = ' distrito.id ='.$estructura;
+        }
+        if($nivel >= 2){ // Region
+            $joins = 'INNER JOIN region ON region.id = distrito.region_id' + $joins;
+            $where = 'region.id = '.$estructura;
+        }
+        if($nivel >= 1){ // Nacional
+            $where = '';
+        }
+        $sql = "SELECT fecha, nombre, lugar
+        FROM actividades
+
+        $joins
+
+        $where
+
+        ORDER BY fecha DESC
+        LIMIT 3";
+
+        return $this->find_all_by_sql($sql);
+    }
 }
 
 ?>

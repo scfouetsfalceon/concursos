@@ -78,6 +78,10 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF;}
     width: 75px;
 }
 
+#cintillo {
+    margin-bottom: 35px;
+}
+
 /* Area para pruebas de espacio */
 .rojo {
     background-color: red;

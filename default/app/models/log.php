@@ -9,7 +9,7 @@
  *
  */
 class Log extends ActiveRecord{
-
+    protected $logger = True;
 
 	public function insert($action) {
 		$this->usuario_id = Session::get('id');
@@ -17,6 +17,10 @@ class Log extends ActiveRecord{
 		$this->accion = $action;
 		$this->save();
 	}
+
+    public function ultimaVisita(){
+        return $this->find_first('usuario_id = '.Session::get('id'), 'columns: creado_at', 'order: id DESC')->fecha;
+    }
 
 }
 
