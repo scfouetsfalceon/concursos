@@ -22,6 +22,9 @@
   Tag::css('bootstrap-combined.no-icons.min');
   Tag::css('font-awesome.min');
   echo Html::IncludeCss();
+
+  Html::headLink(PUBLIC_PATH.'img/favicon.ico' ,'rel="shortcut icon"');
+  echo Html::includeHeadLinks();
   ?>
   <?php echo Tag::js('jquery.min'); ?>
   <?php echo Tag::js('bootstrap.min'); ?>
