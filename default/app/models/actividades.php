@@ -70,7 +70,7 @@ class Actividades extends ActiveRecord
         if($nivel >= 1){ // Nacional
             $where = '';
         }
-        $sql = "SELECT `actividades`.`fecha`, `actividad`.`nombre`, `actividades`.`lugar`
+        $sql = "SELECT `actividades`.`fecha`, `actividades`.`nombre`, `actividades`.`lugar`
         FROM actividades
 
         $joins
