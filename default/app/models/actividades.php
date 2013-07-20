@@ -60,11 +60,11 @@ class Actividades extends ActiveRecord
             $where = 'grupos.id = '.$estructura;
         }
         if($nivel >= 3){ // Distrito
-            $joins = 'INNER JOIN distrito ON distrito.id = grupo.distrito_id' . $joins;
+            $joins .= ' INNER JOIN distrito ON distrito.id = grupos.distrito_id ';
             $where = ' distrito.id ='.$estructura;
         }
         if($nivel >= 2){ // Region
-            $joins = 'INNER JOIN region ON region.id = distrito.region_id' . $joins;
+            $joins .= ' INNER JOIN region ON region.id = distrito.region_id';
             $where = 'region.id = '.$estructura;
         }
         if($nivel >= 1){ // Nacional
