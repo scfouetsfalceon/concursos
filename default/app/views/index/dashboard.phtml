@@ -11,8 +11,8 @@
                         <div class="row">
                             <h4 class="text-center">Bienvenido Scter. <?php echo $usuario->primer_nombre,' ',$usuario->primer_apellido; ?></h4>
                             <p class="text-center"><b>Última visita:</b> <?php echo Toolkit::getHowLong(Load::model('log')->ultimaVisita()); ?></p>
+                            <?php if( empty($usuario->region_id) ): ?><p class="text-center"><b>Nivel acceso:</b> Nacional</p><?php endif; ?>
                             <div style="width:400px; margin:auto;">
-                        <?php if( empty($usuario->region_id) ): ?><div class="span4 text-center"><p><b>Nivel acceso:</b> Nacional</p></div><?php endif; ?>
                                 <div class="span2">
                                     <?php if( !empty($usuario->region_id) ): ?><p><b>Región:</b> <?php echo $usuario->region_nombre; ?></p><?php endif; ?>
                                     <?php if( !empty($usuario->grupos_id) ): ?><p><b>Grupo:</b> <?php echo $usuario->grupos_nombre; ?></p><?php endif; ?>
