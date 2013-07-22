@@ -48,27 +48,29 @@ class Actividades extends ActiveRecord
 
     public function ultimasActividades(){
         $nivel = Session::get('nivel');
-        $estructura = Session::get('estructura_id');
+        $estructura = Session::get('estructura');
         $joins = '';
         $where = '';
         if($nivel == 5){ // Unidad
             $where = 'ramas_id = '.$estructura;
         }
-        if($nivel >= 4){ // Grupo
+        if($nivel <= 4){ // Grupo
             $joins = 'INNER JOIN ramas ON actividades.ramas_id = ramas.id
             INNER JOIN grupos ON grupos.id = ramas.grupos_id';
             $where = 'grupos.id = '.$estructura;
         }
-        if($nivel >= 3){ // Distrito
+        if($nivel <= 3){ // Distrito
             $joins .= ' INNER JOIN distrito ON distrito.id = grupos.distrito_id ';
             $where = ' distrito.id ='.$estructura;
         }
-        if($nivel >= 2){ // Region
+        if($nivel <= 2){ // Region
             $joins .= ' INNER JOIN region ON region.id = distrito.region_id';
             $where = 'region.id = '.$estructura;
         }
-        if($nivel >= 1){ // Nacional
+        if($nivel <= 1){ // Nacional
             $where = '';
+        } else {
+            $where = 'WHERE ' .$where;
         }
         $sql = "SELECT `actividades`.`fecha`, `actividades`.`nombre`, `actividades`.`lugar`
         FROM actividades
