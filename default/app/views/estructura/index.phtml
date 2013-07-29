@@ -7,7 +7,7 @@
             <tr>
                 <th></th>
                 <th>Nombre <i class="icon-sort-by-attributes icon-small"></i></th>
-                <th colspan="2" class="text-center">Opciones</th>
+                <th <?php if( $nivel != 4 ): ?>colspan="2"<?php endif; ?> class="text-center">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -18,23 +18,25 @@
             <?php
             	else:
             		foreach ($lista as $item):
-            			$link = 'estructura/'.($nivel+1).'/'.$item->id;
-            			$ahref = Html::link($link, $item->nombre);
             ?>
             <tr>
                 <td>&nbsp;</td>
-                <td><?php echo  $ahref; ?></td>
-                <td class="text-center">
+                <td><?php echo $item->nombre; ?></td>
+                <td class="text-center"> 
+                    <?php echo Html::link('estructura/'.($nivel+1).'/'.$item->id, '<i class="icon-edit"></i> Detalles', 'class="btn"'); ?>
+                </td>
+                <!-- <td class="text-center">
                     <?php if ($item->estado==1):
                         echo Html::link($ubicacion.'/desactivar/'.$item->id, '<i class="icon-frown"></i> Desactivar', 'class="btn btn-warning"');
                         else:
                             echo Html::link($ubicacion.'/activar/'.$item->id, '<i class="icon-smile"></i> Activar', 'class="btn btn-primary"');?>
                     <?php endif; ?>
-                </td>
-                <!-- <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td> -->
+                </td> -->
+                <?php if( $nivel != 4 ): ?>
                 <td class="text-center">
                     <?php echo Html::link($ubicacion.'/borrar/'.$item->id, '<i class="icon-trash"></i> Borrar</a>', 'class="btn btn-danger" data-name="'.$item->nombre.'"');?>
                 </td>
+                <?php endif; ?>
             </tr>
             <?php
             		endforeach;

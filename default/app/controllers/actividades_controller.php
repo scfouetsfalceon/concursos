@@ -76,12 +76,6 @@ class ActividadesController extends AppController
                     $hay = False;
                 }
             }
-            if ( (date("w", $dia) == $this->sabados) && !$hay ) {
-                $data = new StdClass();
-                $data->fecha = date("d/m/Y",$dia);
-                $data->nombre = 'Disponible';
-                array_push($this->objeto->$meses[date('n',$dia)-1], $data);
-            }
         }
 
 	}

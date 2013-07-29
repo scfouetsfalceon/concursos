@@ -11,6 +11,7 @@ class JovenesController extends AppController {
 		if ( !isset($this->rama) ) { // Session::get('nivel') != 5 ) {
 			Router::redirect('estructura/');
 		} else {
+			$this->registro = (date('n', $this->hoy) <= 3)?True:False;
 			$this->lista = Load::model('jovenes')->listar($this->rama);
 		}
 	}
