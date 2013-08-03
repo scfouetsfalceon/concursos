@@ -7,7 +7,7 @@
   <!-- CDN de Bootstrap y Font-awesome -->
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-  
+
   <!--[if IE 7]>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" rel="stylesheet">
   <![endif]-->
@@ -21,12 +21,13 @@
   Html::headLink(PUBLIC_PATH.'img/favicon.ico' ,'rel="shortcut icon"');
   echo Html::includeHeadLinks();
   ?>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:600,400' rel='stylesheet' type='text/css'>
   <?php // echo Tag::js('jquery.min'); ?>
   <?php // echo Tag::js('bootstrap.min'); ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
   <!--[if lt IE 9]>
-    <?php echo Tag::js('html5shiv'); ?>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
     <?php View::partial('google_analytics'); ?>
 

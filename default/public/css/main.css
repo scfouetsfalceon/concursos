@@ -1,6 +1,17 @@
+* { font-family: 'Raleway', Verdana; }
 html, body { height: 100%; }
 #wrap { min-height: 100%; margin: 0 auto -80px; }
-hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF;}
+hr{ border-color: #D4D4D4; }
+
+.navbar-scouts { background: #622599; }
+.navbar-scouts, .navbar-scouts a.brand, .navbar-scouts .nav>li>a {
+    color: #FFF;
+    text-shadow: none;
+}
+.navbar-scouts, .navbar-scouts a.brand:hover, .navbar-scouts .nav>li>a:hover {
+    color: #FFF;
+    text-shadow: 2px 2px 2px #3B3B3B;
+}
 
 .visible-print {
     display: none;
@@ -77,14 +88,14 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF;}
 .th-fecha {
     width: 75px;
 }
-.sorted th i { 
+.sorted th i {
     display: none !important;
 }
 
-.sorted th:hover i { 
+.sorted th:hover i {
     display: inline-block !important;
     font-size: 12px;
-} 
+}
 
 #cintillo {
     margin-bottom: 35px;
@@ -102,3 +113,76 @@ hr{ border-color: #D4D4D4 -moz-use-text-color #FFFFFF;}
 .azul {
     background-color: blue;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Cintillo Scouts */
+.cintillo {
+    display: block;
+    height: 53px;
+    width: 100%;
+}
+
+.cintillo img{
+    margin-right: 5px;
+}
+
+.cintillo .marca {
+    display: inline-block;
+    margin-top: 12px;
+    padding-right: 20px;
+    vertical-align: top;
+    width: 150px;
+}
+
+.cintillo .marca #trademark {
+    color: #FFF;
+    font-family: 'Raleway', Verdana;
+    font-size: 37px;
+    font-weight: 600;
+    text-shadow: none;
+    width: 130px;
+}
+
+.cintillo .marca sup {
+    font-size: 10px;
+    top: -2em;
+}
+
+.cintillo .complemento {
+    color: #FFF;
+    display: inline-block;
+    font-family: 'Raleway', Verdana;
+    text-shadow: none;
+    width: 300px;
+}
+
+.marca span#pais {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1em;
+    text-align: right;
+    text-shadow: none;
+    width: 100%;
+}
+
+.complemento {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3em;
+    margin-top: 3px;
+    text-shadow: none;
+    width: 100%;
+}
+/* Cintillo Scouts */
