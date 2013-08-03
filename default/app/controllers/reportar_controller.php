@@ -112,8 +112,10 @@ class ReportarController extends AppController {
     public function informe($param1=null, $param2=null) {
         $this->nivel = Session::get('nivel');
         $this->estructura = Session::get('estructura');
+        $param1 = ( empty($param1) )?'':$param1.'/';
+        $param2 = ( empty($param2) )?'':$param2.'/';
         if($this->nivel >= 5){
-            Router::toAction('informe_unidad/'.$this->nivel.'/'.$param1.'/'.$param2);
+            Router::toAction('informe_unidad/'.$this->estructura.'/'.$param1.$param2);
         }
     }
 

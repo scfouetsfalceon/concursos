@@ -5,6 +5,7 @@
 */
 class JovenesActividades extends ActiveRecord
 {
+    protected $logger = True;
 
     public function nuevo($joven, $actividad) {
         $this->jovenes_id = $joven;
