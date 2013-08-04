@@ -1,21 +1,7 @@
 * { font-family: 'Raleway', Verdana; }
 html, body { height: 100%; }
-#wrap { min-height: 100%; margin: 0 auto -80px; }
+#wrap { min-height: 100%; margin: 0 auto -80px; display: block; }
 hr{ border-color: #D4D4D4; }
-
-.navbar-scouts { background: #622599; }
-.navbar-scouts, .navbar-scouts a.brand, .navbar-scouts .nav>li>a {
-    color: #FFF;
-    text-shadow: none;
-}
-.navbar-scouts, .navbar-scouts a.brand:hover, .navbar-scouts .nav>li>a:hover {
-    color: #FFF;
-    text-shadow: 2px 2px 2px #3B3B3B;
-}
-
-.visible-print {
-    display: none;
-}
 
 .cajitas {
 	border-bottom: 1px solid #D7D7D7;
@@ -126,10 +112,24 @@ hr{ border-color: #D4D4D4; }
 
 
 /* Cintillo Scouts */
+.navbar-scouts { background: #622599; padding-top: 10px; }
+.navbar-scouts, .navbar-scouts a.brand, .navbar-scouts .nav>li>a {
+    color: #FFF;
+    text-shadow: none;
+}
+.navbar-scouts, .navbar-scouts a.brand:hover, .navbar-scouts .nav>li>a:hover {
+    color: #FFF;
+    text-shadow: 2px 2px 2px #3B3B3B;
+}
+
+.visible-print {
+    display: none;
+}
 .cintillo {
     display: block;
     height: 53px;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 .cintillo img{
