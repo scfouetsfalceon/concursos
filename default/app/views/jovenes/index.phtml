@@ -8,7 +8,6 @@
             <tr>
                 <th>Credencial</th>
                 <th>Nombre</th>
-                <th>Equipo</th>
                 <th <?php if($registro): ?>colspan="2"<?php endif; ?> class="text-center">Opciones</th>
             </tr>
         </thead>
@@ -26,7 +25,6 @@
             <tr>
                 <td><?php echo $item->credencial; ?></td>
                 <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
-                <td></td>
                 <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
                 <?php if($registro): ?><td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td><?php endif; ?>
             </tr>
