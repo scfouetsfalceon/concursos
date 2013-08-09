@@ -19,7 +19,7 @@ class JovenesController extends AppController {
 	/**
 	 * Registrar Joven dentro de sistema
 	 */
-	public function registrar($type='html') {
+	public function registrar() {
 		if(Input::hasPost('registrar')) {
 			if(Input::post('type')=='json'){
 				Load::model('jovenes');
@@ -29,7 +29,14 @@ class JovenesController extends AppController {
 				}
 			}
 		}
+	}
 
+	public function borrar() {
+			if(Input::post('type')=='json'){
+				if ( Load::model('jovenes')->borrar(Input::post('id')) ) {
+					Flash::valid('Jóven borrado con éxito');
+				}
+			}
 	}
 
 	public function subir() {

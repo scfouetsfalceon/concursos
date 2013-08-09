@@ -12,6 +12,10 @@ class Jovenes extends ActiveRecord {
 
 	public function insertar() {
 		$this->nacionalidad = ($this->nacionalidad == 'VENEZOLANA' || $this->nacionalidad == 'V')?'V':'E';
+        if ( $this->exists("nacionalidad = '$this->nacionalidad' AND cedula = '$this->cedula'") ){
+            Flash::error('Ya existe un jovén con esa cédula');
+            return False;
+        }
 		$this->estado = 1;
 		return ($this->create())?True:False;
 	}
@@ -24,26 +28,18 @@ class Jovenes extends ActiveRecord {
 	public function listar($rama){
 		$columns = 'columns: jovenes.id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, nombre';
 		$joins = 'join: INNER JOIN  `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id` INNER JOIN `tipo` ON `tipo`.`id` = `tipo_id`';
-		$condition = "conditions: ramas_id = $rama AND estado != 0";
+		$condition = "conditions: ramas_id = $rama AND estado = 1";
 		return $this->find($condition, $columns, $joins);
 	}
 
-	private function cambiar_estado($id, $estado) {
-		$joven = $this->find_first($id);
-		$joven->estado = $estado;
-		return ($this->update())?True:False;
-	}
-
 	public function borrar($id) {
-		return $this->cambiar_estado($id, 2); // Borrado lógico
-	}
-
-	public function inactivar($id){
-		return $this->cambiar_estado($id, 0);
-	}
-
-	public function activar($id) {
-		return $this->cambiar_estado($id, 1);
+        if ( date('n') > 3 ) {
+            Flash::error('Operación Inválida, no puede eliminar a un jovén fuera de época de registro');
+            return False;
+        }
+        $joven = $this->find_first($id);
+        $joven->estado = 2;
+        return ($joven->update())?True:False; // Borrado lógico
 	}
 }
 

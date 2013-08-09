@@ -1,6 +1,6 @@
 <div class="span10 offset1">
     <h3>Unidad <?php $cantidad = count($lista); echo ($cantidad)?$lista[0]->nombre:''; ?></h3>
-    <div class="alert" id="Msj"></div>
+    <div class="alert oculto" id="Msj"></div>
     <?php View::content(); ?>
     <a href="#ModalInsertar" role="button" data-toggle="modal" class="btn btn-success pull-right"><i class="icon-plus"></i> Agregar Joven</a>
     <table class="table table-striped sorted">
@@ -21,12 +21,13 @@
             <?php
                 else:
                     foreach ($lista as $item):
+                        $nombre = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
             ?>
             <tr>
                 <td><?php echo $item->credencial; ?></td>
-                <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
-                <td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>
-                <?php if($registro): ?><td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td><?php endif; ?>
+                <td><?php echo $nombre; ?></td>
+                <td class="text-center"> <a href="#" class="btn btn-primary editar"><i class="icon-edit"></i> Editar</a> </td>
+                <?php if($registro): ?><td class="text-center"> <a href="#" class="btn btn-danger" data-id="<?php echo $item->id; ?>" data-nombre="<?php echo $nombre; ?>"><i class="icon-trash"></i> Borrar</a> </td><?php endif; ?>
             </tr>
             <?php
                     endforeach;
@@ -43,7 +44,7 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal">
-            <div class="alert" id="alertPopup"></div>
+            <div class="alert oculto" id="alertPopup"></div>
             <div class="control-group">
                 <label class="control-label">Cédula:</label>
                 <div class="controls">
@@ -97,29 +98,43 @@
         </form>
     </div>
     <div class="modal-footer">
-        <i class="icon-spinner icon-spin icon-2x" id="espere"></i>
+        <i class="icon-spinner icon-spin icon-2x" id="espere" style="display:none;"></i>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
         <button class="btn btn-primary" id="btnRegistrar">Registrar</button>
     </div>
 </div>
+<!-- Modal para borrar -->
+<div id="mBorrar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Borrado...</h3>
+    </div>
+    <div class="modal-body">
+        <p id="textAlert"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-danger" id="btnAlert">Borrar</button>
+    </div>
+</div>
 <?php echo Tag::js('form'); ?>
 <script type="text/javascript">
-    $('.alert').fadeOut();
+    var epoca = <?php echo ($registro)?'true':'false'; ?>;
 
     function spinnerRegistro() {
-        ($('#espere').css('display')=='none')? $('#espere').css('display', 'inline-block') : $('#espere').css('display', 'none') ;
+        $('#espere').toggle();
     }
 
     $('#btnRegistrar').on('click', function(evento) {
         evento.preventDefault();
         spinnerRegistro();
-        var credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
+        var nac = $('#nac').val(), cedula = $('#cedula').val(), credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
         $.post(
             '<?php echo PUBLIC_PATH; ?>jovenes/registrar/',
             {
                 type: 'json',
-                "registro[nacionalidad]": $('#nac').val(),
-                "registro[cedula]": $('#cedula').val(),
+                "registro[nacionalidad]": nac,
+                "registro[cedula]": cedula,
                 "registro[credencial]": credencial,
                 "registro[primer_nombre]": primer_nombre,
                 "registro[segundo_nombre]": segundo_nombre,
@@ -131,22 +146,18 @@
             function(data) {
                 spinnerRegistro();
                 if (data.status == "success") {
-                    $('#Msj').sucessMsj(data.message);
                     $('#vacio').remove();
-                    var joven = '<tr>';
+                    var joven = '<tr>', nombre = primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido;
                     joven += '<td>'+credencial+'</td>';
-                    joven += '<td>'+primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido+'</td>';
-                    joven += '<td></td>';
-                    joven += '<td class="text-center">';
-                    joven += '<a href="#" class="btn btn-warning"><i class="icon-frown"></i> Inactivar</a>';
-                    joven += '<td class="text-center"> <a href="#" class="btn btn-primary"><i class="icon-edit"></i> Editar</a> </td>';
-                    joven += '<td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>';
+                    joven += '<td>'+nombre+'</td>';
+                    joven += '<td class="text-center"> <a href="#" class="btn btn-primary editar"><i class="icon-edit"></i> Editar</a> </td>';
+                    joven += (epoca)?'<td class="text-center"> <a href="#" class="btn btn-danger" data-nombre="'+nombre+'"><i class="icon-trash"></i> Borrar</a> </td>':'';
                     joven += '</tr>';
-                    $('table>tbody').append(joven);
+                    $('tbody').append(joven);
                     $('#ModalInsertar').modal('hide');
+                    $('#Msj').sucessMsj(data.message);
                 } else {
                     $('#alertPopup').errorMsj(data.message);
-                    // $('#ModalInsertar').modal('hide');
                 }
             },
             'json'
@@ -154,6 +165,45 @@
             spinnerRegistro();
             $('#Msj').errorMsj('Ha occurrido un error inesperado, actualice la página y vuelva a intentar');
             $('#ModalInsertar').modal('hide');
+        });
+    });
+
+    // Editar 
+    $('table').on('click', '.editar', function(e){
+        e.preventDefault();
+        // Code
+    });
+
+    $('table').on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        joven = $(this);
+        id = joven.data('id');
+        nombre = joven.data('nombre');
+        fila = joven.parent().parent();
+        $('#mBorrar').modal('show');
+        $("#textAlert").html('Esta seguro que desea borrar '+nombre+'???');
+        $("#btnAlert").on('click', function(e){
+            e.preventDefault();
+            $('#mBorrar').modal('hide');
+            $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x"></i> Por favor espere...');
+            $.post(
+                '<?php echo PUBLIC_PATH; ?>jovenes/borrar/',
+                {
+                    type: 'json',
+                    id: id
+                },
+                function(d) {
+                    if (d.status=='success') {
+                        fila.remove();
+                        $('#Msj').sucessMsj(d.message);
+                    } else {
+                        $('#Msj').errorMsj(d.message);
+                    }
+                },
+                'json'
+            ).error(function() {
+                $('#Msj').errorMsj('Ha occurrido un error inesperado, actualice la página y vuelva a intentar');
+            });
         });
     });
 </script>

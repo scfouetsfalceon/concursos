@@ -46,9 +46,12 @@ hr{ border-color: #D4D4D4; }
     margin:auto;
 }
 
-.modal-footer .icon-spinner {
-    vertical-align: middle;
+.oculto {
     display: none;
+}
+
+.icon-spinner {
+    vertical-align: middle;
 }
 
 .form-horizontal .control-label {

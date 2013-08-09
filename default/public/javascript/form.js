@@ -185,17 +185,11 @@ jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
 $(document).ready(function(){
-//  var f = new Date(), ano = f.getFullYear();
-//     $('input[type="date"]').datepicker({
-//      dateFormat: 'dd/mm/yy',
-//      changeMonth: true,
-//      changeYear: true,
-//      yearRange: String(ano - 100) + ':' + String(ano)
-//  });
     $('input[class~="req"]').requerido();
     $('input[type="email"]').correo();
     $('input[type="number"]').numerico();
     $('input[type="tel"][data-type="local"]').telefono();
     $('input[type="tel"][data-type="celular"]').celular();
+    
     $('.datepicker').datepicker({language: 'es'});
 });
