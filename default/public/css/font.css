@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Futura";
+  src: local("Futura"), url("http://cdn.scoutsfalcon.org/Futura.woff") format('woff'), url("http://cdn.scoutsfalcon.org/Futura.TTF") format('truetype');
+}
+@font-face {
+  font-family: "Futura Bold";
+  src: local("Futura Bold"), url("http://cdn.scoutsfalcon.org/FuturaBold.woff") format('woff'), url("http://cdn.scoutsfalcon.org/FuturaBold.TTF") format('truetype');
+}
