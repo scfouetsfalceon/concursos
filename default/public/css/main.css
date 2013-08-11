@@ -1,8 +1,8 @@
 * { font-family: Verdana; }
 html, body { height: 100%; }
+hr{ border-width: 1px 0 0 0; border-style: solid; border-color: #CCC; margin: 10px 0 15px 0; }
 #wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -80px; display: block; }
 #push { height: 60px; }
-hr{ border-color: #D4D4D4; }
 
 .cajitas {
 	border-bottom: 1px solid #D7D7D7;
