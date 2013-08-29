@@ -10,7 +10,8 @@ class Jovenes extends ActiveRecord {
 		$this->validates_uniqueness_of('credencial', 'message: Por favor verifique, existe alguien registrado con esa credencial');
 	}
 
-	public function insertar() {
+	public function insertar($data) {
+        $this->dump_result_self($data);
 		$this->nacionalidad = ($this->nacionalidad == 'VENEZOLANA' || $this->nacionalidad == 'V')?'V':'E';
         if ( $this->exists("nacionalidad = '$this->nacionalidad' AND cedula = '$this->cedula'") ){
             Flash::error('Ya existe un jovén con esa cédula');
@@ -20,9 +21,10 @@ class Jovenes extends ActiveRecord {
 		return ($this->create())?True:False;
 	}
 
-	public function actualizar() {
-		$this->estado = 1;
-		return ($this->update())?True:False;
+	public function actualizar($data) {
+        $this->find_first($data['id']);
+        $this->dump_result_self($data);
+		return ( $this->update() )?True:False;
 	}
 
 	public function listar($rama){
@@ -41,6 +43,11 @@ class Jovenes extends ActiveRecord {
         $joven->estado = 2;
         return ($joven->update())?True:False; // Borrado lógico
 	}
+
+    public function consultar($id) {
+        $columns = "columns: credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, nacionalidad, cedula";
+        return $this->find_first($id, $columns);
+    }
 }
 
 ?>

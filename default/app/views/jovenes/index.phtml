@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <?php
-            
+
             if(!$cantidad): ?>
             <tr>
                 <td colspan="7" class="text-center" id="vacio">No posee Jóvenes</td>
@@ -23,10 +23,10 @@
                     foreach ($lista as $item):
                         $nombre = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
             ?>
-            <tr>
+            <tr id="row_<?php echo $item->id; ?>">
                 <td><?php echo $item->credencial; ?></td>
                 <td><?php echo $nombre; ?></td>
-                <td class="text-center"> <a href="#" class="btn btn-primary editar"><i class="icon-edit"></i> Editar</a> </td>
+                <td class="text-center"> <a href="#" class="btn btn-primary editar" data-id="<?php echo $item->id; ?>"><i class="icon-edit"></i> Editar</a> </td>
                 <?php if($registro): ?><td class="text-center"> <a href="#" class="btn btn-danger" data-id="<?php echo $item->id; ?>" data-nombre="<?php echo $nombre; ?>"><i class="icon-trash"></i> Borrar</a> </td><?php endif; ?>
             </tr>
             <?php
@@ -49,7 +49,7 @@
                 <label class="control-label">Cédula:</label>
                 <div class="controls">
 
-                    <?php echo Registro::cmbNac('nac', 'class="span1"'); ?> <?php echo Registro::number('cedula', 'class="span2"'); ?>
+                    <?php echo Form::hidden('_id').Registro::cmbNac('nac', 'class="span1"'); ?> <?php echo Registro::number('cedula', 'class="span2"'); ?>
 
                 </div>
             </div>
@@ -121,6 +121,10 @@
 <script type="text/javascript">
     var epoca = <?php echo ($registro)?'true':'false'; ?>;
 
+    $('#ModalInsertar').on('hidden', function(){
+        $(this).find('form').limpiar();
+    });
+
     function spinnerRegistro() {
         $('#espere').toggle();
     }
@@ -128,11 +132,12 @@
     $('#btnRegistrar').on('click', function(evento) {
         evento.preventDefault();
         spinnerRegistro();
-        var nac = $('#nac').val(), cedula = $('#cedula').val(), credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
+        var id = $('#_id').val(), nac = $('#nac').val(), cedula = $('#cedula').val(), credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
         $.post(
             '<?php echo PUBLIC_PATH; ?>jovenes/registrar/',
             {
                 type: 'json',
+                "registro[id]": id,
                 "registro[nacionalidad]": nac,
                 "registro[cedula]": cedula,
                 "registro[credencial]": credencial,
@@ -153,6 +158,7 @@
                     joven += '<td class="text-center"> <a href="#" class="btn btn-primary editar"><i class="icon-edit"></i> Editar</a> </td>';
                     joven += (epoca)?'<td class="text-center"> <a href="#" class="btn btn-danger" data-nombre="'+nombre+'"><i class="icon-trash"></i> Borrar</a> </td>':'';
                     joven += '</tr>';
+                    $('#row_'+id).remove();
                     $('tbody').append(joven);
                     $('#ModalInsertar').modal('hide');
                     $('#Msj').sucessMsj(data.message);
@@ -168,10 +174,32 @@
         });
     });
 
-    // Editar 
+    // Editar
     $('table').on('click', '.editar', function(e){
         e.preventDefault();
-        // Code
+        var id = $(this).data('id');
+        console.log(id);
+        $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x"></i> Por favor espere...', { autocerrar: false });
+        $.post(
+            '<?php echo PUBLIC_PATH; ?>jovenes/consultar/',
+            {
+                id : id,
+                type : 'json'
+            },
+            function(data){
+                $('#_id').val(id);
+                $('#nac').val(data.nacionalidad);
+                $('#cedula').val(data.cedula);
+                $('#credencial').val(data.credencial);
+                $('#primer_nombre').val(data.primer_nombre);
+                $('#segundo_nombre').val(data.segundo_nombre);
+                $('#primer_apellido').val(data.primer_apellido);
+                $('#segundo_apellido').val(data.segundo_apellido);
+                $('#Msj').fadeOut('slow');
+                $('#ModalInsertar').modal('show');
+            },
+            'json'
+        );
     });
 
     $('table').on('click', '.btn-danger', function(e) {

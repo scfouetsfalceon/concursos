@@ -14,15 +14,15 @@ function numericoPrefijo(objecto, prefijo, mensaje) {
     });
 
     objecto.on('blur', function(){
-        var text = $(this).val();
+        var text = jQuery(this).val();
         if ( text.length === 0 ){
-            $(this).removeClass('box_error');
+            jQuery(this).removeClass('box_error');
         } else
             if ( text.length >= 2 && text.length < 11 ) {
-                $(this).addClass('box_error').focus();
+                jQuery(this).addClass('box_error').focus();
                 alertPopup(mensaje);
             } else {
-                $(this).removeClass('box_error');
+                jQuery(this).removeClass('box_error');
             }
 
     });
@@ -35,21 +35,21 @@ function numericoPrefijo(objecto, prefijo, mensaje) {
 * @param String mensaje
 * @param Object opciones
 */
-$.fn.alertMsj = function (mensaje, opciones) {
-    var settings = $.extend({
+jQuery.fn.alertMsj = function (mensaje, opciones) {
+    var settings = jQuery.extend({
         tipo: 'alert',
         autocerrar: true,
         tiempo: 5000
     }, opciones );
 
     if ( settings.tipo != 'alert' ) {
-        $(this).removeClass('alert-error alert-info alert-success').addClass('alert-'+settings.tipo);
+        jQuery(this).removeClass('alert-error alert-info alert-success').addClass('alert-'+settings.tipo);
     }
 
-    $(this).fadeOut().empty().html(mensaje).fadeIn('slow');
+    jQuery(this).fadeOut().empty().html(mensaje).fadeIn('slow');
 
     if (settings.autocerrar) {
-        $(this).delay(settings.tiempo).fadeOut('slow');
+        jQuery(this).delay(settings.tiempo).fadeOut('slow');
     }
 };
 
@@ -60,14 +60,14 @@ $.fn.alertMsj = function (mensaje, opciones) {
 * @param String mensaje
 * @param Object opciones
 */
-$.fn.sucessMsj = function (mensaje, opciones){
-    var settings = $.extend({
+jQuery.fn.sucessMsj = function (mensaje, opciones){
+    var settings = jQuery.extend({
         tipo: 'success',
         autocerrar: true,
         tiempo: 5000
     }, opciones );
 
-    $(this).alertMsj(mensaje, settings);
+    jQuery(this).alertMsj(mensaje, settings);
 };
 
 /**
@@ -77,14 +77,14 @@ $.fn.sucessMsj = function (mensaje, opciones){
 * @param String mensaje
 * @param Object opciones
 */
-$.fn.infoMsj = function (mensaje, opciones){
-    var settings = $.extend({
+jQuery.fn.infoMsj = function (mensaje, opciones){
+    var settings = jQuery.extend({
         tipo: 'info',
         autocerrar: true,
         tiempo: 5000
     }, opciones );
 
-    $(this).alertMsj(mensaje, settings);
+    jQuery(this).alertMsj(mensaje, settings);
 };
 
 /**
@@ -94,21 +94,21 @@ $.fn.infoMsj = function (mensaje, opciones){
 * @param String mensaje
 * @param Object opciones
 */
-$.fn.errorMsj = function(mensaje, opciones) {
-    var settings = $.extend({
+jQuery.fn.errorMsj = function(mensaje, opciones) {
+    var settings = jQuery.extend({
         tipo: 'error',
         autocerrar: true,
         tiempo: 5000
     }, opciones );
-    $(this).alertMsj(mensaje, settings);
+    jQuery(this).alertMsj(mensaje, settings);
 };
 
 /**
 * Plugin de JQuery para campos solo númericos
 *
 */
-$.fn.numerico = function() {
-    $(this).on('keyup', function () {
+jQuery.fn.numerico = function() {
+    jQuery(this).on('keyup', function () {
         if ( this.value.substr(0,1) === 0 )  {
                 this.value = '';
             } else {
@@ -122,7 +122,7 @@ $.fn.numerico = function() {
 * números locales (Venezuela)
 *
 */
-$.fn.telefono = function() {
+jQuery.fn.telefono = function() {
     numericoPrefijo(this, '02', "Esto no es un teléfono de habitación válido<br/>Si desea puede dejar el campo vacío");
 };
 
@@ -131,22 +131,22 @@ $.fn.telefono = function() {
 * números celular(Venezuela)
 *
 */
-$.fn.celular = function () {
+jQuery.fn.celular = function () {
     numericoPrefijo(this, '04', "Esto no es un teléfono de celular válido<br/>Si desea puede dejar el campo vacío");
 };
 
-$.fn.requerido = function () {
-    $(this).on('blur', function(){
-        var text = $(this).val();
+jQuery.fn.requerido = function () {
+    jQuery(this).on('blur', function(){
+        var text = jQuery(this).val();
         if ( text.length === 0 ) {
-            $(this).next('.help-block').remove();
-            $(this).parent().parent().removeClass('error');
-            $(this).after('<span class="help-block">Este campo es obligatorio</span>');
-            $(this).parent().parent().addClass('error');
-            $(this).focus();
+            jQuery(this).next('.help-block').remove();
+            jQuery(this).parent().parent().removeClass('error');
+            jQuery(this).after('<span class="help-block">Este campo es obligatorio</span>');
+            jQuery(this).parent().parent().addClass('error');
+            jQuery(this).focus();
         } else {
-            $(this).next('.help-block').remove();
-            $(this).parent().parent().removeClass('error');
+            jQuery(this).next('.help-block').remove();
+            jQuery(this).parent().parent().removeClass('error');
         }
     });
 };
@@ -156,26 +156,38 @@ $.fn.requerido = function () {
 * electrónicos
 *
 */
-$.fn.correo = function() {
-    $(this).on('blur', function(){
-        var text = $(this).val();
-        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( text ) || text.length === 0 ) {
-            $(this).removeClass('box_error');
+jQuery.fn.correo = function() {
+    jQuery(this).on('blur', function(){
+        var text = jQuery(this).val();
+        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+jQuery/.test( text ) || text.length === 0 ) {
+            jQuery(this).removeClass('box_error');
         } else {
-            $(this).addClass('box_error').focus();
+            jQuery(this).addClass('box_error').focus();
             alertPopup("Este correo inválido");
         }
     });
 };
 
-$.fn.clearSelect = function() {
-    $(this).empty();
-    $(this).append( new Option('--', '') );
+jQuery.fn.clearSelect = function() {
+    jQuery(this).empty();
+    jQuery(this).append( new Option('--', '') );
 };
 
-$.fn.loadSelect = function() {
-    $(this).empty();
-    $(this).append( new Option("Cargando...", "") );
+jQuery.fn.loadSelect = function() {
+    jQuery(this).empty();
+    jQuery(this).append( new Option("Cargando...", "") );
+};
+
+
+jQuery.fn.limpiar = function(){
+    jQuery(this).each(function(){
+        // los input tipo hidden no le paran ni al .reset() a la verga de empatados
+        if( $(this).attr('type') != 'hidden' ) {
+            this.reset();
+        } else {
+            this.value="";
+        }
+    });
 };
 
 jQuery.browser = {};
@@ -184,12 +196,12 @@ jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
-$(document).ready(function(){
-    $('input[class~="req"]').requerido();
-    $('input[type="email"]').correo();
-    $('input[type="number"]').numerico();
-    $('input[type="tel"][data-type="local"]').telefono();
-    $('input[type="tel"][data-type="celular"]').celular();
-    
-    $('.datepicker').datepicker({language: 'es'});
+jQuery(document).ready(function(){
+    jQuery('input[class~="req"]').requerido();
+    jQuery('input[type="email"]').correo();
+    jQuery('input[type="number"]').numerico();
+    jQuery('input[type="tel"][data-type="local"]').telefono();
+    jQuery('input[type="tel"][data-type="celular"]').celular();
+
+    jQuery('.datepicker').datepicker({language: 'es'});
 });
