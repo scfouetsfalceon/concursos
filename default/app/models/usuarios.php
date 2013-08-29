@@ -54,6 +54,10 @@ class Usuarios extends ActiveRecord {
     }
 
     public function getDatos() {
+
+        $id = Session::get('id');
+        if ( empty($id) ) return False;
+
         $sql = "SELECT
         `usuarios`.`id`,
         `usuarios`.`primer_nombre`,
@@ -81,7 +85,7 @@ class Usuarios extends ActiveRecord {
         LEFT JOIN `ramas` ON `ramas`.`id` = `usuarios`.`ramas_id`
         LEFT JOIN `tipo` ON `tipo`.`id` = `ramas`.`tipo_id`
 
-        WHERE `usuarios`.`id` = ".Session::get('id');
+        WHERE `usuarios`.`id` = ".$id;
         $usuario = $this->find_by_sql($sql);
         return ($usuario)?$usuario:False;
     }
