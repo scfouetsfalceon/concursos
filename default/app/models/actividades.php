@@ -8,8 +8,6 @@ class Actividades extends ActiveRecord
     protected $logger = True;
 
     public function nueva($rama, $id, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
-        print 'ID ->'.$id."\n";
-        print 'duracion ->'.$duracion;
         $fecha = explode('/', $fecha);
         $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
         if (!empty($id)){

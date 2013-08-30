@@ -82,7 +82,9 @@ class JovenesActividades extends ActiveRecord
         WHERE
         `jovenes`.`estado` = 1
         AND
-        `actividades`.`fecha` LIKE '$fecha'";
+        `actividades`.`fecha` LIKE '$fecha'
+
+        ORDER BY `region`.`nombre` ASC";
 
         return $this->find_all_by_sql($sql);
     }
@@ -116,7 +118,9 @@ class JovenesActividades extends ActiveRecord
         AND
         `region`.`id` = $id
         AND
-        `actividades`.`fecha` LIKE '$fecha'";
+        `actividades`.`fecha` LIKE '$fecha'
+
+        ORDER BY `distrito`.`nombre` ASC";
 
         return $this->find_all_by_sql($sql);
     }
@@ -149,7 +153,9 @@ class JovenesActividades extends ActiveRecord
         AND
         `distrito`.`id` = $id
         AND
-        `actividades`.`fecha` LIKE '$fecha'";
+        `actividades`.`fecha` LIKE '$fecha'
+
+        ORDER BY `grupos`.`nombre` ASC";
 
         return $this->find_all_by_sql($sql);
     }
@@ -182,7 +188,9 @@ class JovenesActividades extends ActiveRecord
         AND
         `grupos`.`id` = $id
         AND
-        `actividades`.`fecha` LIKE '$fecha'";
+        `actividades`.`fecha` LIKE '$fecha'
+
+        ORDER BY `tipo`.`id` ASC";
 
         return $this->find_all_by_sql($sql);
     }

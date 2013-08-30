@@ -129,17 +129,17 @@ class ReportarController extends AppController {
         $this->jovenes = array();
         foreach ($creditos as $item) {
             if (!array_key_exists($item->id, $this->jovenes)) {
-                $this->jovenes[$item->id] = new StdClass();
-                $this->jovenes[$item->id]->credencial = $item->credencial;
-                $this->jovenes[$item->id]->nombre = trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido);
-                $this->jovenes[$item->id]->cval = 0;
-                $this->jovenes[$item->id]->cac = 0;
+                $this->jovenes[$item->id] = array();
+                $this->jovenes[$item->id]['credencial'] = $item->credencial;
+                $this->jovenes[$item->id]['nombre'] = trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido);
+                $this->jovenes[$item->id]['cval'] = 0;
+                $this->jovenes[$item->id]['cac'] = 0;
             }
             if ($item->cac == 1) {
-                $this->jovenes[$item->id]->cac += $item->creditos;
+                $this->jovenes[$item->id]['cac'] += $item->creditos;
             }
             if ($item->cval == 1) {
-                $this->jovenes[$item->id]->cval += $item->creditos;
+                $this->jovenes[$item->id]['cval'] += $item->creditos;
             }
         }
     }
@@ -163,23 +163,28 @@ class ReportarController extends AppController {
             $creditos = $model->grupo($grupo, $ano, $mes);
         }
 
+
+        $indices = array(); // Array para almacenar los id de BBDD de la inserciones
+        $index = 0; // Contador para los elementos introducidos en el array e indice para el nuevo array de objetos
+
         if ( count($creditos) != 0 ) {
+            // Nuevo array de almacenar los datos de la consulta que luego van a ser convertidos en json
             $this->jovenes = array();
             foreach ($creditos as $item) {
-                if (!array_key_exists($item->id, $this->jovenes)) {
-                    $this->jovenes[$item->id] = new StdClass();
-                    $this->jovenes[$item->id]->campo = $item->campo;
-                    $this->jovenes[$item->id]->campo_nombre = $item->campo_nombre;
-                    $this->jovenes[$item->id]->credencial = $item->credencial;
-                    $this->jovenes[$item->id]->nombre = trim($item->primer_nombre.' '.$item->segundo_nombre).' '.trim($item->primer_apellido.' '.$item->segundo_apellido);
-                    $this->jovenes[$item->id]->cval = 0;
-                    $this->jovenes[$item->id]->cac = 0;
+                if( !in_array($item->id, $indices) ) {
+                    $index = array_push($indices, $item->id);
+                    $this->jovenes[$index] = array();
+                    $this->jovenes[$index]['id'] = $item->id;
+                    $this->jovenes[$index]['campo'] = $item->campo;
+                    $this->jovenes[$index]['campo_nombre'] = $item->campo_nombre;
+                    $this->jovenes[$index]['cval'] = 0;
+                    $this->jovenes[$index]['cac'] = 0;
                 }
                 if ($item->cac == 1) {
-                    $this->jovenes[$item->id]->cac += $item->creditos;
+                    $this->jovenes[$index]['cac'] += $item->creditos;
                 }
                 if ($item->cval == 1) {
-                    $this->jovenes[$item->id]->cval += $item->creditos;
+                    $this->jovenes[$index]['cval'] += $item->creditos;
                 }
             }
             $salida = array('status'=>'valid', 'jovenes'=>$this->jovenes);
@@ -187,7 +192,8 @@ class ReportarController extends AppController {
             $salida = array('status'=>'error');
         }
 
-        echo json_encode($salida);
+        // Solo es para pruebas para poder como queda el array armado, luego solo quedará un
+        echo (Input::hasRequest('type'))?json_encode($salida):print_r($salida);
     }
 
 }

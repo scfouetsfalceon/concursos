@@ -16,9 +16,21 @@
             <?php foreach ($jovenes as $joven): ?>
             <tr>
                 <td>&nbsp;</td>
-                <td><?php echo $joven->nombre; ?></th>
-                <td class="text-center"><?php echo $joven->cval; if($joven->cval>=135){' - Oro';} elseif($joven->cval>=85){' - Plata';} elseif($joven->cval>=40){' - Bronce';} ?></td>
-                <td class="text-center"><?php echo $joven->cac; if($joven->cac>=135){echo ' - Oro';}elseif($joven->cac>=85){echo ' - Plata';}elseif($joven->cac>=40){echo ' - Bronce';} ?></td>
+                <td><?php echo $joven['nombre']; ?></th>
+                <td class="text-center">
+                    <?php echo
+                    ( ($joven['cval']>=100)?'<i class="icon-star" title="Obtenida"></i> ':'' )
+                    . $joven['cval'] .
+                    ( ($joven['cval']>=100)?' <i class="icon-star" title="Obtenida"></i>':'' );
+                    ?>
+                </td>
+                <td class="text-center">
+                    <?php echo
+                    ( ($joven['cac']>=100)?'<i class="icon-star" title="Obtenida"></i> ':'' )
+                    .  $joven['cac'] .
+                    ( ($joven['cac']>=100)?' <i class="icon-star" title="Obtenida"></i>':'' );
+                    ?>
+                </td>
             </tr>
             <?php endforeach; ?>
         </thead>
