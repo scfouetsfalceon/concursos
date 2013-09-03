@@ -8,10 +8,12 @@ class JovenesActividades extends ActiveRecord
     protected $logger = True;
 
     public function nuevo($joven, $actividad) {
+        if ( $this->exists($actividad) ){
+            return True;
+        }
         $this->jovenes_id = $joven;
         $this->actividades_id = $actividad;
         $this->usuarios_id = Session::get('id');
-        $this->estado = 1;
         return $this->create();
     }
 

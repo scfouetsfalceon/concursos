@@ -86,19 +86,65 @@ class ReportarController extends AppController {
 
         $ano = ( !empty($param2) || $ano_actual < $param3 )? $ano_actual : $param3;
 
-        $this->objeto = $fechas->listar($this->id, $ano, $this->mes);
-        $this->jovenes = $jovenes->listar($this->id);
-        // print_r($_POST);
+        $fecha = $fechas->listarSin($this->id, $ano, $this->mes);
+        $this->objeto = array();
+        $jovenes = $jovenes->listar($this->id);
+
+        $argumentos = array();
+        $control  = "08/11/1984";
+        $i=0;
+
+        foreach ($fecha as $dia){
+            if ($dia->fecha != $control) {
+                $control = $dia->fecha;
+                if ($dia->fecha{4} == '-') {
+                    $f = explode('-', $dia->fecha);
+                    $this->objeto[$i]->fecha = $f[2].'/'.$f[1].'/'.$f[0];
+                } else {
+                    $this->objeto[$i]->fecha = $dia->fecha;
+                }
+                $this->objeto[$i]->nombre = $dia->nombre;
+                $this->objeto[$i]->cval = $dia->cval;
+                $this->objeto[$i]->cac = $dia->cac;
+                $this->objeto[$i]->creditos = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
+                $this->objeto[$i]->reportado = empty($dia->jovenes_id)?0:1;
+                $i++;
+            }
+
+            foreach ($jovenes as $item) {
+                    if(!array_key_exists($item->id, $argumentos)) {
+                        $argumentos[$item->id]['credencial'] = $item->credencial;
+                        $argumentos[$item->id]['nombre'] = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
+                        $argumentos[$item->id]['actividades'] = array();
+                    }
+
+                    if ( !@$argumentos[$item->id]['actividades'][$dia->fecha] ) {
+                        $argumentos[$item->id]['actividades'][$dia->fecha] = array();
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['id'] = $dia->id;
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['creditos'] = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['cval'] = $dia->cval;
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['cac'] = $dia->cac;
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['tipo'] = ($dia->cval==1)?'cval':'cac';
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 2;
+                    }
+
+                    if ( empty($dia->jovenes_id) ) {
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 0;
+                    } elseif ( $dia->jovenes_id == $item->id ) {
+                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 1;
+                    }
+            }
+        }
+        $this->jovenes = $argumentos;
+
+
         if ( Input::hasPost('registrar') ){
             $lista = Input::post('campo');
             $reporte = Load::model('jovenes_actividades');
             $salida = True;
-            // print_r($_POST);
 
             foreach ($lista as $joven => $actividades) {
-                // echo "joven - ".$joven.$actividad;
                 foreach ($actividades as $actividad) {
-                    // echo "joven = $joven -> $actividad; ";
                     $salida = $salida && $reporte->nuevo($joven, $actividad);
                }
             }

@@ -30,9 +30,16 @@ class Jovenes extends ActiveRecord {
 	public function listar($rama){
 		$columns = 'columns: jovenes.id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, nombre';
 		$joins = 'join: INNER JOIN  `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id` INNER JOIN `tipo` ON `tipo`.`id` = `tipo_id`';
+        $join = "join: LEFT JOIN jovenes_actividades ON actividades.id = jovenes_actividades.actividades_id";
 		$condition = "conditions: ramas_id = $rama AND estado = 1";
 		return $this->find($condition, $columns, $joins);
 	}
+    public function listarAct($rama){
+        $columns = 'columns: jovenes.id, credencial, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, nombre, jovenes_actividades.actividades_id';
+        $joins = 'join: INNER JOIN  `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id` INNER JOIN `tipo` ON `tipo`.`id` = `tipo_id` LEFT JOIN jovenes_actividades ON jovenes.id = jovenes_actividades.jovenes_id';
+        $condition = "conditions: ramas_id = $rama AND estado = 1";
+        return $this->find($condition, $columns, $joins);
+    }
 
 	public function borrar($id) {
         if ( date('n') > 3 ) {

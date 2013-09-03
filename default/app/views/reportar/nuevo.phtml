@@ -10,16 +10,16 @@
                                 <th class="th-fecha">Fecha</th>
                                 <th>Actividades</th>
                                 <th class="text-center">Créditos</th>
+                                <th class="text-center">Reportados</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($objeto as $dia): ?>
                             <tr>
-                                    <?php if ($dia->fecha{4} == '-') : ?>
-                                    <td><?php $fecha = explode('-', $dia->fecha); echo $fecha[2],'/',$fecha[1],'/',$fecha[0]; ?></td>
+                                    <td><?php echo $dia->fecha ?></td>
                                     <td><?php echo $dia->nombre; ?></td>
-                                    <td class="text-center"><?php echo Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi); ?></td>
-                                    <?php endif; ?>
+                                    <td class="text-center"><?php echo $dia->creditos; ?></td>
+                                    <td class="text-center"><?php echo ($dia->reportado)?'<i class="icon-check"></i>':'<i class="icon-check-empty"></i>'; ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -42,19 +42,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($jovenes as $item): ?>
+                        <?php foreach ($jovenes as $id => $item): ?>
                         <tr>
-                            <td><?php echo $item->credencial; ?></td>
-                            <td><?php echo trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido); ?></td>
+                            <td><?php echo $item['credencial']; ?></td>
+                            <td><?php echo $item['nombre']; ?></td>
                             <?php
-                            foreach ($objeto as $dia):
-                                $creditos = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
-                                $tipo = ($dia->cval==1)?'cval':'cac';
+                            $cval = 0;
+                            $cac = 0;
+                            foreach ($item['actividades'] as $dia):
+                                $tipo = ($dia['cval']==1)?'cval':'cac';
+                                if ($dia['viejo'] == 1){
+                                    $check = True;
+                                    if($dia['cval']==1){$cval+=$dia['creditos'];} else {$cac+=$dia['creditos'];}
+                                } else{ $check = False; }
+                                $disabled = ($dia['viejo'] != 0)?"disabled='disabled'":"";
                             ?>
-                            <td class="text-center"><?php echo Registro::check("campo[$item->id][]", $dia->id, "data-creditos='$creditos' data-tipo='$tipo' data-id='$item->id'"); ?></td>
+                            <td class="text-center">
+                                <?php echo Registro::check("campo[$id][]", $dia['id'], "data-creditos='".$dia['creditos']."' data-tipo='$tipo' data-id='$id' $disabled",$check); ?>
+                            </td>
                             <?php endforeach; ?>
-                            <td class="text-center"><?php echo Registro::number('cval['.$item->id.']', 'class="span1" readonly="readonly"'); ?></td>
-                            <td class="text-center"><?php echo Registro::number('cac['.$item->id.']', 'class="span1" readonly="readonly"'); ?></td>
+                            <td class="text-center"><?php echo Registro::number('cval['.$id.']', 'class="span1" readonly="readonly"', $cval); ?></td>
+                            <td class="text-center"><?php echo Registro::number('cac['.$id.']', 'class="span1" readonly="readonly"', $cac); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

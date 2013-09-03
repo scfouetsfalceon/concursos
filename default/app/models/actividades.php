@@ -45,6 +45,17 @@ class Actividades extends ActiveRecord
         return $this->find($conditions, $columns);
     }
 
+    public function listarSin($unidad, $ano=null, $mes=null){
+        $unidad = ActiveRecord::sql_sanizite($unidad);
+        $columns = "columns: actividades.id, jovenes_id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
+        $ano = (empty($ano))?date('Y'):$ano;
+        $mes = (empty($mes))?date('m'):$mes;
+        $unidad = "conditions: ramas_id = $unidad";
+        $join = "join: LEFT JOIN jovenes_actividades ON actividades.id = jovenes_actividades.actividades_id";
+        $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
+        return $this->find($conditions, $columns, $join);
+    }
+
     public function ultimasActividades(){
         $nivel = Session::get('nivel');
         $estructura = Session::get('estructura');
