@@ -90,19 +90,16 @@ class ReportarController extends AppController {
         $this->objeto = array();
         $jovenes = $jovenes->listar($this->id);
 
-        $argumentos = array();
-        $control  = "08/11/1984";
-        $i=0;
+        // Comenzando a armar un array de jovenes sobre la fecha y asistencia a las actividades
+        $this->jovenes = array();
+        $control  = "08/11/1984"; // Fecha de control(mi cumpleaños)
+        $i=0; // Incremental para el número de actividades
 
         foreach ($fecha as $dia){
+            // Para no crear 2 o más veces la fecha de la actividad y con ello sobreescribiendo la fecha
             if ($dia->fecha != $control) {
                 $control = $dia->fecha;
-                if ($dia->fecha{4} == '-') {
-                    $f = explode('-', $dia->fecha);
-                    $this->objeto[$i]->fecha = $f[2].'/'.$f[1].'/'.$f[0];
-                } else {
-                    $this->objeto[$i]->fecha = $dia->fecha;
-                }
+                $this->objeto[$i]->fecha = Toolkit::fecha($dia->fecha);
                 $this->objeto[$i]->nombre = $dia->nombre;
                 $this->objeto[$i]->cval = $dia->cval;
                 $this->objeto[$i]->cac = $dia->cac;
@@ -112,44 +109,52 @@ class ReportarController extends AppController {
             }
 
             foreach ($jovenes as $item) {
-                    if(!array_key_exists($item->id, $argumentos)) {
-                        $argumentos[$item->id]['credencial'] = $item->credencial;
-                        $argumentos[$item->id]['nombre'] = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
-                        $argumentos[$item->id]['actividades'] = array();
+                    if(!array_key_exists($item->id, $this->jovenes)) {
+                        $this->jovenes[$item->id]['credencial'] = $item->credencial;
+                        $this->jovenes[$item->id]['nombre'] = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
+                        $this->jovenes[$item->id]['actividades'] = array();
                     }
 
-                    if ( !@$argumentos[$item->id]['actividades'][$dia->fecha] ) {
-                        $argumentos[$item->id]['actividades'][$dia->fecha] = array();
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['id'] = $dia->id;
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['creditos'] = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['cval'] = $dia->cval;
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['cac'] = $dia->cac;
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['tipo'] = ($dia->cval==1)?'cval':'cac';
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 2;
+                    if ( !@$this->jovenes[$item->id]['actividades'][$dia->fecha] ) {
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha] = array();
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['id'] = $dia->id;
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['creditos'] = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['cval'] = $dia->cval;
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['cac'] = $dia->cac;
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['tipo'] = ($dia->cval==1)?'cval':'cac';
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 2;
                     }
 
                     if ( empty($dia->jovenes_id) ) {
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 0;
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 0;
                     } elseif ( $dia->jovenes_id == $item->id ) {
-                        $argumentos[$item->id]['actividades'][$dia->fecha]['viejo'] = 1;
+                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 1;
                     }
             }
         }
-        $this->jovenes = $argumentos;
-
 
         if ( Input::hasPost('registrar') ){
             $lista = Input::post('campo');
-            $reporte = Load::model('jovenes_actividades');
-            $salida = True;
+            if ( (bool)count($lista) ){
+                $reporte = Load::model('jovenes_actividades');
+                $control = array();
+                $salida = True;
 
-            foreach ($lista as $joven => $actividades) {
-                foreach ($actividades as $actividad) {
-                    $salida = $salida && $reporte->nuevo($joven, $actividad);
-               }
-            }
-            if ($salida) {
-                Flash::valid('Actividades Reportadas con éxito');
+                foreach ($lista as $joven => $actividades) {
+                    foreach ($actividades as $actividad) {
+                        if(!in_array($actividad, $control)) array_push($control, $actividad);
+                        $salida = $salida && $reporte->nuevo($joven, $actividad);
+                    }
+                }
+                if ($salida) {
+                    foreach ($control as $actividad) {
+                        Load::model('actividades')->reportar($actividad);
+                    }
+                    Flash::valid('Actividades Reportadas con éxito');
+                    Router::redirect('reportar/unidad/'.$this->id);
+                }
+            } else {
+                Flash::info('Reporte vacío');
                 Router::redirect('reportar/unidad/'.$this->id);
             }
         }

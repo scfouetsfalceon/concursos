@@ -1,7 +1,9 @@
 <?php
 
 /**
+* Modelo para actividades Scouts
 *
+* TODO: Optimizar funciones, eliminar no usadas. Pendiente con las functiones reiterativas**
 */
 class Actividades extends ActiveRecord
 {
@@ -35,25 +37,47 @@ class Actividades extends ActiveRecord
         return ($item->save())?True:False;
     }
 
+    // FIXME: las siguientes 3 operaciones son casi iguales debo intentar convertir en una sola
+    // operación y optimizar este código
     public function listar($unidad, $ano=null, $mes=null){
-        $unidad = ActiveRecord::sql_sanizite($unidad);
+        $unidad = "conditions: ramas_id = ".ActiveRecord::sql_sanizite($unidad);
         $columns = "columns: id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
         $ano = (empty($ano))?date('Y'):$ano;
         $mes = (empty($mes))?date('m'):$mes;
-        $unidad = "conditions: ramas_id = $unidad";
         $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
         return $this->find($conditions, $columns);
     }
 
-    public function listarSin($unidad, $ano=null, $mes=null){
-        $unidad = ActiveRecord::sql_sanizite($unidad);
-        $columns = "columns: actividades.id, jovenes_id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
+    public function listarConReporte($unidad, $ano=null, $mes=null){
+        $unidad = "conditions: ramas_id = ".ActiveRecord::sql_sanizite($unidad);
+        $columns = "columns: DISTINCT actividades.id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi, actividades_id AS reportada";
         $ano = (empty($ano))?date('Y'):$ano;
         $mes = (empty($mes))?date('m'):$mes;
-        $unidad = "conditions: ramas_id = $unidad";
         $join = "join: LEFT JOIN jovenes_actividades ON actividades.id = jovenes_actividades.actividades_id";
         $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
         return $this->find($conditions, $columns, $join);
+    }
+
+    public function listarSin($unidad, $ano=null, $mes=null){
+        $unidad = "conditions: ramas_id = ".ActiveRecord::sql_sanizite($unidad);
+        $columns = "columns: actividades.id, jovenes_id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
+        $ano = (empty($ano))?date('Y'):$ano;
+        $mes = (empty($mes))?date('m'):$mes;
+        $join = "join: LEFT JOIN jovenes_actividades ON actividades.id = jovenes_actividades.actividades_id";
+        $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
+        return $this->find($conditions, $columns, $join);
+    }
+
+    public function reportada($actividad){
+        $actividad = "id = ".ActiveRecord::sql_sanizite($actividad);
+        $conditions = $actividad." AND tipo = 1";
+        return $this->exists($conditions);
+    }
+
+    public function reportar($id){
+        $actividad = $this->find_first($id);
+        $actividad->tipo = 1;
+        return $actividad->update();
     }
 
     public function ultimasActividades(){

@@ -8,18 +8,13 @@ class JovenesActividades extends ActiveRecord
     protected $logger = True;
 
     public function nuevo($joven, $actividad) {
-        if ( $this->exists($actividad) ){
+        if ( Load::model('actividades')->reportada($actividad) ){
             return True;
         }
         $this->jovenes_id = $joven;
         $this->actividades_id = $actividad;
         $this->usuarios_id = Session::get('id');
         return $this->create();
-    }
-
-    public function modificar($joven, $actividad) {
-        $this->delete("actividades_id = '$actividad'");
-        return $this->nuevo($joven, $actividad);
     }
 
     // FIXME: Optimizar y mejorar las consultas de jovenes
