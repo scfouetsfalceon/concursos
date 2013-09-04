@@ -49,7 +49,7 @@
                             <?php
                             $cval = 0;
                             $cac = 0;
-                            foreach ($item['actividades'] as $dia):
+                            foreach ($item['actividades'] as $ida => $dia):
                                 $tipo = ($dia['cval']==1)?'cval':'cac';
                                 if ($dia['viejo'] == 1){
                                     $check = True;
@@ -58,7 +58,7 @@
                                 $disabled = ($dia['viejo'] != 0)?"disabled='disabled'":"";
                             ?>
                             <td class="text-center">
-                                <?php echo Registro::check("campo[$id][]", $dia['id'], "data-creditos='".$dia['creditos']."' data-tipo='$tipo' data-id='$id' $disabled",$check); ?>
+                                <?php echo Registro::check("campo[$id][]", $ida, "data-creditos='".$dia['creditos']."' data-tipo='$tipo' data-id='$id' $disabled",$check); ?>
                             </td>
                             <?php endforeach; ?>
                             <td class="text-center"><?php echo Registro::number('cval['.$id.']', 'class="span1" readonly="readonly"', $cval); ?></td>

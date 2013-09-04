@@ -97,8 +97,8 @@ class ReportarController extends AppController {
 
         foreach ($fecha as $dia){
             // Para no crear 2 o más veces la fecha de la actividad y con ello sobreescribiendo la fecha
-            if ($dia->fecha != $control) {
-                $control = $dia->fecha;
+            if ($dia->id != $control) {
+                $control = $dia->id;
                 $this->objeto[$i]->fecha = Toolkit::fecha($dia->fecha);
                 $this->objeto[$i]->nombre = $dia->nombre;
                 $this->objeto[$i]->cval = $dia->cval;
@@ -115,20 +115,20 @@ class ReportarController extends AppController {
                         $this->jovenes[$item->id]['actividades'] = array();
                     }
 
-                    if ( !@$this->jovenes[$item->id]['actividades'][$dia->fecha] ) {
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha] = array();
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['id'] = $dia->id;
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['creditos'] = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['cval'] = $dia->cval;
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['cac'] = $dia->cac;
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['tipo'] = ($dia->cval==1)?'cval':'cac';
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 2;
+                    if ( !@$this->jovenes[$item->id]['actividades'][$dia->id] ) {
+                        $this->jovenes[$item->id]['actividades'][$dia->id] = array();
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['fecha'] = $dia->fecha;
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['creditos'] = Toolkit::calcularCreditos($dia->duracion,$dia->bcp,$dia->ba,$dia->bgi);
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['cval'] = $dia->cval;
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['cac'] = $dia->cac;
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['tipo'] = ($dia->cval==1)?'cval':'cac';
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['viejo'] = 2;
                     }
 
                     if ( empty($dia->jovenes_id) ) {
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 0;
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['viejo'] = 0;
                     } elseif ( $dia->jovenes_id == $item->id ) {
-                        $this->jovenes[$item->id]['actividades'][$dia->fecha]['viejo'] = 1;
+                        $this->jovenes[$item->id]['actividades'][$dia->id]['viejo'] = 1;
                     }
             }
         }
