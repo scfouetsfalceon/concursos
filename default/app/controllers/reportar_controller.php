@@ -175,9 +175,18 @@ class ReportarController extends AppController {
         $mes_actual = date('n', $this->hoy);
         $ano = ( !empty($ano) || $ano_actual < $ano )?$ano_actual:$ano;
         $mes = ( !empty($mes) || $mes_actual < $mes )?$mes_actual:$mes;
-        // $this->lista = Load::model('jovenes_actividades')->jovenes($unidad, $ano, $mes);
         $creditos = Load::model('jovenes_actividades')->jovenes($unidad, $ano, $mes);
+        $rama = Load::model('ramas')->buscar($unidad);
+        if ( $rama->tipo_id == 1 || $rama->tipo_id == 2 ) {
+            $factor = 12;
+        } elseif ( $rama->tipo_id == 3 || $rama->tipo_id == 4 ) {
+            $factor = 32;
+        } else {
+            $factor = 12;
+        }
         $this->jovenes = array();
+        $cval = 0;
+        $cac = 0;
         foreach ($creditos as $item) {
             if (!array_key_exists($item->id, $this->jovenes)) {
                 $this->jovenes[$item->id] = array();
@@ -187,12 +196,16 @@ class ReportarController extends AppController {
                 $this->jovenes[$item->id]['cac'] = 0;
             }
             if ($item->cac == 1) {
+                $cac += $item->creditos;
                 $this->jovenes[$item->id]['cac'] += $item->creditos;
             }
             if ($item->cval == 1) {
+                $cval += $item->creditos;
                 $this->jovenes[$item->id]['cval'] += $item->creditos;
             }
         }
+        $this->cval = round(($cval/$factor),0,PHP_ROUND_HALF_UP);
+        $this->cac = round(($cac/$factor),0,PHP_ROUND_HALF_UP);
     }
 
     public function consulta($region=null, $distrito=null, $grupo=null){

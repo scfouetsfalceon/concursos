@@ -1,6 +1,10 @@
 <div class="span8 offset2">
     <h3>Informe de Unidad</h3>
     <?php View::content(); ?>
+    <p>Créditos Generales <br/>
+        CVAL: <?php echo Form::text('cval', 'class="span1" readonly="readonly"', $cval); ?>
+        CAC: <?php echo Form::text('cac', 'class="span1" readonly="readonly"', $cac); ?>
+    </p>
 </div>
 <div class="span10 offset1">
     <table class="table table-striped">
