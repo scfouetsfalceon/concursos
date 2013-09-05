@@ -28,7 +28,7 @@
 
                             <tr>
                                 <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Form::text("actividad[$i].fecha", 'class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
-                                <td><?php echo Form::text("actividad[$i].actividad", 'class="span2"', $dia->nombre); ?></td>
+                                <td><?php echo Form::text("actividad[$i].nombre", 'class="span2"', $dia->nombre); ?></td>
                                 <td><?php echo Form::text("actividad[$i].lugar", 'class="span2"', $dia->lugar); ?></td>
                                 <td>
                                     <?php echo Registro::selectTipo("actividad[$i].tipo", 'class="span1"', $tipo); ?>

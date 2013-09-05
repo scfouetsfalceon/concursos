@@ -135,10 +135,12 @@ class ActividadesController extends AppController
         if (Input::hasPost('actividad')) {
             $rama = Input::post('rama');
             $actividades = Input::post('actividad');
+            $modelo = Load::model('actividades');
+            print_r($actividades);
             $resultado = True;
             foreach ($actividades as $actividad) {
-                if ( !empty($actividad['actividad']) && $actividad['duracion'] != '' ){
-                    $resultado = $resultado && Load::model('actividades')->nueva($rama, $actividad['id'], $actividad['fecha'], $actividad['actividad'], $actividad['lugar'], $actividad['tipo'], $actividad['duracion'], $actividad['bcp'], $actividad['ba'], $actividad['bgi']);
+                if ( !empty($actividad['nombre']) && $actividad['duracion'] != '' ){
+                    $resultado = $resultado && $modelo->nueva($rama, $actividad);
                 }
             }
             if($resultado) Flash::success('Actividades registradas exitosamente!!!');

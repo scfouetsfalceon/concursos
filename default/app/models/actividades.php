@@ -9,11 +9,9 @@ class Actividades extends ActiveRecord
 {
     protected $logger = True;
 
-    public function nueva($rama, $id, $fecha, $nombre, $lugar, $tipo, $duracion, $bcp, $ba, $bgi, $creditos) {
-        $fecha = explode('/', $fecha);
-        $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
-        if (!empty($id)){
-            $existe = $this->find_first($id);
+    public function nueva($rama, $data) {
+        if (!empty($data['id'])){
+            $existe = $this->find_first($data['id']);
             if ($existe) {
                 $item = $existe;
             } else {
@@ -22,18 +20,19 @@ class Actividades extends ActiveRecord
         } else {
             $item = $this;
         }
+        $fecha = explode('/', $data['fecha']);
+        $ingles = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
         $item->ramas_id = $rama;
+        $item->lugar = $data['lugar'];
+        $item->nombre = $data['nombre'];
+        $item->duracion = $data['duracion'];
         $item->fecha = $ingles;
-        $item->nombre = $nombre;
-        $item->lugar = $lugar;
         $item->tipo = '0';
-        $item->cval = ($tipo==1)?'1':'0';
-        $item->cac = ($tipo==2)?'1':'0';
-        $item->duracion = $duracion;
-        $item->bcp = ($duracion==0)?1:$bcp;
-        $item->ba = $ba;
-        $item->bgi = $bgi;
-        // $item->creditos = ($duracion*$bcp)+$ba+$bgi;
+        $item->cval = ($data['tipo']==1)?'1':'0';
+        $item->cac = ($data['tipo']==2)?'1':'0';
+        $item->bcp = ($data['duracion']==0)?1:$data['bcp'];
+        $item->ba = $data['ba'];
+        $item->bgi = $data['bgi'];
         return ($item->save())?True:False;
     }
 
@@ -41,7 +40,7 @@ class Actividades extends ActiveRecord
     // operación y optimizar este código
     public function listar($unidad, $ano=null, $mes=null){
         $unidad = "conditions: ramas_id = ".ActiveRecord::sql_sanizite($unidad);
-        $columns = "columns: id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi";
+        $columns = "columns: id, fecha, nombre, lugar, cac, cval, duracion, bcp, ba, bgi, tipo";
         $ano = (empty($ano))?date('Y'):$ano;
         $mes = (empty($mes))?date('m'):$mes;
         $conditions = $unidad." AND fecha LIKE '$ano-$mes-%'";
