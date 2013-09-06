@@ -4,14 +4,14 @@
         <?php $i=1; foreach ($objeto as $mes => $dias): $cantidad = count($dias)?>
             <div class="span4 cajas">
                 <h5>
-                    <?php echo $mes,' ',($cantidad != 0)?'<small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':''; ?>
+                    <?php echo $mes,' ',($cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?'<small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':''; ?>
                 </h5>
                 <div class="cajitas">
                     <table class="table table-striped table-actividades">
                             <thead>
                                 <tr>
-                                    <th class="th-fecha">Fecha</th>
-                                    <th>Actividades</th>
+                                    <th class="th-fecha text-center">Fecha</th>
+                                    <th class="text-center">Actividades</th>
                                 </tr>
                             </thead>
                             <tbody>

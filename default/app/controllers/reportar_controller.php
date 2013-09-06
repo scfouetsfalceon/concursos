@@ -68,9 +68,21 @@ class ReportarController extends AppController {
     }
 
     public function nuevo($param1=null, $param2=null, $param3=null) {
+        $this->id = (Session::get('nivel') == 5)?Session::get('estructura'):$param1;
+        $ano_actual = date('Y', $this->hoy);
+        $mes_actual = date('m', $this->hoy);
+        $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
+
+        if ( $this->mes < $mes_actual-3 ) {
+            Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
+            Router::toAction("unidad/$this->id/");
+        }
+
+        $this->mes = (isset($dia->fecha{2}))?$this->mes:'0'.$this->mes;
+
         $fechas = Load::model('actividades');
         $jovenes = Load::model('jovenes');
-        $this->id = (Session::get('nivel') == 5)?Session::get('estructura'):$param1;
+
         $rama = Load::model('ramas')->buscar($this->id);
         if ( $rama->tipo_id == 1 || $rama->tipo_id == 2 ) {
             $this->rama = 12;
@@ -79,10 +91,6 @@ class ReportarController extends AppController {
         } else {
             $this->rama = 12;
         }
-
-        $ano_actual = date('Y', $this->hoy);
-        $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
-        $this->mes = (isset($dia->fecha{2}))?$this->mes:'0'.$this->mes;
 
         $ano = ( !empty($param2) || $ano_actual < $param3 )? $ano_actual : $param3;
 
