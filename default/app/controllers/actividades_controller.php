@@ -89,7 +89,7 @@ class ActividadesController extends AppController
         //     Router::toAction("unidad/$unidad/");
         // }
         $this->mes = ( !isset($mes) || $mes_actual < $mes )? $mes_actual : $mes;
-        $this->mes = ($this->mes < 9)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
+        $this->mes = ($this->mes < 10)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
         $this->ano = ( !isset($ano) || $ano_actual < $ano)? $ano_actual : $ano;
 
         $act = Load::model('actividades')->listar($this->unidad, $this->ano, $this->mes);
