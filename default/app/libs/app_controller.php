@@ -21,18 +21,24 @@ class AppController extends Controller {
 
 	final protected function initialize()
 	{
-        $this->hoy = $_SERVER['REQUEST_TIME'];
-		$this->log=Load::model('log');
-        if ( !Auth::is_valid() ) {
-            if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {
-                Router::redirect('/');
-            }
-        } else {
-	        if(Input::request('type')=='json') {
-				View::response('json', null);
-				View::select('../generico/generico');
-			}
+        // Clausula Internet Explorer
+        if ( strrpos($_SERVER['HTTP_USER_AGENT'], "MSIE") !== False ){
+            View::response(null, null);
+            View::select('../generico/ie');
         }
+            $this->hoy = $_SERVER['REQUEST_TIME'];
+            $this->log=Load::model('log');
+            if ( !Auth::is_valid() ) {
+                if(!(Router::get('controller') == 'index' && Router::get('action') == 'index' )) {
+                    Router::redirect('/');
+                }
+            } else {
+    	        if(Input::request('type')=='json') {
+    				View::response('json', null);
+    				View::select('../generico/generico');
+    			}
+            }
+
 	}
 
 	final protected function finalize()

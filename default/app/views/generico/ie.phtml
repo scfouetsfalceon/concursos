@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv='Content-type' content='text/html; charset=<?php echo APP_CHARSET ?>' />
+  <meta charset='<?php echo APP_CHARSET ?>' />
+  <title><?php echo $title; ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- CDN de Bootstrap y Font-awesome -->
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <?php echo Tag::js('html5shiv'); ?>
+  <![endif]-->
+  <!--[if IE 7]>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome-ie7.min.css" rel="stylesheet">
+  <![endif]-->
+  <?php
+    Tag::css('ie');
+    echo Html::IncludeCss();
+    Html::headLink(PUBLIC_PATH.'img/favicon.ico' ,'rel="shortcut icon"');
+    echo Html::includeHeadLinks();
+  ?>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <?php View::partial('google_analytics'); ?>
+
+    </head>
+    <body>
+      <div class="container">
+        <div class="row">
+          <div class="square">
+            <h2 class="alert alert-error text-center">Error de seguridad!!!</h2>
+            <p>
+              <em>
+                  Debido a los famosos <b>problemas de seguridad de Internet Explorer</b>, en cualquier de sus versiones se han tomado la importante decisión de no permitir el acceso a nuestros servidores con dicho navegador, por cual recomendamos cambiar a cualquiera de las alternativas libres(y de mucha mejor calidad) que hay como <a href="http://www.google.com/intl/es-419/chrome/" target="_blank">Google Chrome</a>, <a href="http://www.mozilla.org/es-ES/firefox/new/" target="_blank">Firefox</a>, entre otras.<br>
+              </em>
+              <?php echo Html::img('chrome.png', 'class="img-circle" width="320px" height="320px"'); ?>
+              <?php echo Html::img('firefox.png', 'class="img-circle" width="380px" height="380px"'); ?>
+            </p>
+            <small>Sistema en línea de Concursos Nacionales<br>Desarrollado por Icter.us</small>
+          </div>
+        </div>
+    </div>
+</body>
+</html>
+
