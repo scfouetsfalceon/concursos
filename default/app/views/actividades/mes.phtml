@@ -88,11 +88,19 @@
                 var bcp =  +$(campos+'bcp').val();
                 var ba = +$(campos+'ba').val();
                 var bgi = +$(campos+'bgi').val();
+                var creditos = 4;
 
                 factor = duracion*bcp;
-                factor = (factor<=0)?1:factor;
-                var creditos = factor + ba + bgi ;
-                $(campos+'creditos').val( (isNaN(creditos) )?'':creditos);
+                if (factor<=0) {
+                    factor = 1;
+                    $(campos+'duracion').val(0);
+                    $(campos+'bcp option').eq(0).prop('selected', true);
+                    $(campos+'ba option').eq(0).prop('selected', true);
+                    $(campos+'bgi option').eq(0).prop('selected', true);
+                } else {
+                    creditos = factor + ba + bgi;
+                }
+                $(campos+'creditos').val(creditos);
             }
 
             // FIXME: Debo corregir esto con más tiempo y con una solución más elegante

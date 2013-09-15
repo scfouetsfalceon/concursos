@@ -25,14 +25,21 @@ class Actividades extends ActiveRecord
         $item->ramas_id = $rama;
         $item->lugar = $data['lugar'];
         $item->nombre = $data['nombre'];
-        $item->duracion = $data['duracion'];
         $item->fecha = $ingles;
         $item->tipo = '0';
         $item->cval = ($data['tipo']==1)?'1':'0';
         $item->cac = ($data['tipo']==2)?'1':'0';
-        $item->bcp = ($data['duracion']==0)?1:$data['bcp'];
-        $item->ba = $data['ba'];
-        $item->bgi = $data['bgi'];
+        if ( $data['duracion'] <= 0 ) {
+            $item->duracion = '0';
+            $item->bcp = 1;
+            $item->ba = 2;
+            $item->bgi = 1;
+        } else {
+            $item->duracion = $data['duracion'];
+            $item->bcp = $data['bcp'];
+            $item->ba = $data['ba'];
+            $item->bgi = $data['bgi'];
+        }
         return ($item->save())?True:False;
     }
 
