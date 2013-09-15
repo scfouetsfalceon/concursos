@@ -13,12 +13,12 @@
                                 <th class="th-fecha">Fecha</th>
                                 <th>Actividad</th>
                                 <th>Lugar</th>
-                                <th>Tipo</th>
-                                <th>Noche/Hrs.</th>
+                                <th>Tipo <a class="ayudas" data-toggle="tooltip" data-placement="top" title="CVAL = Concursos de Vida Al Aire Libre<br>CAC = Concursos de Acción Comunitaria"><i class="icon-question-sign"></i></a></th>
+                                <th>Noches/Hrs. <a class="ayudas" data-toggle="tooltip" data-placement="top" title="Noches para CVAL<br>Horas para CAC"><i class="icon-question-sign"></i></a></th>
 
-                                <th>BCP</th>
-                                <th>BA</th>
-                                <th>BGI</th>
+                                <th>PCP <a class="ayudas" data-toggle="tooltip" data-placement="top" title="Puntos por Contenido Programáticos"><i class="icon-question-sign"></i></a></th>
+                                <th>BA <a class="ayudas" data-toggle="tooltip" data-placement="top" title="Bono por Asistencia"><i class="icon-question-sign"></i></a></th>
+                                <th>BGI <a class="ayudas" data-toggle="tooltip" data-placement="top" title="Bono por Grado de Independencia"><i class="icon-question-sign"></i></a></th>
 
                                 <th>Créditos</th>
                             </tr>
@@ -69,6 +69,7 @@
         ?>
         <script type="text/javascript">
             var i = 9999;
+            $('.ayudas').tooltip({html: true});
             // Agregar nueva actividad
             // FIXME: Debo buscar con más tiempo, una mejor solución para las nuevas actividades (Me siento sucio con esta solución jejejeje)
             $('#nuevo').on('click', function(e){

@@ -57,7 +57,6 @@ class IndexController extends AppController
         $usuario = Load::model('usuarios');
         $this->usuario = $usuario->getDatos();
         $this->ramas = strtr($this->usuario->ramas_nombre, array('Femenina'=>'Fem.','Femenino'=>'Fem.','Masculina'=>'Mas.','Masculino'=>'Mas.'));
-        Flash::info('Área aún en construcción y mejoras constantes, por favor disculpe las molestias');
         // if( $this->auth->get('estado') == 3 ) {
         //     Router::redirect('bienvenida/');
         // }

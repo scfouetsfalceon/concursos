@@ -84,10 +84,10 @@ class ActividadesController extends AppController
         $this->unidad = $unidad;
         $mes_actual = date('n', $this->hoy);
         $ano_actual = date('Y', $this->hoy);
-        if ( $mes < $mes_actual-3 ) {
-            Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
-            Router::toAction("unidad/$unidad/");
-        }
+        // if ( $mes < $mes_actual-3 ) {
+        //     Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
+        //     Router::toAction("unidad/$unidad/");
+        // }
         $this->mes = ( !isset($mes) || $mes_actual < $mes )? $mes_actual : $mes;
         $this->mes = ($this->mes < 9)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
         $this->ano = ( !isset($ano) || $ano_actual < $ano)? $ano_actual : $ano;

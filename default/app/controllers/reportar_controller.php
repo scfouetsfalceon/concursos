@@ -73,10 +73,10 @@ class ReportarController extends AppController {
         $mes_actual = date('m', $this->hoy);
         $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
 
-        if ( $this->mes < $mes_actual-3 ) {
-            Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
-            Router::toAction("unidad/$this->id/");
-        }
+        // if ( $this->mes < $mes_actual-3 ) {
+        //     Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
+        //     Router::toAction("unidad/$this->id/");
+        // }
 
         $this->mes = (isset($dia->fecha{2}))?$this->mes:'0'.$this->mes;
 

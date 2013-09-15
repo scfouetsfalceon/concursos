@@ -4,7 +4,11 @@
         <?php $i=1; foreach ($objeto as $mes => $dias): $cantidad = count($dias)?>
             <div class="span4 cajas">
                 <h5>
-                    <?php echo $mes,' ',($cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?'<small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':''; ?>
+                    <?php
+                    echo ($cantidad != 0)?
+                    // TODO Desbloquear clausula de 3 meses a partir de Enero 2014
+                    // ($cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?
+                    $mes.' <small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':$mes; ?>
                 </h5>
                 <div class="cajitas">
                     <table class="table table-striped table-actividades">

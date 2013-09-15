@@ -4,7 +4,9 @@
         <?php $i=1; foreach ($objeto as $mes => $dias): $cantidad = count($dias)?>
             <div class="span4 cajas">
                 <h5>
-                    <?php echo ( ($mes_actual-2) <= $i  && $mes_actual >= $i)?
+                    <?php echo ($mes_actual >= $i)?
+                    // TODO Desbloquear clausula de 3 meses a partir de Enero 2014
+                    // ( ($mes_actual-2) <= $i  && $mes_actual >= $i)?
                     $mes . ' <small>' . Html::link('actividades/mes/'.$id.'/'.$i,'(Crear actividades)') . '</small>':
                     $mes . ' <small>(No disponible)</small>'; ?>
                 </h5>
