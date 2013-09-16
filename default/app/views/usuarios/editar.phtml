@@ -57,16 +57,16 @@
             <label class="control-label">Correo Electrónico:</label>
             <div class="controls">
 
-                <?php echo Form::text('adulto.email', 'class="span2"'); ?>
+                <?php echo Registro::email('adulto.email', 'class="span2"'); ?>
 
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label">Clave:</label>
+            <label class="control-label">Clave:<i class="icon-question-sign" title="Si la contraseña esta vacía no será modificada" style="color:#08C;"></i></label>
             <div class="controls">
 
-                <?php echo Form::text('adulto.nueva_clave', 'class="span2"', ''), Form::hidden('adulto.clave'); ; ?>
+                <?php echo Form::text('adulto.clave', 'class="span2"', ''); ?>
 
             </div>
         </div>
@@ -83,3 +83,6 @@
     </form>
 </div>
 <?php echo Tag::js('form'); ?>
+<script type="text/javascript">
+    $('i').tooltip();
+</script>

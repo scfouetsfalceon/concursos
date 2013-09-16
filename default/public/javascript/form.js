@@ -1,3 +1,5 @@
+var validate = true;
+
 // Validar campo númerico y de tipo local
 function numericoPrefijo(objecto, prefijo, mensaje) {
     objecto.on('keyup', function(){
@@ -108,13 +110,13 @@ jQuery.fn.errorMsj = function(mensaje, opciones) {
 *
 */
 jQuery.fn.numerico = function() {
-    jQuery(this).on('keyup', function () {
+    // jQuery(this).on('keyup', function () {
         if ( this.value.substr(0,1) === 0 )  {
                 this.value = '';
             } else {
                 this.value = this.value.replace(/[^0-9]/g,'');
         }
-    });
+    // });
 };
 
 /**
@@ -136,7 +138,7 @@ jQuery.fn.celular = function () {
 };
 
 jQuery.fn.requerido = function () {
-    jQuery(this).on('blur', function(){
+    // jQuery(this).on('blur', function(){
         var text = jQuery(this).val();
         if ( text.length === 0 ) {
             jQuery(this).next('.help-block').remove();
@@ -148,7 +150,7 @@ jQuery.fn.requerido = function () {
             jQuery(this).next('.help-block').remove();
             jQuery(this).parent().parent().removeClass('error');
         }
-    });
+    // });
 };
 
 /**
@@ -157,15 +159,18 @@ jQuery.fn.requerido = function () {
 *
 */
 jQuery.fn.correo = function() {
-    jQuery(this).on('blur', function(){
+    // jQuery(this).on('blur', function(){
         var text = jQuery(this).val();
+        jQuery(this).next('.help-block').remove();
+        jQuery(this).parent().parent().addClass('error');
         if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+jQuery/.test( text ) || text.length === 0 ) {
-            jQuery(this).removeClass('box_error');
+            jQuery(this).next('.help-block').remove();
+            jQuery(this).parent().parent().addClass('error');
         } else {
             jQuery(this).addClass('box_error').focus();
-            alertPopup("Este correo inválido");
+            jQuery(this).after('<span class="help-block">Este correo inválido</span>').parent().parent().addClass('error');
         }
-    });
+    // });
 };
 
 jQuery.fn.clearSelect = function() {
@@ -179,9 +184,10 @@ jQuery.fn.loadSelect = function() {
 };
 
 
+// TODO: terminar de escribir la función para limpiar formularios
 jQuery.fn.limpiar = function(){
     jQuery(this).each(function(){
-        // los input tipo hidden no le paran ni al .reset() a la verga de empatados
+        // los input tipo hidden no le paran ni al .reset() (a la verga de empatados)
         if( $(this).attr('type') != 'hidden' ) {
             this.reset();
         } else {
@@ -190,6 +196,7 @@ jQuery.fn.limpiar = function(){
     });
 };
 
+// Comprobamos el navegador por JS
 jQuery.browser = {};
 jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
@@ -197,11 +204,17 @@ jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
 jQuery(document).ready(function(){
-    jQuery('input[class~="req"]').requerido();
-    jQuery('input[type="email"]').correo();
-    jQuery('input[type="number"]').numerico();
+    jQuery('input[class~="req"]').on('blur', requerido);
+    jQuery('input[type="email"]').on('blur', correo);
+    jQuery('input[type="number"]').on('keyup', numerico);
     jQuery('input[type="tel"][data-type="local"]').telefono();
     jQuery('input[type="tel"][data-type="celular"]').celular();
 
+    // TODO: Validar que la función datepicker este disponible
     jQuery('.datepicker').datepicker({language: 'es'});
+
+    // jQuery('form').on('submit', function(e){
+    //     e.preventDefault();
+
+    // });
 });

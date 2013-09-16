@@ -114,8 +114,6 @@ class Usuarios extends ActiveRecord {
     }
 
     public function actualizar($datos) {
-        // print_r($this);
-
         $existe = $this->find_first($datos['id']);
 
         $existe->primer_nombre = $datos['primer_nombre'];
