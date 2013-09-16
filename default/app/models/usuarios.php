@@ -9,6 +9,27 @@ class Usuarios extends ActiveRecord {
         $this->validates_uniqueness_of('email', 'message: Ya existe un usuario con ese Correo Electrónico');
     }
 
+    public function before_update(){
+        if ($this->id == 1) {
+            Flash::error("Este usuario no puede ser modificado");
+            exit(1);
+        }
+    }
+
+    public function before_save(){
+        if ($this->id == 1) {
+            Flash::error("Este usuario no puede ser modificado");
+            exit(1);
+        }
+    }
+
+    public function before_delete(){
+        if ($this->id == 1) {
+            Flash::error("Este usuario no puede ser modificado");
+            exit(1);
+        }
+    }
+
     public function listar($nivel, $estructura, $page) {
         $page = "page: ".$page;
         $per_page = "per_page: 10";
@@ -116,6 +137,9 @@ class Usuarios extends ActiveRecord {
     public function actualizar($datos) {
         $existe = $this->find_first($datos['id']);
 
+        $existe->nac = $datos['nac'];
+        $existe->cedula = $datos['cedula'];
+        $existe->credencial = $datos['credencial'];
         $existe->primer_nombre = $datos['primer_nombre'];
         $existe->segundo_nombre = $datos['segundo_nombre'];
         $existe->primer_apellido = $datos['primer_apellido'];
