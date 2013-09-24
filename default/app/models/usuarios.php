@@ -98,7 +98,7 @@ class Usuarios extends ActiveRecord {
         `usuarios`.`ramas_id`,
         `tipo`.`nombre` AS ramas_nombre
 
-        FROM `demo_concursos`.`usuarios`
+        FROM `usuarios`
 
         LEFT JOIN `region` ON `region`.`id` = `usuarios`.`region_id`
         LEFT JOIN `distrito` ON `distrito`.`id` = `usuarios`.`distrito_id`

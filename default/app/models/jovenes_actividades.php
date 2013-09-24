@@ -37,7 +37,7 @@ class JovenesActividades extends ActiveRecord
         `actividades`.`cac`,
         ((`duracion`*`bcp`)+`ba`+`bgi`) AS creditos
 
-        FROM `demo_concursos`.`jovenes`
+        FROM `jovenes`
 
         INNER JOIN `jovenes_actividades` ON `jovenes`.`id` = `jovenes_actividades`.`jovenes_id`
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
@@ -66,7 +66,7 @@ class JovenesActividades extends ActiveRecord
         `actividades`.`cac`,
         ((`duracion`*`bcp`)+`ba`+`bgi`) AS creditos
 
-        FROM `demo_concursos`.`jovenes`
+        FROM `jovenes`
 
         INNER JOIN `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id`
         INNER JOIN `grupos` ON `grupos`.`id` = `ramas`.`grupos_id`
@@ -100,7 +100,7 @@ class JovenesActividades extends ActiveRecord
         `actividades`.`cac`,
         ((`duracion`*`bcp`)+`ba`+`bgi`) AS creditos
 
-        FROM `demo_concursos`.`jovenes`
+        FROM `jovenes`
 
         INNER JOIN `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id`
         INNER JOIN `grupos` ON `grupos`.`id` = `ramas`.`grupos_id`
@@ -136,7 +136,7 @@ class JovenesActividades extends ActiveRecord
         `actividades`.`cac`,
         ((`duracion`*`bcp`)+`ba`+`bgi`) AS creditos
 
-        FROM `demo_concursos`.`jovenes`
+        FROM `jovenes`
 
         INNER JOIN `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id`
         INNER JOIN `grupos` ON `grupos`.`id` = `ramas`.`grupos_id`
@@ -171,7 +171,7 @@ class JovenesActividades extends ActiveRecord
         `actividades`.`cac`,
         ((`duracion`*`bcp`)+`ba`+`bgi`) AS creditos
 
-        FROM `demo_concursos`.`jovenes`
+        FROM `jovenes`
 
         INNER JOIN `ramas` ON `ramas`.`id` = `jovenes`.`ramas_id`
         INNER JOIN `tipo` ON `tipo`.`id` = `ramas`.`tipo_id`
