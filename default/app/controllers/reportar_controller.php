@@ -244,19 +244,22 @@ class ReportarController extends AppController {
             $this->jovenes = array();
             foreach ($creditos as $item) {
                 if( !in_array($item->id, $indices) ) {
-                    $index = array_push($indices, $item->id);
+                    array_push($indices, $item->id);
                     $this->jovenes[$index] = array();
                     $this->jovenes[$index]['id'] = $item->id;
                     $this->jovenes[$index]['campo'] = $item->campo;
                     $this->jovenes[$index]['campo_nombre'] = $item->campo_nombre;
                     $this->jovenes[$index]['cval'] = 0;
                     $this->jovenes[$index]['cac'] = 0;
+                    $index++;
                 }
                 if ($item->cac == 1) {
-                    $this->jovenes[$index]['cac'] += $item->creditos;
+                    $i = array_search($item->id, $indices);
+                    $this->jovenes[$i]['cac'] += $item->creditos;
                 }
                 if ($item->cval == 1) {
-                    $this->jovenes[$index]['cval'] += $item->creditos;
+                    $i = array_search($item->id, $indices);
+                    $this->jovenes[$i]['cval'] += $item->creditos;
                 }
             }
             $salida = array('status'=>'valid', 'jovenes'=>$this->jovenes);
@@ -265,7 +268,7 @@ class ReportarController extends AppController {
         }
 
         // Solo es para pruebas para poder como queda el array armado, luego solo quedará un
-        echo (Input::hasRequest('type'))?json_encode($salida):print_r($salida);
+        echo json_encode($salida);
     }
 
 }
