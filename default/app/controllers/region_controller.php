@@ -21,7 +21,7 @@ class RegionController extends AppController
             $id = Filter::get($param1, 'int');
         }
         $who = Session::get('id');
-        if ( $who != 1 ) {
+        if ( $who == 1 ) {
             $id = Load::model('region')->borrar($id);
             if ( $id ) Flash::valid("Región borrada exitosamente");
         } else {
