@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $('form').on('submit', function(e) {
         e.preventDefault();
+        $('#espere').toggle();
         var n = $('#nombre').val();
         var linkver = '<?php echo PUBLIC_PATH."estructura/2/"; ?>';
         var linkregion = '<?php echo PUBLIC_PATH."region/"; ?>';
@@ -17,14 +18,17 @@
                     $('#vacio').remove();
                     var fila = '<tr>';
                     fila += '<td>&nbsp;</td>';
-                    fila += '<td><a href="'+linkver+d.message+'">'+n+'</a></td>';
-                    fila += '<td class="text-center"> <a href="'+linkregion+'desactivar/'+d.message+'" class="btn btn-warning"><i class="icon-frown"></i> Desactivar</a> </td>';
+                    fila += '<td>'+n+'</td>';
+                    fila += '<td class="text-center"> <a href="'+linkver+d.message+'" class="btn"><i class="icon-edit"></i> Detalle</a> </td>';
                     fila += '<td class="text-center"> <a href="#" class="btn btn-danger"><i class="icon-trash"></i> Borrar</a> </td>';
                     fila += '</tr>';
                     $('table>tbody').append(fila);
                     $('#ModalInsertar').modal('hide');
+                    $('#ModalInsertar').find('input[type=text]').val('');
+                    $('#espere').toggle();
                 } else {
                     $('#alertPopup').errorMsj(d.message);
+                    $('#espere').toggle();
                 }
             },
             'json'

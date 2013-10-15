@@ -22,7 +22,7 @@
             <tr>
                 <td>&nbsp;</td>
                 <td><?php echo $item->nombre; ?></td>
-                <td class="text-center"> 
+                <td class="text-center">
                     <?php echo Html::link('estructura/'.($nivel+1).'/'.$item->id, '<i class="icon-edit"></i> Detalles', 'class="btn"'); ?>
                 </td>
                 <!-- <td class="text-center">
@@ -67,7 +67,7 @@
 
     </div>
     <div class="modal-footer">
-        <i class="icon-spinner icon-spin icon-2x" id="espere"></i>
+        <i class="icon-spinner icon-spin icon-2x" id="espere" style="display:none;"></i>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
         <input type="submit" class="btn btn-primary" value="Registrar">
     </div>
@@ -75,7 +75,7 @@
 </form>
 <?php View::partial('estructura/modal_'.$nivel); ?>
 <script type="text/javascript">
-    $("table").tablesorter(); 
+    $("table").tablesorter();
     $('a.btn-danger').on('click', function(e) {
         e.preventDefault();
         fila = $(this).parent().parent();

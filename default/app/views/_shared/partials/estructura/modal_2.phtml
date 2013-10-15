@@ -24,8 +24,11 @@
                     fila += '</tr>';
                     $('table>tbody').append(fila);
                     $('#ModalInsertar').modal('hide');
+                    $('#ModalInsertar').find('input[type=text]').val('');
+                    $('#espere').toggle();
                 } else {
                     $('#alertPopup').errorMsj(d.message);
+                    $('#espere').toggle();
                 }
             },
             'json'
