@@ -21,9 +21,15 @@ class DistritoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = Input::post('nombre');
-        $id = Load::model('distrito')->borrar($id);
-        if ( $id ) Flash::valid("Distrito borrada exitosamente");
+        $who = Session::get('id');
+        if ( $who != 1 ) {
+            $id = Load::model('distrito')->borrar($id);
+            if ( $id ) Flash::valid("Distrito borrada exitosamente");
+        } else {
+            Load::model('email');
+            $notificacion = new email();
+            $notificacion->AdministradorEliminar($id, $who, "Distrito");
+        }
     }
 
     public function activar($param1, $param2=NULL) {
@@ -60,7 +66,7 @@ class DistritoController extends AppController
         } else {
             $salida = array('status'=>'error');
         }
-        
+
         echo json_encode($salida);
     }
 

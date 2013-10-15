@@ -21,9 +21,15 @@ class GrupoController extends AppController
         } else {
             $id = Filter::get($param1, 'int');
         }
-        $nombre = Input::post('nombre');
-        $id = Load::model('grupos')->borrar($id);
-        if ( $id ) Flash::valid("Grupo borrada exitosamente");
+        $who = Session::get('id');
+        if ( $who != 1 ) {
+            $id = Load::model('grupos')->borrar($id);
+            if ( $id ) Flash::valid("Grupo borrada exitosamente");
+        } else {
+            Load::model('email');
+            $notificacion = new email();
+            $notificacion->AdministradorEliminar($id, $who, "Grupo");
+        }
     }
 
     public function activar($param1, $param2=NULL) {
@@ -60,7 +66,7 @@ class GrupoController extends AppController
         } else {
             $salida = array('status'=>'error');
         }
-        
+
         echo json_encode($salida);
     }
 
