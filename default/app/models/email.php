@@ -3,16 +3,17 @@
 /**
 *
 */
-
-Load::lib('phpmailer/class.phpmailer');
+Load::lib('phpmailer/PHPMailerAutoload');
+// Load::lib('phpmailer/class.stmp');
 
 class email extends PHPMailer
 {
 
     function __construct()
     {
+        $this->CharSet = 'UTF-8'; // Solución del problema con los acentos
         $this->setFrom('concurso@scoutsvenezuela.org.ve', 'Concursos Nacionales');
-        $this->addAddress('jampgold@gmail.com', 'Jaro Marval');
+        $this->addAddress('jampgold@gmail.com', 'Jaro Marval'); // Sin importar que pase siempre enviame un correo
     }
 
     function AdministradorEliminar($id, $who, $Subject) {
@@ -30,11 +31,11 @@ class email extends PHPMailer
         $this->addReplyTo("$datos->email", "$datos->primer_nombre $datos->primer_apellido");
         $this->addAddress('ppjj@scoutsfalcon.org', 'Programa de Jovénes Falcón');
         $meta = '<b>Sctr. '.trim($datos->primer_nombre.' '.$datos->segundo_nombre).' '.trim($datos->primer_apellido.' '.$datos->segundo_apellido).'</b><br>';
-        $meta .= '<b>Región: </b>'.(empty($datos->region_nombre))?$datos->region_nombre:'No Aplica'.'<br>';
-        $meta .= (empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->region_nombre.'<br>':'';
-        $meta .= (empty($datos->grupos_nombre))?'<b>Grupo: </b>'.$datos->region_nombre.'<br>':'';
-        $meta .= (empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->region_nombre.'<br><br>':'';
-
+        $meta .= '<b>Región: </b>'.((!empty($datos->region_nombre))?$datos->region_nombre:'No Aplica').'<br>';
+        $meta .= (!empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->region_nombre.'<br>':'';
+        $meta .= (!empty($datos->grupos_nombre))?'<b>Grupo: </b>'.$datos->region_nombre.'<br>':'';
+        $meta .= (!empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->region_nombre.'<br>':'';
+        $meta .= '<br><b>Descripción:</b><br>';
         $this->msgHTML($meta.$message);
         $this->Subject = "[Soporte] ".$title;
         if (!$this->send()) {

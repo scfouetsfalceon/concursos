@@ -31,7 +31,7 @@
         <button class="btn btn-primary" id="btnSoporte">Enviar Solicitud</button>
     </div>
 </div>
-
+<?php echo Tag::js('form'); ?>
 <script type="text/javascript">
 $('#btnSoporte').on('click', function(e){
     e.preventDefault();
@@ -43,11 +43,11 @@ $('#btnSoporte').on('click', function(e){
             type:'json'
         },
         function(d){
-            console.log(d.message);
-            if (d.status=='success') {
-                $('#alertSoporte').sucessMsj(d.message);
-                $('#ModalSoporte').find('input[type=text]').val('').modal('hide');
+            if (true) {
+                $('#ModalSoporte').modal('hide');
+                $('#ModalSoporte').find('input[type=text], textarea').val('');
                 $('#espere').toggle();
+                alert('Su solicitud de soporte ha sido enviada y será respondida en la brevedad');
             } else {
                 $('#alertSoporte').errorMsj(d.message);
                 $('#espere').toggle();
