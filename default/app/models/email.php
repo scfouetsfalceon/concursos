@@ -30,12 +30,12 @@ class email extends PHPMailer
         $this->addReplyTo("$datos->email", "$datos->primer_nombre $datos->primer_apellido");
         $this->addAddress('ppjj@scoutsfalcon.org', 'Programa de Jovénes Falcón');
         $meta = '<b>Sctr. '.trim($datos->primer_nombre.' '.$datos->segundo_nombre).' '.trim($datos->primer_apellido.' '.$datos->segundo_apellido).'</b><br>';
-        $meta = '<b>Región: </b>'.(empty($datos->region_nombre))?$datos->region_nombre:'No Aplica'.'<br>';
-        $meta = (empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->region_nombre.'<br>':'';
-        $meta = (empty($datos->_nombre))?'<b>Grupo: </b>'.$datos->region_nombre.'<br>':'';
-        $meta = (empty($datos->region_nombre))?'<b>Rama: </b>'.$datos->region_nombre.'<br><br>':'';
+        $meta .= '<b>Región: </b>'.(empty($datos->region_nombre))?$datos->region_nombre:'No Aplica'.'<br>';
+        $meta .= (empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->region_nombre.'<br>':'';
+        $meta .= (empty($datos->grupos_nombre))?'<b>Grupo: </b>'.$datos->region_nombre.'<br>':'';
+        $meta .= (empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->region_nombre.'<br><br>':'';
 
-        $this->Body = $meta.$message;
+        $this->msgHTML($meta.$message);
         $this->Subject = "[Soporte] ".$title;
         if (!$this->send()) {
             Flash::error("Error " . $this->ErrorInfo);
