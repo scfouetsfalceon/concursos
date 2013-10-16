@@ -29,7 +29,14 @@
         <?php if ( Session::get('nivel') == 0 ): ?>
         <li><?php echo Html::link('ajustes/', '<i class="icon-cogs"></i> Ajustes') ?></li>
         <?php endif; ?>
-        <li><?php echo Html::link('ayudas/', '<i class="icon-question"></i> Ayudas', 'target="_blank"') ?></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-question"></i> Ayudas</a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><?php echo Html::link('ayudas/', 'Sobre los Concursos', 'target="_blank"') ?></li>
+                <li><?php echo Html::link('ayudas/videos/', 'Vídeo Tutoriales') ?></li>
+                <li><a href="#ModalSoporte" role="button" data-toggle="modal">Solicitud de Soporte</a></li>
+            </ul>
+        </li>
         <li><?php echo Html::link('salir/', '<i class="icon-off"></i> Salir') ?></li>
     </ul>
 </div>

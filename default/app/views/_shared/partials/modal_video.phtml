@@ -1,0 +1,29 @@
+<!-- Modal for player -->
+<div id="viewer" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-body">
+    <div id="videoDiv"></div>
+    <a href="#" data-dismiss="modal" aria-hidden="true">[Cerrar x]</a>
+  </div>
+</div>
+
+<script src="//www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+    google.load("swfobject", "2.1");
+</script>
+
+<script type="text/javascript">
+    var _url = "http://www.youtube.com/v/", url='';
+    $('.ver').on('click', function(e){
+        url = _url + $(this).data('video');
+    });
+
+    $('#viewer').on('show', function () {
+        var params = { allowScriptAccess: "always", allowfullscreen: "true"};
+        var atts = { id: "ytPlayer" };
+        swfobject.embedSWF(url + "?version=3&enablejsapi=1&playerapiid=player1&autohide=1&showinfo=0&autoplay=1", "videoDiv", "530", "311", "9", null, null, params, atts);
+    });
+
+    $('#viewer').bind('hide', function () {
+        $(this).children('div.modal-body').prepend('<div id="videoDiv"></div>').find('object').remove();
+    });
+</script>

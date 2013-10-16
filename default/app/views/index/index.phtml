@@ -1,9 +1,55 @@
-
+<style type="text/css">
+li {
+    background-color: #FAFAFA;
+    background-image: linear-gradient(to bottom, #FFF, #F2F2F2);
+    background-repeat: repeat-x;
+    border: 1px solid #D4D4D4;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    color: #777;
+    cursor: pointer;
+    font-weight:bold;
+    margin-bottom: 1px;
+    min-height: 30px;
+    list-style: none;
+    padding: 10px 10px 0 10px;
+}
+span {
+    color: red;
+    display: block;
+    font-size: 12px;
+    text-align: right;
+    width: 100%;
+    cursor: pointer;
+}
+ul {
+    margin: 0;
+}
+</style>
       <?php echo Form::open(null, 'post', 'class="form-signin"'); ?>
         <h2 class="form-signin-heading">Bienvenido</h2>
         <?php View::content(); ?>
         <input type="text" name="usuario" class="input-block-level" placeholder="Correo Electronico">
         <input type="password" name="clave" class="input-block-level" placeholder="Contraseña">
         <button class="btn btn-large btn-primary" type="submit">Ingresar</button>
+        <span id="mostrar">
+            Ayuda <i class="icon-double-angle-down"></i>
+        </span>
+        <ul id="d" style="display:none;">
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="qu-tNQmxl8E">Como ingresar</li>
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="6mztvEEDQ8c">Como cargar los datos</li>
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="Ch1eaaX8s60">Como crear actividades</li>
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="uKA41hm3Qxw">Como reportar la asistencia</li>
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="GA6SUcBOWXs">Como ver el informe</li>
+            <li href="#viewer" class="ver" data-toggle="modal" data-video="S1lItLIcmGk">Como crear usuarios</li>
+        </ul>
         <small>Sistema en línea de Concursos Nacionales<br>Desarrollado por Icter.us</small>
       </form>
+<script type="text/javascript">
+    $('#mostrar').on('click', function(e){
+        e.preventDefault();
+        $('#d').slideToggle();
+    });
+</script>
+
+<?php View::partial('modal_video'); ?>

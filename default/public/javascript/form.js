@@ -106,22 +106,21 @@ jQuery.fn.errorMsj = function(mensaje, opciones) {
 };
 
 /**
-* Plugin de JQuery para campos solo númericos
+* Campos solo númericos
 *
 */
-jQuery.fn.numerico = function() {
-    // jQuery(this).on('keyup', function () {
+function numerico() {
+    jQuery(this).on('keyup', function () {
         if ( this.value.substr(0,1) === 0 )  {
                 this.value = '';
             } else {
                 this.value = this.value.replace(/[^0-9]/g,'');
         }
-    // });
-};
+    });
+}
 
 /**
-* Plugin de JQuery para campos telefónicos
-* números locales (Venezuela)
+* Campos telefónicos números locales (Venezuela)
 *
 */
 jQuery.fn.telefono = function() {
@@ -129,49 +128,43 @@ jQuery.fn.telefono = function() {
 };
 
 /**
-* Plugin de JQuery para campos telefónicos
-* números celular(Venezuela)
+* Campos telefónicos números celular(Venezuela)
 *
 */
 jQuery.fn.celular = function () {
     numericoPrefijo(this, '04', "Esto no es un teléfono de celular válido<br/>Si desea puede dejar el campo vacío");
 };
 
-jQuery.fn.requerido = function () {
-    // jQuery(this).on('blur', function(){
-        var text = jQuery(this).val();
-        if ( text.length === 0 ) {
-            jQuery(this).next('.help-block').remove();
-            jQuery(this).parent().parent().removeClass('error');
-            jQuery(this).after('<span class="help-block">Este campo es obligatorio</span>');
-            jQuery(this).parent().parent().addClass('error');
-            jQuery(this).focus();
-        } else {
-            jQuery(this).next('.help-block').remove();
-            jQuery(this).parent().parent().removeClass('error');
-        }
-    // });
-};
+function requerido() {
+    var text = jQuery(this).val();
+    if ( text.length === 0 ) {
+        jQuery(this).next('.help-block').remove();
+        jQuery(this).parent().parent().removeClass('error');
+        jQuery(this).after('<span class="help-block">Este campo es obligatorio</span>');
+        jQuery(this).parent().parent().addClass('error');
+        jQuery(this).focus();
+    } else {
+        jQuery(this).next('.help-block').remove();
+        jQuery(this).parent().parent().removeClass('error');
+    }
+}
 
 /**
-* Plugin de JQuery para campos correos
-* electrónicos
+* Campos correos electrónicos
 *
 */
-jQuery.fn.correo = function() {
-    // jQuery(this).on('blur', function(){
-        var text = jQuery(this).val();
+function correo() {
+    var text = jQuery(this).val();
+    jQuery(this).next('.help-block').remove();
+    jQuery(this).parent().parent().addClass('error');
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+jQuery/.test( text ) || text.length === 0 ) {
         jQuery(this).next('.help-block').remove();
         jQuery(this).parent().parent().addClass('error');
-        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+jQuery/.test( text ) || text.length === 0 ) {
-            jQuery(this).next('.help-block').remove();
-            jQuery(this).parent().parent().addClass('error');
-        } else {
-            jQuery(this).addClass('box_error').focus();
-            jQuery(this).after('<span class="help-block">Este correo inválido</span>').parent().parent().addClass('error');
-        }
-    // });
-};
+    } else {
+        jQuery(this).addClass('box_error').focus();
+        jQuery(this).after('<span class="help-block">Este correo inválido</span>').parent().parent().addClass('error');
+    }
+}
 
 jQuery.fn.clearSelect = function() {
     jQuery(this).empty();
@@ -204,7 +197,7 @@ jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
 jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
 jQuery(document).ready(function(){
-    jQuery('input[class~="req"]').on('blur', requerido);
+    jQuery('input[class~="req"], textarea[class~="req"]').on('blur', requerido);
     jQuery('input[type="email"]').on('blur', correo);
     jQuery('input[type="number"]').on('keyup', numerico);
     jQuery('input[type="tel"][data-type="local"]').telefono();
@@ -215,6 +208,5 @@ jQuery(document).ready(function(){
 
     // jQuery('form').on('submit', function(e){
     //     e.preventDefault();
-
     // });
 });

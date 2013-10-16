@@ -97,11 +97,13 @@
                 type: 'json'
             },
             function(d) {
-                if (d.status=='valid') {
+                if (d.status=='success') {
                     fila.remove();
+                    $('#Msj').sucessMsj(d.message);
+                } else {
+                    $('#Msj').errorMsj(d.message);
                 }
                 $('#mBorrar').modal('hide');
-                $('#Msj').sucessMsj(d.message);
             }
         );
     }

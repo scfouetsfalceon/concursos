@@ -85,6 +85,7 @@ class Usuarios extends ActiveRecord {
         `usuarios`.`segundo_nombre`,
         `usuarios`.`primer_apellido`,
         `usuarios`.`segundo_apellido`,
+        `usuarios`.`email`,
         `usuarios`.`nivel`,
         `usuarios`.`estructura_id`,
         `usuarios`.`region_id`,
