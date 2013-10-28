@@ -78,7 +78,7 @@ class ReportarController extends AppController {
         //     Router::toAction("unidad/$this->id/");
         // }
 
-        $this->mes = (isset($dia->fecha{2}))?$this->mes:'0'.$this->mes;
+        $this->mes = (!isset($dia->fecha{2}))?$this->mes:'0'.$this->mes;
 
         $fechas = Load::model('actividades');
         $jovenes = Load::model('jovenes');
