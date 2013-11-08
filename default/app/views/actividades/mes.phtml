@@ -93,7 +93,8 @@
                 factor = duracion*bcp;
                 if (factor<=0) {
                     factor = 1;
-                    $(campos+'duracion').val(0);
+                    // FIXME: es demasiado ladilla el cero a cadaa rato corregir de poner 0 cuando no tenga foco
+                    // $(campos+'duracion').val(0);
                     $(campos+'bcp option').eq(0).prop('selected', true);
                     $(campos+'ba option').eq(0).prop('selected', true);
                     $(campos+'bgi option').eq(0).prop('selected', true);
