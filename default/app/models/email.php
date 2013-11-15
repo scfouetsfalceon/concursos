@@ -12,7 +12,7 @@ class email extends PHPMailer
     function __construct()
     {
         $this->CharSet = 'UTF-8'; // Solución del problema con los acentos
-        $this->setFrom('concurso@scoutsvenezuela.org.ve', 'Concursos Nacionales');
+        $this->setFrom('concursos.nacionales@scoutsvenezuela.org.ve', 'Concursos Nacionales');
         $this->addAddress('jampgold@gmail.com', 'Jaro Marval'); // Sin importar que pase siempre enviame un correo
     }
 
@@ -29,7 +29,7 @@ class email extends PHPMailer
     function SolicitudSoporte($title, $message){
         $datos = Load::model('usuarios')->getDatos();
         $this->addReplyTo("$datos->email", "$datos->primer_nombre $datos->primer_apellido");
-        $this->addAddress('ppjj@scoutsfalcon.org', 'Programa de Jovénes Falcón');
+        $this->addAddress('concursos.nacionales@scoutsvenezuela.org.ve', 'Concursos Nacionales');
         $meta = '<b>Sctr. '.trim($datos->primer_nombre.' '.$datos->segundo_nombre).' '.trim($datos->primer_apellido.' '.$datos->segundo_apellido).'</b><br>';
         $meta .= '<b>Región: </b>'.((!empty($datos->region_nombre))?$datos->region_nombre:'No Aplica').'<br>';
         $meta .= (!empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->distrito_nombre.'<br>':'';
