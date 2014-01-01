@@ -57,9 +57,9 @@ class IndexController extends AppController
         $usuario = Load::model('usuarios');
         $this->usuario = $usuario->getDatos();
         $this->ramas = strtr($this->usuario->ramas_nombre, array('Femenina'=>'Fem.','Femenino'=>'Fem.','Masculina'=>'Mas.','Masculino'=>'Mas.'));
-        // if( $this->auth->get('estado') == 3 ) {
-        //     Router::redirect('bienvenida/');
-        // }
+
+        // TODO: Convertir esto en un mensaje por panel
+        Flash::valid('Feliz Navidad y Próspero Año 2014.<br/>Muchas Gracias por seguir trabajando por nuestros Jóvenes');
     }
 
     public function bienvenida() {
