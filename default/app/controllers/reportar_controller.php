@@ -38,14 +38,13 @@ class ReportarController extends AppController {
 
         $this->id = (Session::get('nivel') == 5)?Session::get('estructura'):$param1;
 
-        $ano_actual = date('Y', $this->hoy);
+        $this->ano_actual = date('Y', $this->hoy);
         $this->mes_actual = date('n', $this->hoy);
 
-        $ano = ( !isset($param2) || $ano_actual < $param2 )? $ano_actual : $param2;
+        $ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
 
         $primer_dia   = $ano."-01-01";
         $ultimo_dia     = $ano."-12-31";
-        #timezone_open('America/Caracas');
         $fecha_inicio      = strtotime($primer_dia);
         $fecha_fin        = strtotime($ultimo_dia);
         $n = 1;
@@ -73,10 +72,10 @@ class ReportarController extends AppController {
         $mes_actual = date('m', $this->hoy);
         $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
 
-        // if ( $this->mes < $mes_actual-3 ) {
-        //     Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
-        //     Router::toAction("unidad/$this->id/");
-        // }
+        if ( $ano_actual != 2013 && $this->mes < $mes_actual-3 ) {
+            Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
+            Router::toAction("unidad/$this->id/");
+        }
 
         $this->mes = ($this->mes > 9)?$this->mes:'0'.$this->mes;
 

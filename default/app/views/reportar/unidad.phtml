@@ -5,10 +5,14 @@
             <div class="span4 cajas">
                 <h5>
                     <?php
-                    echo ($cantidad != 0)?
-                    // TODO Desbloquear clausula de 3 meses a partir de Enero 2014
-                    // ($cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?
-                    $mes.' <small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':$mes; ?>
+                    // A partir del 2014 solo se podrá reportar los 3 últimos meses en curso
+                    echo $mes .
+                    (
+                        ( $ano_actual >= 2014 && $cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?
+                        ' <small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':
+                        ''
+                    );
+                    ?>
                 </h5>
                 <div class="cajitas">
                     <table class="table table-striped table-actividades">

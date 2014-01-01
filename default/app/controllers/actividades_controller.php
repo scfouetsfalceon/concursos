@@ -10,7 +10,6 @@ class ActividadesController extends AppController
     private $segundos_dias = 86400;
 
 
-
 	public function index($param1=null, $param2=null, $param3=null) {
         $ano_actual = date('Y', $this->hoy);
         $nivel = (isset($param1) && Session::get('nivel') < $param1)?$param1:Session::get('nivel');
@@ -48,14 +47,13 @@ class ActividadesController extends AppController
 
         $this->id = (Session::get('nivel') == 5)?Session::get('estructura'):$param1;
 
-        $ano_actual = date('Y', $this->hoy);
+        $this->ano_actual = date('Y', $this->hoy);
         $this->mes_actual = date('n', $this->hoy);
 
-        $ano = ( !isset($param2) || $ano_actual < $param2 )? $ano_actual : $param2;
+        $ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
 
         $primer_dia   = $ano."-01-01";
         $ultimo_dia     = $ano."-12-31";
-        #timezone_open('America/Caracas');
         $fecha_inicio      = strtotime($primer_dia);
         $fecha_fin        = strtotime($ultimo_dia);
         $n = 1;
@@ -84,10 +82,10 @@ class ActividadesController extends AppController
         $this->unidad = $unidad;
         $mes_actual = date('n', $this->hoy);
         $ano_actual = date('Y', $this->hoy);
-        // if ( $mes < $mes_actual-3 ) {
-        //     Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
-        //     Router::toAction("unidad/$unidad/");
-        // }
+        if ( $ano_actual != 2012 && $mes < $mes_actual-3 ) {
+            Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
+            Router::toAction("unidad/$unidad/");
+        }
         $this->mes = ( !isset($mes) || $mes_actual < $mes )? $mes_actual : $mes;
         $this->mes = ($this->mes < 10)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
         $this->ano = ( !isset($ano) || $ano_actual < $ano)? $ano_actual : $ano;
