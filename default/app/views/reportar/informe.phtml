@@ -62,7 +62,7 @@
         var distrito = $('#adulto_distrito_id').val(),distrito_nombre = $('#adulto_distrito_id option:selected').text();
         var grupo = $('#adulto_grupos_id').val(),grupo_nombre = $('#adulto_grupos_id option:selected').text();
         var url='',nombre='',str='';
-        var orden=0,cval=0,cac=0;
+        var orden=0,cval=0,cac=0,total_cval=0,total_cac=0;
         var titulo = 'Nacional';
         var detalle = '';
         if (region != undefined && region != 0) {
@@ -98,8 +98,9 @@
                             d = detalle.replace('{num}', orden);
                             str='<tr><td>&nbsp;</td><td>'+nombre+' '+d+'</td>';
                             str+='<td class="text-center">'+cval+'</td>';
-                            str+='<td class="text-center">'+cac+'</td>';
+                            str+='<td class="text-center">'+cac+'</td></tr>';
                             $('table>tbody').append(str);
+                            total_cac+=cac; total_cval+=cval;
                             orden=item.campo,nombre=item.campo_nombre,cval=0,cac=0;
                         }
                         if(item.cval>=100){
@@ -113,7 +114,15 @@
                         d = detalle.replace('{num}', orden);
                         str='<tr><td>&nbsp;</td><td>'+nombre+' '+d+'</td>';
                         str+='<td class="text-center">'+cval+'</td>';
-                        str+='<td class="text-center">'+cac+'</td>';
+                        str+='<td class="text-center">'+cac+'</td></tr>';
+                        total_cac+=cac; total_cval+=cval;
+                        console.log('- '+total_cac);
+                        console.log('-- '+total_cval);
+                        if (total_cval != 0 || total_cac != 0) {
+                            str+='<tr><td>&nbsp;</td><td><b>Total</b></td>';
+                            str+='<td class="text-center">'+total_cval+'</td>';
+                            str+='<td class="text-center">'+total_cac+'</td></tr>';
+                        }
                         $('table>tbody').append(str);
                     // }
                     $('#btnImprimir').removeClass('disabled');
