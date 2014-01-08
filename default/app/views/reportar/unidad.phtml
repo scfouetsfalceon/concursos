@@ -1,17 +1,33 @@
     <?php View::content(); ?>
     <div class="span12">
         <div class="row">
+        <?php if($ano_actual == 2014):
+        $param = Router::get('parameters');
+        $url = Router::get('controller').'/'.Router::get('action').'/'.$param[0].'/';
+        ?>
+        <ul class="pager">
+            <?php if($ano == 2014): ?>
+            <li class="previous">
+                <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
+            </li>
+            <?php else: ?>
+            <li class="next">
+                <?php echo Html::link($url, '2014 &rarr;'); ?>
+            </li>
+            <?php endif; ?>
+        </ul>
+        <?php endif; ?>
         <?php $i=1; foreach ($objeto as $mes => $dias): $cantidad = count($dias)?>
             <div class="span4 cajas">
                 <h5>
                     <?php
                     // A partir del 2014 solo se podrá reportar los 3 últimos meses en curso
-                    echo $mes .
-                    (
-                        ( $ano_actual >= 2014 && $cantidad != 0 && $mes_actual-2 <= $i  && $mes_actual >= $i )?
-                        ' <small>'.Html::link('reportar/nuevo/'.$id.'/'.$i,'Reportar').'</small>':
-                        ''
-                    );
+                    if ( $ano == 2013 && $ano_actual == 2014 && $mes_actual == 1 && $cantidad != 0) {
+                        $mes .= ' <small>' . Html::link("reportar/nuevo/$id/$i/2013",'Reportar').'</small>';
+                    } elseif ( $ano_actual >= 2014 && $cantidad != 0 && ( ($mes_actual-2) <= $i  && $mes_actual >= $i ) ) {
+                        $mes .= ' <small>' . Html::link("reportar/nuevo/$id/$i/",'Reportar').'</small>';
+                    }
+                    echo $mes;
                     ?>
                 </h5>
                 <div class="cajitas">

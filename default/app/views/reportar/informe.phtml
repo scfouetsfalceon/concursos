@@ -4,7 +4,7 @@
     <?php View::content(); ?>
 </div>
 <div class="span4 offset4 hidden-print">
-        <?php print Session::get('region_id'); View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
+        <?php echo Form::hidden('ano'); View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
 
         <?php $estructura = ($nivel < 2)?null:$estructura; View::partial('adultos/distrito', null, array('nivel'=>$nivel, 'region'=>$estructura, 'distrito'=>Session::get('distrito_id'))); ?>
 
@@ -22,6 +22,20 @@
 </div>
 <div class="clearfix"></div>
 <div class="span10 offset1">
+        <?php
+            $url = Router::get('controller').'/'.Router::get('action').'/';
+        ?>
+        <ul class="pager">
+            <?php if($ano == 2014): ?>
+            <li class="previous">
+                <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
+            </li>
+            <?php else: ?>
+            <li class="next">
+                <?php echo Html::link($url, '2014 &rarr;'); ?>
+            </li>
+            <?php endif; ?>
+        </ul>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -70,6 +84,7 @@
         $.post(
             '<?php echo PUBLIC_PATH; ?>reportar/consulta/'+url,
             {
+                ano : $('#ano').val(),
                 type: 'json'
             },
             function(d){

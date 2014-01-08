@@ -1,4 +1,19 @@
 <div class="span8 offset2">
+        <?php
+            $param = Router::get('parameters');
+            $url = Router::get('controller').'/'.Router::get('action').'/'.$param[0].'/';
+        ?>
+        <ul class="pager">
+            <?php if($ano == 2014): ?>
+            <li class="previous">
+                <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
+            </li>
+            <?php else: ?>
+            <li class="next">
+                <?php echo Html::link($url, '2014 &rarr;'); ?>
+            </li>
+            <?php endif; ?>
+        </ul>
     <h3>Informe de Unidad</h3>
     <?php View::content(); ?>
     <p>Créditos Generales <br/>

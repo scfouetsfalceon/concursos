@@ -50,12 +50,12 @@ class ActividadesController extends AppController
         $this->ano_actual = date('Y', $this->hoy);
         $this->mes_actual = date('n', $this->hoy);
 
-        $ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
+        $this->ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
 
-        $primer_dia   = $ano."-01-01";
-        $ultimo_dia     = $ano."-12-31";
-        $fecha_inicio      = strtotime($primer_dia);
-        $fecha_fin        = strtotime($ultimo_dia);
+        $primer_dia = $this->ano."-01-01";
+        $ultimo_dia = $this->ano."-12-31";
+        $fecha_inicio = strtotime($primer_dia);
+        $fecha_fin = strtotime($ultimo_dia);
         $n = 1;
         $meses = $this->meses;
 
@@ -65,7 +65,7 @@ class ActividadesController extends AppController
         $hay = False;
         for($dia = $fecha_inicio; $dia <= $fecha_fin; $dia += $this->segundos_dias){
             if(date("d", $dia) == "01") {
-                $act = $fechas->listar($this->id, $ano, date('m',$dia));
+                $act = $fechas->listar($this->id, $this->ano, date('m',$dia));
                 if( count($act) ) {
                     $this->objeto->$meses[date('n',$dia)-1] = $act;
                     $hay = True;
@@ -82,13 +82,14 @@ class ActividadesController extends AppController
         $this->unidad = $unidad;
         $mes_actual = date('n', $this->hoy);
         $ano_actual = date('Y', $this->hoy);
-        if ( $ano_actual != 2012 && $mes < $mes_actual-3 ) {
+        $this->ano = ( empty($ano) || $ano_actual < $ano)? $ano_actual : $ano;
+        $this->mes = ($ano != 2013 && ( empty($mes) || $mes_actual < $mes ))? $mes_actual : $mes;
+        $this->mes = ($this->mes < 10)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
+
+        if ( $ano != 2013 && $mes < $mes_actual-3 ) {
             Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
             Router::toAction("unidad/$unidad/");
         }
-        $this->mes = ( !isset($mes) || $mes_actual < $mes )? $mes_actual : $mes;
-        $this->mes = ($this->mes < 10)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
-        $this->ano = ( !isset($ano) || $ano_actual < $ano)? $ano_actual : $ano;
 
         $act = Load::model('actividades')->listar($this->unidad, $this->ano, $this->mes);
         if( count($act) ) {

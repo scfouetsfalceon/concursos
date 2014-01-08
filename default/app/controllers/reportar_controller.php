@@ -41,10 +41,10 @@ class ReportarController extends AppController {
         $this->ano_actual = date('Y', $this->hoy);
         $this->mes_actual = date('n', $this->hoy);
 
-        $ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
+        $this->ano = ( !isset($param2) || $this->ano_actual < $param2 )? $this->ano_actual : $param2;
 
-        $primer_dia   = $ano."-01-01";
-        $ultimo_dia     = $ano."-12-31";
+        $primer_dia   = $this->ano."-01-01";
+        $ultimo_dia     = $this->ano."-12-31";
         $fecha_inicio      = strtotime($primer_dia);
         $fecha_fin        = strtotime($ultimo_dia);
         $n = 1;
@@ -55,7 +55,7 @@ class ReportarController extends AppController {
 
         for($dia = $fecha_inicio; $dia <= $fecha_fin; $dia += $this->segundos_dias){
             if(date("d", $dia) == "01") {
-                $act = $fechas->listar($this->id, $ano, date('m',$dia));
+                $act = $fechas->listar($this->id, $this->ano, date('m',$dia));
                 if( count($act) ) {
                     $this->objeto->$meses[date('n',$dia)-1] = $act;
                 } else {
@@ -71,8 +71,9 @@ class ReportarController extends AppController {
         $ano_actual = date('Y', $this->hoy);
         $mes_actual = date('m', $this->hoy);
         $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
+        $ano = ( $param3 != 2013 && ( empty($param2) || $ano_actual > $param3) )? $ano_actual : $param3;
 
-        if ( $ano_actual != 2013 && $this->mes < $mes_actual-3 ) {
+        if ( $ano != 2013 && $this->mes < $mes_actual-3 ) {
             Flash::error('No se pueden reportar una actividad con más de 3 meses de realizada!!!');
             Router::toAction("unidad/$this->id/");
         }
@@ -90,8 +91,6 @@ class ReportarController extends AppController {
         } else {
             $this->rama = 12;
         }
-
-        $ano = ( !empty($param2) || $ano_actual < $param3 )? $ano_actual : $param3;
 
         $fecha = $fechas->listarSin($this->id, $ano, $this->mes);
         $this->objeto = array();
@@ -170,19 +169,21 @@ class ReportarController extends AppController {
     public function informe($param1=null, $param2=null) {
         $this->nivel = Session::get('nivel');
         $this->estructura = Session::get('estructura');
-        $param1 = ( empty($param1) )?'':$param1.'/';
-        $param2 = ( empty($param2) )?'':$param2.'/';
+        $ano_actual = date('Y', $this->hoy);
+        $this->ano = ( empty($param1) || $param1 > $ano_actual)?$ano_actual:$param1;
         if($this->nivel >= 5){
+            $param1 = ( empty($param1) )?'':$param1.'/';
+            $param2 = ( empty($param2) )?'':$param2.'/';
             Router::toAction('informe_unidad/'.$this->estructura.'/'.$param1.$param2);
         }
     }
 
     public function informe_unidad($unidad, $ano=null, $mes=null) {
         $ano_actual = date('Y', $this->hoy);
-        $mes_actual = date('n', $this->hoy);
-        $ano = ( !empty($ano) || $ano_actual < $ano )?$ano_actual:$ano;
-        $mes = ( !empty($mes) || $mes_actual < $mes )?$mes_actual:$mes;
-        $creditos = Load::model('jovenes_actividades')->jovenes($unidad, $ano, $mes);
+        // $mes_actual = date('n', $this->hoy);
+        $this->ano = ( empty($ano) || $ano_actual < $ano )?$ano_actual:$ano;
+        // $mes = ( !empty($mes) || $mes_actual > $mes )?$mes_actual:$mes;
+        $creditos = Load::model('jovenes_actividades')->jovenes($unidad, $this->ano, $mes);
         $rama = Load::model('ramas')->buscar($unidad);
         if ( $rama->tipo_id == 1 || $rama->tipo_id == 2 ) {
             $factor = 12;
@@ -216,11 +217,12 @@ class ReportarController extends AppController {
     }
 
     public function consulta($region=null, $distrito=null, $grupo=null){
-        $mes=null; $ano=null;
+        $mes =null; $ano = Input::Post('ano');
+
         $ano_actual = date('Y', $this->hoy);
-        $mes_actual = date('n', $this->hoy);
-        $ano = ( !empty($ano) || $ano_actual < $ano )?$ano_actual:$ano;
-        $mes = ( !empty($mes) || $mes_actual < $mes )?$mes_actual:$mes;
+        // $mes = date('n', $this->hoy);
+        $ano = ( empty($ano) || $ano > $ano_actual )?$ano_actual:$ano;
+        // $mes = ( !empty($mes) || $mes_actual < $mes )?$mes_actual:$mes;
 
         $model = Load::model('jovenes_actividades');
 
