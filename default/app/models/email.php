@@ -34,7 +34,7 @@ class email extends PHPMailer
         $meta .= '<b>Región: </b>'.((!empty($datos->region_nombre))?$datos->region_nombre:'No Aplica').'<br>';
         $meta .= (!empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->distrito_nombre.'<br>':'';
         $meta .= (!empty($datos->grupos_nombre))?'<b>Grupo: </b>'.$datos->grupos_nombre.'<br>':'';
-        $meta .= (!empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->rama_snombre.'<br>':'';
+        $meta .= (!empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->ramas_nombre.'<br>':'';
         $meta .= '<br><b>Descripción:</b><br>';
         $this->msgHTML($meta.$message);
         $this->Subject = "[Soporte] ".$title;
