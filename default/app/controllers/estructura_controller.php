@@ -9,6 +9,7 @@ class EstructuraController extends AppController
 
     public function index($param1=null, $param2=null)
     {
+        if (empty($param1) && Session::get('nivel')==0) Router::redirect(Router::get('controller').'/1');
         $this->nivel=(isset($param1))?$param1:Session::get('nivel');
         $this->estructura=(isset($param2))?$param2:Session::get('estructura');
         $this->lista = null;

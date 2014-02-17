@@ -11,6 +11,7 @@ class ActividadesController extends AppController
 
 
 	public function index($param1=null, $param2=null, $param3=null) {
+        if (empty($param1) && Session::get('nivel')==0) Router::redirect(Router::get('controller').'/estructura/1');
         $ano_actual = date('Y', $this->hoy);
         $nivel = (isset($param1) && Session::get('nivel') < $param1)?$param1:Session::get('nivel');
         $estructura = ( (Session::get('nivel') == $nivel) && (Session::get('estructura') != $param2) )?Session::get('estructura'):$param2;
@@ -135,6 +136,8 @@ class ActividadesController extends AppController
 	}
 
     public function crear() {
+        $rama = Input::post('rama');
+        $s = Input::hasPost('actividad');
         if (Input::hasPost('actividad')) {
             $rama = Input::post('rama');
             $actividades = Input::post('actividad');

@@ -59,7 +59,7 @@ class IndexController extends AppController
         $this->ramas = strtr($this->usuario->ramas_nombre, array('Femenina'=>'Fem.','Femenino'=>'Fem.','Masculina'=>'Mas.','Masculino'=>'Mas.'));
 
         // TODO: Convertir esto en un mensaje por panel
-        Flash::valid('Feliz Navidad y Próspero Año 2014.<br/>Muchas Gracias por seguir trabajando por nuestros Jóvenes');
+        Flash::info('<h4>Bienvenido</h4> Ya está disponible la opción de migrar jóven y a partir de este año 2014 solo se pueden registrar los últimos tres(3) meses en curso');
     }
 
     public function bienvenida() {

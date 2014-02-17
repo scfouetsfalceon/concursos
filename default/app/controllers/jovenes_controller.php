@@ -53,6 +53,10 @@ class JovenesController extends AppController {
         echo json_encode(Load::model('jovenes')->consultar($id));
     }
 
+    public function migrar($id) {
+        Load::model('jovenes')->migrar($id);
+        Router::redirect(Utils::getBack());
+    }
 }
 
 ?>

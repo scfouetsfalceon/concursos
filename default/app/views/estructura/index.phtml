@@ -73,7 +73,7 @@
     </div>
 </div>
 </form>
-<?php View::partial('estructura/modal_'.$nivel); ?>
+<?php if ($nivel) View::partial('estructura/modal_'.$nivel); ?>
 <script type="text/javascript">
     $("table").tablesorter();
     $('a.btn-danger').on('click', function(e) {

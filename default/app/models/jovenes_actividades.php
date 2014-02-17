@@ -23,7 +23,7 @@ class JovenesActividades extends ActiveRecord
     public function nacional($ano=null, $mes=null)
     {
         $ano = (empty($ano))?date('Y'):$ano;
-        $mes = (!empty($mes) && isset($dia->fecha{2}))?$mes:'0'.$mes;
+        $mes = (!empty($mes) && !isset($dia->fecha{2}))?$mes:'0'.$mes;
         $fecha = (empty($mes))?$ano.'-%':$ano.'-'.$mes.'-%';
         $sql = "SELECT
         `jovenes`.`id`,
@@ -45,8 +45,8 @@ class JovenesActividades extends ActiveRecord
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
 
         WHERE
-        `jovenes`.`estado` = 1
-        AND
+        -- `jovenes`.`estado` = 1
+        -- AND
         `actividades`.`fecha` LIKE '$fecha'
 
         ORDER BY `region`.`nombre` ASC";
@@ -79,8 +79,8 @@ class JovenesActividades extends ActiveRecord
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
 
         WHERE
-        `jovenes`.`estado` = 1
-        AND
+        -- `jovenes`.`estado` = 1
+        -- AND
         `region`.`id` = $id
         AND
         `actividades`.`fecha` LIKE '$fecha'
@@ -114,8 +114,8 @@ class JovenesActividades extends ActiveRecord
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
 
         WHERE
-        `jovenes`.`estado` = 1
-        AND
+        -- `jovenes`.`estado` = 1
+        -- AND
         `distrito`.`id` = $id
         AND
         `actividades`.`fecha` LIKE '$fecha'
@@ -149,8 +149,8 @@ class JovenesActividades extends ActiveRecord
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
 
         WHERE
-        `jovenes`.`estado` = 1
-        AND
+        -- `jovenes`.`estado` = 1
+        -- AND
         `grupos`.`id` = $id
         AND
         `actividades`.`fecha` LIKE '$fecha'
@@ -183,7 +183,7 @@ class JovenesActividades extends ActiveRecord
         INNER JOIN `actividades` ON `actividades`.`id` = `jovenes_actividades`.`actividades_id`
 
         WHERE
-        `jovenes`.`estado` = 1
+        ( `jovenes`.`historico` IS NULL OR `jovenes`.`historico` <= '$ano' )
         AND
         `jovenes`.`ramas_id` = $unidad
         AND

@@ -44,6 +44,30 @@ class email extends PHPMailer
             Flash::valid("Solicitud de soporte enviada éxitosamente!!!");
         }
     }
+
+    public function reporte($title, $message) {
+        $datos = Load::model('usuarios')->getDatos();
+        $this->addReplyTo("$datos->email", "$datos->primer_nombre $datos->primer_apellido");
+        $this->addAddress('concursos.nacionales@scoutsvenezuela.org.ve', 'Concursos Nacionales');
+        $meta = '<b>Sctr. '.trim($datos->primer_nombre.' '.$datos->segundo_nombre).' '.trim($datos->primer_apellido.' '.$datos->segundo_apellido).'</b><br>';
+        $meta .= '<b>Región: </b>'.((!empty($datos->region_nombre))?$datos->region_nombre:'No Aplica').'<br>';
+        $meta .= (!empty($datos->distrito_nombre))?'<b>Distrito: </b>'.$datos->distrito_nombre.'<br>':'';
+        $meta .= (!empty($datos->grupos_nombre))?'<b>Grupo: </b>'.$datos->grupos_nombre.'<br>':'';
+        $meta .= (!empty($datos->ramas_nombre))?'<b>Rama: </b>'.$datos->ramas_nombre.'<br>':'';
+        $meta .= '<br><b>Descripción:</b><br>';
+        $this->msgHTML($meta.$message);
+        $this->Subject = "[Concursos] ".$title;
+        $this->send()
+    }
+
+    public function joven($action, $joven){
+        $datos = "<b>ID:</b> $joven->id<br>";
+        $datos .= "<b>Cédula:</b> $joven->cedula<br>";
+        $datos .= "<b>Credencial:</b> $joven->credencial<br>";
+        $datos .= "<b>Nombre</b> $joven->primer_nombre $joven->segundo_nombre $joven->primer_apellido $joven->segundo_apellido<br>";
+        $this->reporte($action, $message);
+    }
+
 }
 
 ?>

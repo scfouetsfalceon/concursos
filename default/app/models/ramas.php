@@ -38,6 +38,17 @@ class ramas extends ActiveRecord {
         $this->grupos_id = $grupo;
         return $this->create();
     }
+
+    public function proximaRama($rama, $grupo, $sexo){
+        $y = " AND ";
+        $grupo = "grupos_id = ".$grupo;
+        $sexo = "tipo.sexo = ".$sexo;
+        $rama = "ramas.id > ".$rama;
+        $columns = "columns: ramas.id";
+        $joins = "join: INNER JOIN tipo ON tipo_id = tipo.id";
+        $conditions = $grupo.$y.$sexo.$y.$rama;
+        return $this->find_first($conditions,$columns,$joins);
+    }
 }
 
 ?>

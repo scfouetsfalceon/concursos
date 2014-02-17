@@ -8,7 +8,7 @@
             <tr>
                 <th>Credencial</th>
                 <th>Nombre</th>
-                <th <?php if($registro): ?>colspan="2"<?php endif; ?> class="text-center">Opciones</th>
+                <th <?php if($registro): ?>colspan="3"<?php endif; ?> class="text-center">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +27,9 @@
                 <td><?php echo $item->credencial; ?></td>
                 <td><?php echo $nombre; ?></td>
                 <td class="text-center"> <a href="#" class="btn btn-primary editar" data-id="<?php echo $item->id; ?>"><i class="icon-edit"></i> Editar</a> </td>
+                <td class="text-center">
+                    <?php echo Html::link('jovenes/migrar/'.$item->id, '<i class="icon-bolt"></i> Migrar</a>', 'class="btn btn-warning migrar"'); ?>
+                </td>
                 <?php if($registro): ?><td class="text-center"> <a href="#" class="btn btn-danger" data-id="<?php echo $item->id; ?>" data-nombre="<?php echo $nombre; ?>"><i class="icon-trash"></i> Borrar</a> </td><?php endif; ?>
             </tr>
             <?php
@@ -117,6 +120,23 @@
         <button class="btn btn-danger" id="btnAlert">Borrar</button>
     </div>
 </div>
+
+<!-- Modal para migrar -->
+<div id="mMigrar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mMigrarLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="mMigrarLabel">¿Está seguro que quiere migrar?</h3>
+  </div>
+  <div class="modal-body">
+    <p>La operación de migración de un jóven lo transfiere a la siguiente unidad o en el caso de la unidad de Clan lo convierte en un historico a partir de ese momento.</p>
+    <p>Sin que pierda los créditos obtenido anteriormente en ninguno de los casos</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <a href="" class="btn btn-primary">Migrar</a>
+  </div>
+</div>
+
 <?php echo Tag::js('form'); ?>
 <script type="text/javascript">
     var epoca = <?php echo ($registro)?'true':'false'; ?>;
@@ -233,5 +253,12 @@
                 $('#Msj').errorMsj('Ha occurrido un error inesperado, actualice la página y vuelva a intentar');
             });
         });
+    });
+
+    // Migrar Jovén
+    $('table').on('click', '.migrar', function(e){
+        e.preventDefault();
+        $('#mMigrar').find('.btn-primary').attr('href', $(this).attr('href'));
+        $('#mMigrar').modal('show');
     });
 </script>

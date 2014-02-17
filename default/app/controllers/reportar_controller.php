@@ -6,6 +6,7 @@ class ReportarController extends AppController {
     private $segundos_dias = 86400;
 
     public function index($param1=null, $param2=null) {
+        if (empty($param1) && Session::get('nivel')==0) Router::redirect(Router::get('controller').'/estructura/1');
         $nivel = (isset($param1) && Session::get('nivel') < $param1)?$param1:Session::get('nivel');
         $estructura = ( (Session::get('nivel') == $nivel) && (Session::get('estructura') != $param2) )?Session::get('estructura'):$param2;
         if ($nivel == 5) {

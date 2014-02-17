@@ -5,7 +5,7 @@
             $param = Router::get('parameters');
             $url = Router::get('controller').'/'.Router::get('action').'/'.$param[0].'/';
         ?>
-        <ul class="pager">
+<!--         <ul class="pager">
             <?php if($ano == 2014): ?>
             <li class="previous">
                 <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
@@ -15,7 +15,7 @@
                 <?php echo Html::link($url, '2014 &rarr;'); ?>
             </li>
             <?php endif; ?>
-        </ul>
+        </ul> -->
         <?php endif; ?>
         <?php $i=1; foreach ($objeto as $mes => $dias): $cantidad = count($dias)?>
             <div class="span4 cajas">
