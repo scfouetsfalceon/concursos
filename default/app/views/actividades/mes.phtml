@@ -27,7 +27,7 @@
                             <?php $i=0; foreach ($dias as $dia): $tipo = ($dia->cac == 1)?2:1;?>
 
                             <tr>
-                                <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Form::text("actividad[$i].fecha", 'class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
+                                <td><?php echo Form::hidden("actividad[$i].id", null, $dia->id),Form::text("actividad[$i].fecha", ' autocomplete="off" class="input-small datepicker" data-date-format="dd/mm/yyyy"', $dia->fecha); ?></td>
                                 <td><?php echo Form::text("actividad[$i].nombre", 'autocomplete="off" class="span2"', $dia->nombre); ?></td>
                                 <td><?php echo Form::text("actividad[$i].lugar", 'autocomplete="off" class="span2"', $dia->lugar); ?></td>
                                 <td>
