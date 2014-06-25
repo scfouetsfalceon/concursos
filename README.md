@@ -23,8 +23,7 @@ Sistema para reporte en línea de los Concursos Nacionales de Vida al Aire Libre
 * Crear Estructuras (Regiones, Distritos, Grupos/Unidades)
 
 ## Cosas por hacer
-* Importar GPO
+* Desarrollo de Otros Reportes
 * Optimizar y minificar código
 * Dashboard (Gráficas e Información)
 * Integrar con Adaba
-* Importación desde un archivo de Registro GPO
