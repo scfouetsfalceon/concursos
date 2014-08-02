@@ -50,6 +50,10 @@ class JovenesController extends AppController {
 
     public function consultar() {
         $id = Input::request('id');
+        if ($id ==  ''){
+            echo json_encode(array('error' => 'Error en ID'));
+            return False;
+        }
         echo json_encode(Load::model('jovenes')->consultar($id));
     }
 

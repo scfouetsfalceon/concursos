@@ -6,6 +6,7 @@
     <table class="table table-striped sorted">
         <thead>
             <tr>
+                <th>&nbsp;</th>
                 <th>Credencial</th>
                 <th>Nombre</th>
                 <th <?php if($registro): ?>colspan="3"<?php endif; ?> class="text-center">Opciones</th>
@@ -16,14 +17,16 @@
 
             if(!$cantidad): ?>
             <tr>
-                <td colspan="7" class="text-center" id="vacio">No posee Jóvenes</td>
+                <td colspan="8" class="text-center" id="vacio">No posee Jóvenes</td>
             </tr>
             <?php
                 else:
+                    $i = 1;
                     foreach ($lista as $item):
                         $nombre = trim($item->primer_nombre.' '.$item->segundo_nombre)." ".trim($item->primer_apellido.' '.$item->segundo_apellido);
             ?>
             <tr id="row_<?php echo $item->id; ?>">
+                <td><?php echo $i; $i++; ?></td>
                 <td><?php echo $item->credencial; ?></td>
                 <td><?php echo $nombre; ?></td>
                 <td class="text-center"> <a href="#" class="btn btn-primary editar" data-id="<?php echo $item->id; ?>"><i class="icon-edit"></i> Editar</a> </td>
@@ -152,6 +155,7 @@
     $('#btnRegistrar').on('click', function(evento) {
         evento.preventDefault();
         spinnerRegistro();
+        cantidad = $('table >tbody >tr').length;
         var id = $('#_id').val(), nac = $('#nac').val(), cedula = $('#cedula').val(), credencial = $('#credencial').val(), primer_nombre = $('#primer_nombre').val(), segundo_nombre = $('#segundo_nombre').val(), primer_apellido = $('#primer_apellido').val(), segundo_apellido = $('#segundo_apellido').val();
         $.post(
             '<?php echo PUBLIC_PATH; ?>jovenes/registrar/',
@@ -172,11 +176,14 @@
                 spinnerRegistro();
                 if (data.status == "success") {
                     $('#vacio').remove();
-                    var joven = '<tr>', nombre = primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido;
+                    nombre = primer_nombre+' '+segundo_nombre+' '+primer_apellido+' '+segundo_apellido;
+                    var joven = '<tr>';
+                    joven += '<td>'+(cantidad+1)+'</td>';
                     joven += '<td>'+credencial+'</td>';
                     joven += '<td>'+nombre+'</td>';
-                    joven += '<td class="text-center"> <a href="#" class="btn btn-primary editar"><i class="icon-edit"></i> Editar</a> </td>';
-                    joven += (epoca)?'<td class="text-center"> <a href="#" class="btn btn-danger" data-nombre="'+nombre+'"><i class="icon-trash"></i> Borrar</a> </td>':'';
+                    joven += '<td class="text-center"> <a href="#" class="btn btn-primary editar disabled" title="Refresque la página para poder habilitar estas opciones"><i class="icon-edit"></i> Editar</a> </td>';
+                    joven += '<td class="text-center"><a href="#" class="btn btn-warning migrar disabled" title="Refresque la página para poder habilitar estas opciones"><i class="icon-bolt"></i> Migrar</a></td>';
+                    joven += (epoca)?'<td class="text-center"> <a href="#" class="btn btn-danger disabled" title="Refresque la página para poder habilitar estas opciones"><i class="icon-trash"></i> Borrar</a> </td>':'';
                     joven += '</tr>';
                     $('#row_'+id).remove();
                     $('tbody').append(joven);
@@ -198,7 +205,10 @@
     $('table').on('click', '.editar', function(e){
         e.preventDefault();
         var id = $(this).data('id');
-        console.log(id);
+        if (id === undefined ){
+            $('#Msj').errorMsj('Refresque esta página y vuelva a intentar');
+            return false;
+        }
         $('#Msj').infoMsj('<i class="icon-spinner icon-spin icon-2x"></i> Por favor espere...', { autocerrar: false });
         $.post(
             '<?php echo PUBLIC_PATH; ?>jovenes/consultar/',
@@ -207,16 +217,20 @@
                 type : 'json'
             },
             function(data){
-                $('#_id').val(id);
-                $('#nac').val(data.nacionalidad);
-                $('#cedula').val(data.cedula);
-                $('#credencial').val(data.credencial);
-                $('#primer_nombre').val(data.primer_nombre);
-                $('#segundo_nombre').val(data.segundo_nombre);
-                $('#primer_apellido').val(data.primer_apellido);
-                $('#segundo_apellido').val(data.segundo_apellido);
-                $('#Msj').fadeOut('slow');
-                $('#ModalInsertar').modal('show');
+                if (data.error == ''){
+                    $('#_id').val(id);
+                    $('#nac').val(data.nacionalidad);
+                    $('#cedula').val(data.cedula);
+                    $('#credencial').val(data.credencial);
+                    $('#primer_nombre').val(data.primer_nombre);
+                    $('#segundo_nombre').val(data.segundo_nombre);
+                    $('#primer_apellido').val(data.primer_apellido);
+                    $('#segundo_apellido').val(data.segundo_apellido);
+                    $('#Msj').fadeOut('slow');
+                    $('#ModalInsertar').modal('show');
+                } else {
+                    $('#Msj').errorMsj('Refresque esta página y vuelva a intentar');
+                }
             },
             'json'
         );
