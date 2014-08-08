@@ -5,10 +5,11 @@ class ramas extends ActiveRecord {
 
 	public function getRamas($grupo=Null) {
 
-		$grupo=(!isset($grupo))?Session::get('estructura'):$grupo;
+        $grupo=(!isset($grupo))?Session::get('estructura'):$grupo;
 
-		$columns="columns: ramas.id, nombre, count(jovenes.id) AS cantidad";
-        $joins="join: INNER JOIN tipo ON tipo.id = ramas.tipo_id";
+        $columns = "columns: ramas.id, tipo.nombre, count(jovenes.id) AS cantidad";
+        $join = "join: INNER JOIN tipo ON tipo.id = ramas.tipo_id
+        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: ramas.id";
         $conditions = 'grupos_id = '.$grupo.' AND jovenes.estado != 2 ';
 
