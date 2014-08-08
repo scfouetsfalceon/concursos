@@ -4,9 +4,20 @@ class distrito extends ActiveRecord {
 	protected $logger =  True;
 
 	public function listar($region) {
-        $columns = 'columns: id, nombre';
-        $conditions = 'region_id = '.$region.' AND estado != 2';
-		return $this->find($columns, $conditions);
+        /* SELECT region.nombre, count(jovenes.id) AS cantidad FROM `region`
+        INNER JOIN distrito ON region.id = distrito.region_id
+        INNER JOIN grupos ON distrito.id = grupos.distrito_id
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id
+        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id
+        GROUP BY region.id */
+        $columns = "columns: distrito.id, distrito.nombre, count(jovenes.id) AS cantidad";
+        $join = "join: INNER JOIN grupos ON distrito.id = grupos.distrito_id
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id
+        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        $group = "group: distrito.id";
+        $conditions = 'region_id = '.$region.' AND distrito.estado != 2 AND jovenes.estado != 2 ';
+
+        return $this->find($columns, $conditions, $join, $group);
     }
 
     public function listarConActividades($region) {

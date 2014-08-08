@@ -9,7 +9,21 @@ class region extends ActiveRecord {
     }
 
 	public function listar() {
-		return $this->find('estado != 2');
+        /* SELECT region.nombre, count(jovenes.id) AS cantidad FROM `region`
+        INNER JOIN distrito ON region.id = distrito.region_id
+        INNER JOIN grupos ON distrito.id = grupos.distrito_id
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id
+        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id
+        GROUP BY region.id */
+        $columns = "columns: region.id, region.nombre, count(jovenes.id) AS cantidad";
+        $join = "join: INNER JOIN distrito ON region.id = distrito.region_id
+        INNER JOIN grupos ON distrito.id = grupos.distrito_id
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id
+        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        $group = "group: region.id";
+        $conditions = "region.estado != 2 AND jovenes.estado != 2 ";
+
+		return $this->find($columns, $conditions, $join, $group);
 	}
 
     public function listarConActividades() {
