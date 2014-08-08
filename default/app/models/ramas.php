@@ -4,10 +4,16 @@ class ramas extends ActiveRecord {
     protected $logger = True;
 
 	public function getRamas($grupo=Null) {
+
 		$grupo=(!isset($grupo))?Session::get('estructura'):$grupo;
-		$columns="columns: ramas.id, nombre";
-		$joins="join: INNER JOIN tipo ON tipo.id = ramas.tipo_id";
-		return $this->find('conditions: grupos_id = '.$grupo,$columns,$joins);
+
+		$columns="columns: ramas.id, nombre, count(jovenes.id) AS cantidad";
+        $joins="join: INNER JOIN tipo ON tipo.id = ramas.tipo_id";
+        $group = "group: ramas.id";
+        $conditions = 'grupos_id = '.$grupo.' AND jovenes.estado != 2 ';
+
+        return $this->find($columns, $conditions, $join, $group);
+
 	}
 
     public function buscar($id) {
