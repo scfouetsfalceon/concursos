@@ -9,6 +9,8 @@ class grupos extends ActiveRecord {
         INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: grupos.id";
         $conditions = 'distrito_id = '.$distrito.' AND grupos.estado != 2 AND jovenes.estado != 2 ';
+
+        return $this->find($columns, $conditions, $join, $group);
     }
 
     public function listarConActividades($distrito) {
