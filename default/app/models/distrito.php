@@ -13,17 +13,17 @@ class distrito extends ActiveRecord {
         $columns = "columns: distrito.id, distrito.nombre, count(jovenes.id) AS cantidad";
         $join = "join: INNER JOIN grupos ON distrito.id = grupos.distrito_id
         INNER JOIN ramas ON grupos.id = ramas.grupos_id
-        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: distrito.id";
-        $conditions = 'region_id = '.$region.' AND distrito.estado != 2 AND jovenes.estado != 2 ';
+        $conditions = 'region_id = '.$region.' AND distrito.estado != 2';
 
         return $this->find($columns, $conditions, $join, $group);
     }
 
     public function listarConActividades($region) {
-        $sql = "SELECT 
+        $sql = "SELECT
         `distrito`.`id`,
-        `distrito`.`nombre`, 
+        `distrito`.`nombre`,
         sum(`actividades`.`cval`) AS cval,
         sum(`actividades`.`cac`) AS cac
 

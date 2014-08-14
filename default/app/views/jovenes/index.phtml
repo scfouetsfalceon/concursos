@@ -217,7 +217,7 @@
                 type : 'json'
             },
             function(data){
-                if (data.error == ''){
+                if (data.estatus == 'OK'){
                     $('#_id').val(id);
                     $('#nac').val(data.nacionalidad);
                     $('#cedula').val(data.cedula);

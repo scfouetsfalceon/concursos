@@ -54,7 +54,8 @@ class JovenesController extends AppController {
             echo json_encode(array('error' => 'Error en ID'));
             return False;
         }
-        echo json_encode(Load::model('jovenes')->consultar($id));
+        $result = json_encode(Load::model('jovenes')->consultar($id));
+        echo str_replace('}', ',"estatus": "OK"}', $result);
     }
 
     public function migrar($id) {

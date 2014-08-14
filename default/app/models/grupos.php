@@ -6,17 +6,17 @@ class grupos extends ActiveRecord {
 	public function listar($distrito) {
         $columns = "columns: grupos.id, grupos.nombre, count(jovenes.id) AS cantidad";
         $join = "join: INNER JOIN ramas ON grupos.id = ramas.grupos_id
-        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: grupos.id";
-        $conditions = 'distrito_id = '.$distrito.' AND grupos.estado != 2 AND jovenes.estado != 2 ';
+        $conditions = 'distrito_id = '.$distrito.' AND grupos.estado != 2';
 
         return $this->find($columns, $conditions, $join, $group);
     }
 
     public function listarConActividades($distrito) {
-        $sql = "SELECT 
+        $sql = "SELECT
         `grupos`.`id`,
-        `grupos`.`nombre`, 
+        `grupos`.`nombre`,
         sum(`actividades`.`cval`) AS cval,
         sum(`actividades`.`cac`) AS cac
 

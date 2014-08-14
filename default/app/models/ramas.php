@@ -9,9 +9,9 @@ class ramas extends ActiveRecord {
 
         $columns = "columns: ramas.id, tipo.nombre, count(jovenes.id) AS cantidad";
         $join = "join: INNER JOIN tipo ON tipo.id = ramas.tipo_id
-        INNER JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: ramas.id";
-        $conditions = 'grupos_id = '.$grupo.' AND jovenes.estado != 2 ';
+        $conditions = 'grupos_id = '.$grupo;
 
         return $this->find($columns, $conditions, $join, $group);
 
