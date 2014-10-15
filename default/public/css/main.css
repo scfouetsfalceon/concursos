@@ -1,14 +1,13 @@
-* { font-family: Verdana; }
-html, body { height: 100%; }
+html, body { font-family: Verdana, Arial, sans-serif; height: 100%; }
 hr{ border-width: 1px 0 0 0; border-style: solid; border-color: #CCC; margin: 10px 0 15px 0; }
 #wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -80px; display: block; }
 #push { height: 60px; }
 
 /* Deshabilitar los inputs number */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 
@@ -197,7 +196,7 @@ i.icon-star {
     font-family: "Futura";
     font-size: 14px;
     margin: 4px 0 0 15px;
-    line-height: 1.1em;
+    line-height: 1.3em;
     text-shadow: none;
     width: 330px;
 }

@@ -22,9 +22,14 @@
                 <h5>
                     <?php
                     // A partir del 2014 solo se podrá reportar los 3 últimos meses en curso
-                    if ( $ano == 2013 && $ano_actual == 2014 && $mes_actual == 1) {
+                    /* if ( $ano == 2013 && $ano_actual == 2014 && $mes_actual == 1) {
                         $mes .= ' <small>' . Html::link("actividades/mes/$id/$i/2013",'(Crear actividades)') . '</small>';
                     } elseif ( $ano_actual >= 2014 && ( ($mes_actual-2) <= $i  && $mes_actual >= $i ) ) {
+                        $mes .= ' <small>' . Html::link('actividades/mes/'.$id.'/'.$i,'(Crear actividades)') . '</small>';
+                    } else {
+                        $mes .= ' <small>(No disponible)</small>';
+                    } */
+                    if ( $mes_actual >= $i ) {
                         $mes .= ' <small>' . Html::link('actividades/mes/'.$id.'/'.$i,'(Crear actividades)') . '</small>';
                     } else {
                         $mes .= ' <small>(No disponible)</small>';
