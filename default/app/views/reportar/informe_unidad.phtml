@@ -4,13 +4,13 @@
             $url = Router::get('controller').'/'.Router::get('action').'/'.$param[0].'/';
         ?>
         <ul class="pager">
-            <?php if($ano == 2014): ?>
+            <?php if($ano == 2015): ?>
             <li class="previous">
-                <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
+                <?php echo Html::link($url.'2014', '&larr; 2013'); ?>
             </li>
             <?php else: ?>
             <li class="next">
-                <?php echo Html::link($url, '2014 &rarr;'); ?>
+                <?php echo Html::link($url, '2015 &rarr;'); ?>
             </li>
             <?php endif; ?>
         </ul>

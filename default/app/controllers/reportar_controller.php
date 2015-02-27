@@ -172,7 +172,6 @@ class ReportarController extends AppController {
         $this->nivel = Session::get('nivel');
         $this->estructura = Session::get('estructura');
         $ano_actual = date('Y', $this->hoy);
-        $this->ano = ( empty($param1) || $param1 > $ano_actual)?$ano_actual:$param1;
         if($this->nivel >= 5){
             $param1 = ( empty($param1) )?'':$param1.'/';
             $param2 = ( empty($param2) )?'':$param2.'/';

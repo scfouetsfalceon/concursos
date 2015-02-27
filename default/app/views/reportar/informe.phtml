@@ -4,11 +4,20 @@
     <?php View::content(); ?>
 </div>
 <div class="span4 offset4 hidden-print">
-        <?php echo Form::hidden('ano'); View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
+        <?php View::partial('adultos/region', null, array('nivel'=>$nivel, 'region'=>Session::get('region_id'))); ?>
 
         <?php $estructura = ($nivel < 2)?null:$estructura; View::partial('adultos/distrito', null, array('nivel'=>$nivel, 'region'=>$estructura, 'distrito'=>Session::get('distrito_id'))); ?>
 
         <?php $estructura = ($nivel < 3)?null:$estructura; View::partial('adultos/grupos', null, array('nivel'=>$nivel, 'distrito'=>$estructura, 'grupo'=>Session::get('grupos_id'))); ?>
+
+        <div class="control-group">
+            <label class="control-label">Año:</label>
+            <div class="controls">
+
+            <?php echo Form::select('ano', array('2013' => '2013', '2014' => '2014', '2015' => '2015')); ?>
+
+            </div>
+        </div>
 
         <button class="btn btn-primary" id="btnGenerar">Generar</button>
         <a href="#" onClick="print();" class="btn btn-success disabled" id="btnImprimir">Imprimir</a>
@@ -25,17 +34,6 @@
         <?php
             $url = Router::get('controller').'/'.Router::get('action').'/';
         ?>
-        <ul class="pager">
-            <?php if($ano == 2014): ?>
-            <li class="previous">
-                <?php echo Html::link($url.'2013', '&larr; 2013'); ?>
-            </li>
-            <?php else: ?>
-            <li class="next">
-                <?php echo Html::link($url, '2014 &rarr;'); ?>
-            </li>
-            <?php endif; ?>
-        </ul>
     <table class="table table-striped">
         <thead>
             <tr>
