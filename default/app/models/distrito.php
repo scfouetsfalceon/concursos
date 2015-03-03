@@ -33,7 +33,10 @@ class distrito extends ActiveRecord {
         LEFT JOIN `ramas` ON `grupos`.`id` = `ramas`.`grupos_id`
         LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
 
-        WHERE `distrito`.`region_id` = '$region' AND `distrito`.`estado` = 1
+        WHERE
+        `distrito`.`region_id` = '$region'
+        AND
+        `distrito`.`estado` = 1
 
         GROUP BY `distrito`.`id`";
         return $this->find_all_by_sql($sql);

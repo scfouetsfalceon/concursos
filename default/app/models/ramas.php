@@ -11,7 +11,7 @@ class ramas extends ActiveRecord {
         $join = "join: INNER JOIN tipo ON tipo.id = ramas.tipo_id
         LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
         $group = "group: ramas.id";
-        $conditions = 'grupos_id = '.$grupo;
+        $conditions = "grupos_id = $grupo AND jovenes.estado = 1";
 
         return $this->find($columns, $conditions, $join, $group);
 
@@ -34,9 +34,13 @@ class ramas extends ActiveRecord {
         INNER JOIN `tipo` ON `tipo`.`id` = `ramas`.`tipo_id`
         LEFT JOIN `actividades` ON `ramas`.`id` = `actividades`.`ramas_id`
 
-        WHERE `grupos_id` = '$grupo'
+        WHERE
+        `grupos_id` = '$grupo'
+        AND
+        `jovenes`.`estado` = 1
 
-        GROUP BY `ramas`.`id`";
+        GROUP BY `ramas`.`id`
+        -- RAMAS";
         return $this->find_all_by_sql($sql);
     }
 
