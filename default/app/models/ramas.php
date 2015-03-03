@@ -36,11 +36,8 @@ class ramas extends ActiveRecord {
 
         WHERE
         `grupos_id` = '$grupo'
-        AND
-        `jovenes`.`estado` = 1
 
-        GROUP BY `ramas`.`id`
-        -- RAMAS";
+        GROUP BY `ramas`.`id`";
         return $this->find_all_by_sql($sql);
     }
 

@@ -72,7 +72,7 @@ class ReportarController extends AppController {
         $ano_actual = date('Y', $this->hoy);
         $mes_actual = date('m', $this->hoy);
         $this->mes = (empty($param2))?date('m', $this->hoy):$param2;
-        $ano = ( $param3 != 2013 && ( empty($param2) || $ano_actual > $param3) )? $ano_actual : $param3;
+        $ano = ( $param3 != ($ano_actual - 1) && ( empty($param2) || $ano_actual > $param3) )? $ano_actual : $param3;
 
         // Clausula de 3 meses
         /* if ( $ano != 2013 && $this->mes < $mes_actual-3 ) {
@@ -107,6 +107,7 @@ class ReportarController extends AppController {
             // Para no crear 2 o más veces la fecha de la actividad y con ello sobreescribiendo la fecha
             if ($dia->id != $control) {
                 $control = $dia->id;
+                $this->objeto[$i] = new StdClass();
                 $this->objeto[$i]->fecha = Toolkit::fecha($dia->fecha);
                 $this->objeto[$i]->nombre = $dia->nombre;
                 $this->objeto[$i]->cval = $dia->cval;

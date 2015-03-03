@@ -84,7 +84,7 @@ class ActividadesController extends AppController
         $mes_actual = date('n', $this->hoy);
         $ano_actual = date('Y', $this->hoy);
         $this->ano = ( empty($ano) || $ano_actual < $ano)? $ano_actual : $ano;
-        $this->mes = ($ano != 2013 && ( empty($mes) || $mes_actual < $mes ))? $mes_actual : $mes;
+        $this->mes = ($ano != ($ano_actual - 1) && ( empty($mes) || $mes_actual < $mes ))? $mes_actual : $mes;
         $this->mes = ($this->mes < 10)?'0'.$this->mes:$this->mes; // Agregamos el cero(0) al mes
 
         // Clausula de 3 meses
