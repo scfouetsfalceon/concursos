@@ -41,14 +41,11 @@ class JovenesController extends AppController {
     }
 
     public function borrar() {
-        if(Input::post('type')=='json'){
-            if ( Load::model('jovenes')->borrar(Input::post('id')) ) {
+        if(Input::post('type') == 'json'){
+            $modelo = Load::model('jovenes');
+            if ( $modelo->borrar(Input::post('id')) ) {
                 Flash::valid('Jóven borrado con éxito');
-            } else {
-                Flash::valid('Jóven bor');
             }
-        } else {
-            Flash::valid('ERROR');
         }
     }
 

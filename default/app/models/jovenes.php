@@ -55,11 +55,11 @@ class Jovenes extends ActiveRecord {
             Flash::error('Operación Inválida, no puede eliminar a un jovén fuera de época de registro');
             return False;
         }
-        $joven = $this->find_first($id);
+        $joven = $this->find_first((int)$id);
         $joven->estado = 2;
         $joven->historico = date('Y', $_SERVER['REQUEST_TIME']);
         $action = 'Borrando Jóven';
-        Load::model('email')->reporte($action, $joven);
+        // Load::model('email')->reporte($action, $joven);
         return $joven->update(); // Borrado lógico
 	}
 
