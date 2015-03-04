@@ -59,7 +59,7 @@ class IndexController extends AppController
         $this->ramas = strtr($this->usuario->ramas_nombre, array('Femenina'=>'Fem.','Femenino'=>'Fem.','Masculina'=>'Mas.','Masculino'=>'Mas.'));
 
         // TODO: Convertir esto en un mensaje por panel
-        Flash::info('<h4>Bienvenido</h4> Están disponibles de nuevo para reportar cualquier mes del año');
+        Flash::info('<h4>Bienvenido</h4> Están disponibles reportar los pendientes del Año pasado y se podrá reportar cualquier mes del año para este 2015');
     }
 
     public function bienvenida() {
