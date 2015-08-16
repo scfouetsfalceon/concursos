@@ -51,10 +51,10 @@ class Jovenes extends ActiveRecord {
     }
 
 	public function borrar($id) {
-        if ( date('n', $_SERVER['REQUEST_TIME']) > 3 ) {
+        /* if ( date('n', $_SERVER['REQUEST_TIME']) > 3 ) {
             Flash::error('Operación Inválida, no puede eliminar a un jovén fuera de época de registro');
             return False;
-        }
+        }*/
         $joven = $this->find_first((int)$id);
         $joven->estado = 2;
         $joven->historico = date('Y', $_SERVER['REQUEST_TIME']);
