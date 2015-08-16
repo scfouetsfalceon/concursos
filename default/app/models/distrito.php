@@ -10,10 +10,9 @@ class distrito extends ActiveRecord {
         INNER JOIN ramas ON grupos.id = ramas.grupos_id
         INNER JOIN jovenes ON ramas.id = jovenes.ramas_id
         GROUP BY region.id */
-        $columns = "columns: distrito.id, distrito.nombre, count(jovenes.id) AS cantidad";
+        $columns = "columns: distrito.id, distrito.nombre";
         $join = "join: INNER JOIN grupos ON distrito.id = grupos.distrito_id
-        INNER JOIN ramas ON grupos.id = ramas.grupos_id
-        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id";
         $group = "group: distrito.id";
         $conditions = 'region_id = '.$region.' AND distrito.estado != 2';
 

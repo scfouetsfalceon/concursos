@@ -10,13 +10,12 @@ class region extends ActiveRecord {
 
 	public function listar() {
         /*  */
-        $columns = "columns: region.id, region.nombre, count(jovenes.id) AS cantidad";
+        $columns = "columns: region.id, region.nombre";
         $join = "join: INNER JOIN distrito ON region.id = distrito.region_id
         INNER JOIN grupos ON distrito.id = grupos.distrito_id
-        INNER JOIN ramas ON grupos.id = ramas.grupos_id
-        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        INNER JOIN ramas ON grupos.id = ramas.grupos_id";
         $group = "group: region.id";
-        $conditions = "region.estado != 2 AND jovenes.estado != 2 ";
+        $conditions = "region.estado != 2";
 
 		return $this->find($columns, $conditions, $join, $group);
 	}

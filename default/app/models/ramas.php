@@ -7,11 +7,10 @@ class ramas extends ActiveRecord {
 
         $grupo=(!isset($grupo))?Session::get('estructura'):$grupo;
 
-        $columns = "columns: ramas.id, tipo.nombre, count(jovenes.id) AS cantidad";
-        $join = "join: INNER JOIN tipo ON tipo.id = ramas.tipo_id
-        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        $columns = "columns: ramas.id, tipo.nombre";
+        $join = "join: INNER JOIN tipo ON tipo.id = ramas.tipo_id";
         $group = "group: ramas.id";
-        $conditions = "grupos_id = $grupo AND jovenes.estado = 1";
+        $conditions = "grupos_id = $grupo";
 
         return $this->find($columns, $conditions, $join, $group);
 

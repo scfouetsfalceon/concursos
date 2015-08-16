@@ -4,9 +4,8 @@ class grupos extends ActiveRecord {
 	protected $logger = True;
 
 	public function listar($distrito) {
-        $columns = "columns: grupos.id, grupos.nombre, count(jovenes.id) AS cantidad";
-        $join = "join: INNER JOIN ramas ON grupos.id = ramas.grupos_id
-        LEFT JOIN jovenes ON ramas.id = jovenes.ramas_id";
+        $columns = "columns: grupos.id, grupos.nombre";
+        $join = "join: INNER JOIN ramas ON grupos.id = ramas.grupos_id";
         $group = "group: grupos.id";
         $conditions = 'distrito_id = '.$distrito.' AND grupos.estado != 2';
 
