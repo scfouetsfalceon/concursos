@@ -1,7 +1,6 @@
 <?php
 
 class ramas extends ActiveRecord {
-    protected $logger = True;
 
 	public function getRamas($grupo=Null) {
 

@@ -1,7 +1,6 @@
 <?php
 
 class Jovenes extends ActiveRecord {
-	protected $logger = True;
     private $ano;
 
 	public function initialize() {

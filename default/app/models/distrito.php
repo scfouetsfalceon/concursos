@@ -1,7 +1,6 @@
 <?php
 
 class distrito extends ActiveRecord {
-	protected $logger =  True;
 
 	public function listar($region) {
         /* SELECT region.nombre, count(jovenes.id) AS cantidad FROM `region`

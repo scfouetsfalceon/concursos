@@ -5,7 +5,6 @@
 */
 class JovenesActividades extends ActiveRecord
 {
-    protected $logger = True;
 
     public function nuevo($joven, $actividad) {
         if ( Load::model('actividades')->reportada($actividad) ){

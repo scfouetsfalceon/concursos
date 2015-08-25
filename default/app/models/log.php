@@ -9,7 +9,6 @@
  *
  */
 class Log extends ActiveRecord{
-    protected $logger = True;
 
 	public function insert($action) {
 		$this->usuario_id = Session::get('id');

@@ -1,7 +1,6 @@
 <?php
 
 class grupos extends ActiveRecord {
-	protected $logger = True;
 
 	public function listar($distrito) {
         $columns = "columns: grupos.id, grupos.nombre";

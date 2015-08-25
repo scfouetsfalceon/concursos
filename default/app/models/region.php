@@ -1,7 +1,6 @@
 <?php
 
 class region extends ActiveRecord {
-	protected $logger =  True;
 
     public function initialize() {
         $this->validates_presence_of('nombre', 'message: Es obligatorio el nombre');

@@ -7,8 +7,6 @@
 */
 class Actividades extends ActiveRecord
 {
-    protected $logger = True;
-
     public function nueva($rama, $data) {
         if (!empty($data['id'])){
             $existe = $this->find_first($data['id']);

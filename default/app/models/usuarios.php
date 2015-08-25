@@ -1,7 +1,6 @@
 <?php
 
 class Usuarios extends ActiveRecord {
-    protected $logger = True;
 
     public function initialize(){
         $this->validates_uniqueness_of('cedula', 'message: Ya existe un usuario con esa cédula');
