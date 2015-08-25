@@ -75,7 +75,6 @@ class Db
     {
         $databases = Config::read('databases');
         $config = $databases[$database];
-        print_r($config);
 
 		// carga los valores por defecto para la conexión, si no existen
 		$default = array ('port' => 0, 'dsn' => NULL, 'dbname' => NULL, 'host' => 'localhost', 'username' => NULL, 'password' => NULL);
