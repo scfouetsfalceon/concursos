@@ -1,18 +1,18 @@
     <?php View::content(); ?>
     <div class="span12">
         <div class="row">
-        <?php if($ano_actual == 2015):
+        <?php if($ano_actual == 2016):
             $param = Router::get('parameters');
             $url = Router::get('controller').'/'.Router::get('action').'/'.$param[0].'/';
         ?>
          <ul class="pager">
-            <?php if($ano == 2015): ?>
+            <?php if($ano == 2016): ?>
             <li class="previous">
-                <?php echo Html::link($url.'2014', '&larr; 2014'); ?>
+                <?php echo Html::link($url.'2015', '&larr; 2015'); ?>
             </li>
             <?php else: ?>
             <li class="next">
-                <?php echo Html::link($url, '2015 &rarr;'); ?>
+                <?php echo Html::link($url, '2016 &rarr;'); ?>
             </li>
             <?php endif; ?>
         </ul>
